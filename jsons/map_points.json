@@ -1,0 +1,1904 @@
+{
+  "0": {
+    "point_id": 2,
+    "latitude": 59.62828785,
+    "longitude": 28.54662179,
+    "height": 42.57734907
+  },
+  "1": {
+    "point_id": 3,
+    "latitude": 59.62836546,
+    "longitude": 28.5462065,
+    "height": 43.1244462
+  },
+  "2": {
+    "point_id": 50,
+    "latitude": 59.6259639,
+    "longitude": 28.54970523,
+    "height": 46.09091943
+  },
+  "3": {
+    "point_id": 53,
+    "latitude": 59.62569003,
+    "longitude": 28.55332764,
+    "height": 48.66217613
+  },
+  "4": {
+    "point_id": 54,
+    "latitude": 59.62547488,
+    "longitude": 28.55453445,
+    "height": 48.51760982
+  },
+  "5": {
+    "point_id": 101,
+    "latitude": 59.62588188,
+    "longitude": 28.54969393,
+    "height": 45.83114987
+  },
+  "6": {
+    "point_id": 106,
+    "latitude": 59.62574592,
+    "longitude": 28.54931925,
+    "height": 45.80996298
+  },
+  "7": {
+    "point_id": 108,
+    "latitude": 59.62574817,
+    "longitude": 28.54976114,
+    "height": 45.35669443
+  },
+  "8": {
+    "point_id": 125,
+    "latitude": 59.62581361,
+    "longitude": 28.55189846,
+    "height": 47.43822021
+  },
+  "9": {
+    "point_id": 135,
+    "latitude": 59.62569323,
+    "longitude": 28.54932914,
+    "height": 45.51884931
+  },
+  "10": {
+    "point_id": 141,
+    "latitude": 59.62642709,
+    "longitude": 28.55147009,
+    "height": 46.26060912
+  },
+  "11": {
+    "point_id": 178,
+    "latitude": 59.62574665,
+    "longitude": 28.55020614,
+    "height": 45.29344529
+  },
+  "12": {
+    "point_id": 194,
+    "latitude": 59.62575806,
+    "longitude": 28.55337781,
+    "height": 48.46798185
+  },
+  "13": {
+    "point_id": 223,
+    "latitude": 59.62600752,
+    "longitude": 28.54959398,
+    "height": 46.1274606
+  },
+  "14": {
+    "point_id": 226,
+    "latitude": 59.62590993,
+    "longitude": 28.54969288,
+    "height": 45.9208987
+  },
+  "15": {
+    "point_id": 235,
+    "latitude": 59.6258838,
+    "longitude": 28.55057014,
+    "height": 45.89227819
+  },
+  "16": {
+    "point_id": 236,
+    "latitude": 59.62577234,
+    "longitude": 28.55097325,
+    "height": 46.03315619
+  },
+  "17": {
+    "point_id": 247,
+    "latitude": 59.62571662,
+    "longitude": 28.54976475,
+    "height": 45.21695443
+  },
+  "18": {
+    "point_id": 251,
+    "latitude": 59.62554265,
+    "longitude": 28.55457899,
+    "height": 48.40785534
+  },
+  "19": {
+    "point_id": 254,
+    "latitude": 59.6260432,
+    "longitude": 28.5505985,
+    "height": 46.50465801
+  },
+  "20": {
+    "point_id": 267,
+    "latitude": 59.6254327,
+    "longitude": 28.55581748,
+    "height": 47.63524764
+  },
+  "21": {
+    "point_id": 271,
+    "latitude": 59.62516301,
+    "longitude": 28.5556312,
+    "height": 46.92867932
+  },
+  "22": {
+    "point_id": 272,
+    "latitude": 59.62545347,
+    "longitude": 28.55400182,
+    "height": 48.49212594
+  },
+  "23": {
+    "point_id": 273,
+    "latitude": 59.62609519,
+    "longitude": 28.55216647,
+    "height": 46.9997111
+  },
+  "24": {
+    "point_id": 274,
+    "latitude": 59.62578843,
+    "longitude": 28.55247054,
+    "height": 47.91908666
+  },
+  "25": {
+    "point_id": 275,
+    "latitude": 59.62597339,
+    "longitude": 28.55252602,
+    "height": 47.38783494
+  },
+  "26": {
+    "point_id": 276,
+    "latitude": 59.62589512,
+    "longitude": 28.55013392,
+    "height": 46.00188831
+  },
+  "27": {
+    "point_id": 277,
+    "latitude": 59.62592584,
+    "longitude": 28.55013902,
+    "height": 46.13199802
+  },
+  "28": {
+    "point_id": 386,
+    "latitude": 59.6250459,
+    "longitude": 28.55748022,
+    "height": 46.12589415
+  },
+  "29": {
+    "point_id": 387,
+    "latitude": 59.62508683,
+    "longitude": 28.55761273,
+    "height": 45.41817448
+  },
+  "30": {
+    "point_id": 426,
+    "latitude": 59.62567612,
+    "longitude": 28.55476935,
+    "height": 46.84246191
+  },
+  "31": {
+    "point_id": 427,
+    "latitude": 59.62969373,
+    "longitude": 28.52749389,
+    "height": 45.85258808
+  },
+  "32": {
+    "point_id": 504,
+    "latitude": 59.62973202,
+    "longitude": 28.52753508,
+    "height": 45.88701178
+  },
+  "33": {
+    "point_id": 658,
+    "latitude": 59.629657,
+    "longitude": 28.52744713,
+    "height": 45.80954878
+  },
+  "34": {
+    "point_id": 670,
+    "latitude": 59.62815611,
+    "longitude": 28.55097256,
+    "height": 43.82192464
+  },
+  "35": {
+    "point_id": 671,
+    "latitude": 59.62510624,
+    "longitude": 28.55484272,
+    "height": 42
+  },
+  "36": {
+    "point_id": 745,
+    "latitude": 59.62853236,
+    "longitude": 28.54522943,
+    "height": 44.07615151
+  },
+  "37": {
+    "point_id": 750,
+    "latitude": 59.62493844,
+    "longitude": 28.5573905,
+    "height": 46.08143366
+  },
+  "38": {
+    "point_id": 775,
+    "latitude": 59.62542417,
+    "longitude": 28.55586413,
+    "height": 47.74914746
+  },
+  "39": {
+    "point_id": 824,
+    "latitude": 59.62531,
+    "longitude": 28.556493,
+    "height": 47.90149224
+  },
+  "40": {
+    "point_id": 826,
+    "latitude": 59.625228,
+    "longitude": 28.556451,
+    "height": 48.59951861
+  },
+  "41": {
+    "point_id": 827,
+    "latitude": 59.625116,
+    "longitude": 28.556398,
+    "height": 48.45004325
+  },
+  "42": {
+    "point_id": 828,
+    "latitude": 59.625598,
+    "longitude": 28.551096,
+    "height": 46.49789492
+  },
+  "43": {
+    "point_id": 873,
+    "latitude": 59.62793376,
+    "longitude": 28.53701633,
+    "height": 46.30608226
+  },
+  "44": {
+    "point_id": 874,
+    "latitude": 59.62788798,
+    "longitude": 28.5369901,
+    "height": 46.23629653
+  },
+  "45": {
+    "point_id": 875,
+    "latitude": 59.62784512,
+    "longitude": 28.5369619,
+    "height": 46.12897619
+  },
+  "46": {
+    "point_id": 876,
+    "latitude": 59.62777656,
+    "longitude": 28.53693258,
+    "height": 45.94674349
+  },
+  "47": {
+    "point_id": 877,
+    "latitude": 59.62773206,
+    "longitude": 28.53690607,
+    "height": 45.77295521
+  },
+  "48": {
+    "point_id": 878,
+    "latitude": 59.62768593,
+    "longitude": 28.53688146,
+    "height": 45.59652961
+  },
+  "49": {
+    "point_id": 879,
+    "latitude": 59.62763994,
+    "longitude": 28.53686131,
+    "height": 45.40204544
+  },
+  "50": {
+    "point_id": 880,
+    "latitude": 59.62759199,
+    "longitude": 28.53684429,
+    "height": 45.19531754
+  },
+  "51": {
+    "point_id": 881,
+    "latitude": 59.62754517,
+    "longitude": 28.53681727,
+    "height": 45.00434198
+  },
+  "52": {
+    "point_id": 882,
+    "latitude": 59.62731472,
+    "longitude": 28.53671225,
+    "height": 44.57226239
+  },
+  "53": {
+    "point_id": 906,
+    "latitude": 59.63143017,
+    "longitude": 28.52033607,
+    "height": 45.95209329
+  },
+  "54": {
+    "point_id": 907,
+    "latitude": 59.63139113,
+    "longitude": 28.52030326,
+    "height": 45.93014653
+  },
+  "55": {
+    "point_id": 983,
+    "latitude": 59.625582,
+    "longitude": 28.5542895,
+    "height": 49.23823846
+  },
+  "56": {
+    "point_id": 987,
+    "latitude": 59.62552171,
+    "longitude": 28.5553981,
+    "height": 46.24678727
+  },
+  "57": {
+    "point_id": 988,
+    "latitude": 59.627537,
+    "longitude": 28.535456,
+    "height": 45.22205049
+  },
+  "58": {
+    "point_id": 1015,
+    "latitude": 59.62553241,
+    "longitude": 28.55427024,
+    "height": 49.13264188
+  },
+  "59": {
+    "point_id": 1031,
+    "latitude": 59.62587812,
+    "longitude": 28.54942823,
+    "height": 46.14374371
+  },
+  "60": {
+    "point_id": 1036,
+    "latitude": 59.62575523,
+    "longitude": 28.54958013,
+    "height": 45.37905118
+  },
+  "61": {
+    "point_id": 1047,
+    "latitude": 59.62574673,
+    "longitude": 28.54913423,
+    "height": 46.03518368
+  },
+  "62": {
+    "point_id": 1056,
+    "latitude": 59.62564602,
+    "longitude": 28.55364376,
+    "height": 48.80215225
+  },
+  "63": {
+    "point_id": 1059,
+    "latitude": 59.62544664,
+    "longitude": 28.55464912,
+    "height": 47.98977165
+  },
+  "64": {
+    "point_id": 1066,
+    "latitude": 59.62567816,
+    "longitude": 28.54915318,
+    "height": 45.62527042
+  },
+  "65": {
+    "point_id": 1081,
+    "latitude": 59.62553009,
+    "longitude": 28.55468337,
+    "height": 48.05267524
+  },
+  "66": {
+    "point_id": 1083,
+    "latitude": 59.6259276,
+    "longitude": 28.549427,
+    "height": 46.28872167
+  },
+  "67": {
+    "point_id": 1098,
+    "latitude": 59.62573831,
+    "longitude": 28.54913365,
+    "height": 45.99087328
+  },
+  "68": {
+    "point_id": 1119,
+    "latitude": 59.6260073,
+    "longitude": 28.5508188,
+    "height": 46.5039089
+  },
+  "69": {
+    "point_id": 1126,
+    "latitude": 59.62576872,
+    "longitude": 28.55167122,
+    "height": 47.34825445
+  },
+  "70": {
+    "point_id": 1127,
+    "latitude": 59.62577437,
+    "longitude": 28.55135868,
+    "height": 46.80612631
+  },
+  "71": {
+    "point_id": 1128,
+    "latitude": 59.62577513,
+    "longitude": 28.55118817,
+    "height": 46.47992817
+  },
+  "72": {
+    "point_id": 1138,
+    "latitude": 59.62580819,
+    "longitude": 28.55157549,
+    "height": 47.17832712
+  },
+  "73": {
+    "point_id": 1164,
+    "latitude": 59.62594847,
+    "longitude": 28.55296256,
+    "height": 47.38119778
+  },
+  "74": {
+    "point_id": 1165,
+    "latitude": 59.62601149,
+    "longitude": 28.5526938,
+    "height": 47.07539131
+  },
+  "75": {
+    "point_id": 1166,
+    "latitude": 59.626126,
+    "longitude": 28.55228072,
+    "height": 46.7375956
+  },
+  "76": {
+    "point_id": 1167,
+    "latitude": 59.62628519,
+    "longitude": 28.55182559,
+    "height": 46.51582677
+  },
+  "77": {
+    "point_id": 1168,
+    "latitude": 59.62586369,
+    "longitude": 28.54942483,
+    "height": 46.10901999
+  },
+  "78": {
+    "point_id": 1179,
+    "latitude": 59.62591241,
+    "longitude": 28.54943553,
+    "height": 46.22809975
+  },
+  "79": {
+    "point_id": 1201,
+    "latitude": 59.62579579,
+    "longitude": 28.55132018,
+    "height": 46.72286979
+  },
+  "80": {
+    "point_id": 1253,
+    "latitude": 59.62568676,
+    "longitude": 28.54904193,
+    "height": 45.76282908
+  },
+  "81": {
+    "point_id": 1283,
+    "latitude": 59.62582551,
+    "longitude": 28.55209688,
+    "height": 47.5197938
+  },
+  "82": {
+    "point_id": 1294,
+    "latitude": 59.6256944,
+    "longitude": 28.55365987,
+    "height": 48.7558533
+  },
+  "83": {
+    "point_id": 1303,
+    "latitude": 59.626047,
+    "longitude": 28.5522395,
+    "height": 47.17024153
+  },
+  "84": {
+    "point_id": 1334,
+    "latitude": 59.62568486,
+    "longitude": 28.54949535,
+    "height": 45.2217764
+  },
+  "85": {
+    "point_id": 1433,
+    "latitude": 59.631513,
+    "longitude": 28.520052,
+    "height": 46.03557384
+  },
+  "86": {
+    "point_id": 1587,
+    "latitude": 59.6251814,
+    "longitude": 28.557193,
+    "height": 46.4013339
+  },
+  "87": {
+    "point_id": 1588,
+    "latitude": 59.6251046,
+    "longitude": 28.5571482,
+    "height": 46.99327345
+  },
+  "88": {
+    "point_id": 1589,
+    "latitude": 59.62548963,
+    "longitude": 28.55497785,
+    "height": 46.95419409
+  },
+  "89": {
+    "point_id": 1590,
+    "latitude": 59.6255102,
+    "longitude": 28.55484018,
+    "height": 47.41153717
+  },
+  "90": {
+    "point_id": 1591,
+    "latitude": 59.6249937,
+    "longitude": 28.5570808,
+    "height": 46.99043497
+  },
+  "91": {
+    "point_id": 1592,
+    "latitude": 59.6252144,
+    "longitude": 28.555844,
+    "height": 48.12018695
+  },
+  "92": {
+    "point_id": 1593,
+    "latitude": 59.62533771,
+    "longitude": 28.55515458,
+    "height": 46.41774049
+  },
+  "93": {
+    "point_id": 1594,
+    "latitude": 59.6253886,
+    "longitude": 28.55490947,
+    "height": 46.88382677
+  },
+  "94": {
+    "point_id": 1595,
+    "latitude": 59.62542013,
+    "longitude": 28.55477785,
+    "height": 47.40252742
+  },
+  "95": {
+    "point_id": 1596,
+    "latitude": 59.6261144,
+    "longitude": 28.55298222,
+    "height": 45.90653879
+  },
+  "96": {
+    "point_id": 1597,
+    "latitude": 59.6263438,
+    "longitude": 28.55219321,
+    "height": 45.38270224
+  },
+  "97": {
+    "point_id": 1598,
+    "latitude": 59.6264985,
+    "longitude": 28.5517804,
+    "height": 45.23530937
+  },
+  "98": {
+    "point_id": 1599,
+    "latitude": 59.62663388,
+    "longitude": 28.55148197,
+    "height": 45.02184577
+  },
+  "99": {
+    "point_id": 1600,
+    "latitude": 59.6267792,
+    "longitude": 28.5511823,
+    "height": 44.74446962
+  },
+  "100": {
+    "point_id": 1601,
+    "latitude": 59.62694083,
+    "longitude": 28.55090019,
+    "height": 44.45435695
+  },
+  "101": {
+    "point_id": 1602,
+    "latitude": 59.62715213,
+    "longitude": 28.55053351,
+    "height": 44.53481748
+  },
+  "102": {
+    "point_id": 1603,
+    "latitude": 59.62740411,
+    "longitude": 28.55004572,
+    "height": 44.46919712
+  },
+  "103": {
+    "point_id": 1604,
+    "latitude": 59.62764495,
+    "longitude": 28.5494621,
+    "height": 44.3743215
+  },
+  "104": {
+    "point_id": 1605,
+    "latitude": 59.62783531,
+    "longitude": 28.54884939,
+    "height": 44.39227938
+  },
+  "105": {
+    "point_id": 1606,
+    "latitude": 59.6279223,
+    "longitude": 28.54849792,
+    "height": 44.5054908
+  },
+  "106": {
+    "point_id": 1607,
+    "latitude": 59.62806697,
+    "longitude": 28.54777647,
+    "height": 43.73514443
+  },
+  "107": {
+    "point_id": 1608,
+    "latitude": 59.62845863,
+    "longitude": 28.5456857,
+    "height": 43.94505797
+  },
+  "108": {
+    "point_id": 1610,
+    "latitude": 59.62557204,
+    "longitude": 28.55335182,
+    "height": 48.38045148
+  },
+  "109": {
+    "point_id": 1611,
+    "latitude": 59.62565136,
+    "longitude": 28.55289468,
+    "height": 48.09858896
+  },
+  "110": {
+    "point_id": 1612,
+    "latitude": 59.62570918,
+    "longitude": 28.55249802,
+    "height": 48.02933403
+  },
+  "111": {
+    "point_id": 1613,
+    "latitude": 59.62573761,
+    "longitude": 28.55219347,
+    "height": 47.68907747
+  },
+  "112": {
+    "point_id": 1614,
+    "latitude": 59.62575515,
+    "longitude": 28.55195462,
+    "height": 47.55330813
+  },
+  "113": {
+    "point_id": 1616,
+    "latitude": 59.62559361,
+    "longitude": 28.55393397,
+    "height": 49.17870433
+  },
+  "114": {
+    "point_id": 1618,
+    "latitude": 59.62564241,
+    "longitude": 28.55395092,
+    "height": 49.01432985
+  },
+  "115": {
+    "point_id": 1627,
+    "latitude": 59.62589602,
+    "longitude": 28.55280966,
+    "height": 47.73889781
+  },
+  "116": {
+    "point_id": 1628,
+    "latitude": 59.62586139,
+    "longitude": 28.55181636,
+    "height": 47.32501117
+  },
+  "117": {
+    "point_id": 1629,
+    "latitude": 59.62588865,
+    "longitude": 28.55157275,
+    "height": 47.1116179
+  },
+  "118": {
+    "point_id": 1630,
+    "latitude": 59.62593051,
+    "longitude": 28.55129731,
+    "height": 46.78336358
+  },
+  "119": {
+    "point_id": 1631,
+    "latitude": 59.62597073,
+    "longitude": 28.55105092,
+    "height": 46.62535512
+  },
+  "120": {
+    "point_id": 1635,
+    "latitude": 59.62610907,
+    "longitude": 28.55197963,
+    "height": 47.10182282
+  },
+  "121": {
+    "point_id": 1636,
+    "latitude": 59.6261747,
+    "longitude": 28.5517041,
+    "height": 47.02705037
+  },
+  "122": {
+    "point_id": 1645,
+    "latitude": 59.62564072,
+    "longitude": 28.5491572,
+    "height": 45.38790834
+  },
+  "123": {
+    "point_id": 1646,
+    "latitude": 59.62578298,
+    "longitude": 28.54914538,
+    "height": 46.2184224
+  },
+  "124": {
+    "point_id": 1647,
+    "latitude": 59.62584573,
+    "longitude": 28.54918488,
+    "height": 46.45804795
+  },
+  "125": {
+    "point_id": 1648,
+    "latitude": 59.62587747,
+    "longitude": 28.54918884,
+    "height": 46.540672
+  },
+  "126": {
+    "point_id": 1649,
+    "latitude": 59.62591563,
+    "longitude": 28.54919347,
+    "height": 46.64048511
+  },
+  "127": {
+    "point_id": 1677,
+    "latitude": 59.6256095,
+    "longitude": 28.5488259,
+    "height": 45.40238305
+  },
+  "128": {
+    "point_id": 1678,
+    "latitude": 59.62559517,
+    "longitude": 28.54844404,
+    "height": 45.54653218
+  },
+  "129": {
+    "point_id": 1679,
+    "latitude": 59.62559794,
+    "longitude": 28.54813613,
+    "height": 45.54685424
+  },
+  "130": {
+    "point_id": 1680,
+    "latitude": 59.62563746,
+    "longitude": 28.54757575,
+    "height": 45.30572985
+  },
+  "131": {
+    "point_id": 1681,
+    "latitude": 59.6256765,
+    "longitude": 28.54728304,
+    "height": 44.87808108
+  },
+  "132": {
+    "point_id": 1682,
+    "latitude": 59.6257295,
+    "longitude": 28.5469831,
+    "height": 44.45206674
+  },
+  "133": {
+    "point_id": 1683,
+    "latitude": 59.62564549,
+    "longitude": 28.54867999,
+    "height": 45.71131571
+  },
+  "134": {
+    "point_id": 1684,
+    "latitude": 59.62568056,
+    "longitude": 28.54867262,
+    "height": 45.92449629
+  },
+  "135": {
+    "point_id": 1685,
+    "latitude": 59.6257165,
+    "longitude": 28.54867203,
+    "height": 46.129338
+  },
+  "136": {
+    "point_id": 1686,
+    "latitude": 59.62575257,
+    "longitude": 28.54867241,
+    "height": 46.2943655
+  },
+  "137": {
+    "point_id": 1687,
+    "latitude": 59.62579417,
+    "longitude": 28.54867297,
+    "height": 46.48469843
+  },
+  "138": {
+    "point_id": 1688,
+    "latitude": 59.62583882,
+    "longitude": 28.54899031,
+    "height": 46.58688948
+  },
+  "139": {
+    "point_id": 1689,
+    "latitude": 59.62583871,
+    "longitude": 28.54870611,
+    "height": 46.64915875
+  },
+  "140": {
+    "point_id": 1690,
+    "latitude": 59.62587886,
+    "longitude": 28.54871272,
+    "height": 46.73332072
+  },
+  "141": {
+    "point_id": 1691,
+    "latitude": 59.62591977,
+    "longitude": 28.54872268,
+    "height": 46.82004456
+  },
+  "142": {
+    "point_id": 1856,
+    "latitude": 59.62594915,
+    "longitude": 28.54825951,
+    "height": 46.86720909
+  },
+  "143": {
+    "point_id": 1857,
+    "latitude": 59.6260092,
+    "longitude": 28.54781024,
+    "height": 46.80014955
+  },
+  "144": {
+    "point_id": 1858,
+    "latitude": 59.62605798,
+    "longitude": 28.54754083,
+    "height": 46.91453546
+  },
+  "145": {
+    "point_id": 1859,
+    "latitude": 59.62610908,
+    "longitude": 28.54724995,
+    "height": 46.9876417
+  },
+  "146": {
+    "point_id": 1860,
+    "latitude": 59.62590531,
+    "longitude": 28.54824454,
+    "height": 46.807359
+  },
+  "147": {
+    "point_id": 1861,
+    "latitude": 59.62596246,
+    "longitude": 28.54778554,
+    "height": 46.77369526
+  },
+  "148": {
+    "point_id": 1862,
+    "latitude": 59.62600969,
+    "longitude": 28.54751216,
+    "height": 46.8205731
+  },
+  "149": {
+    "point_id": 1863,
+    "latitude": 59.62606265,
+    "longitude": 28.54721537,
+    "height": 46.89373303
+  },
+  "150": {
+    "point_id": 1864,
+    "latitude": 59.62584489,
+    "longitude": 28.54847167,
+    "height": 46.69559899
+  },
+  "151": {
+    "point_id": 1865,
+    "latitude": 59.62586313,
+    "longitude": 28.5482247,
+    "height": 46.73265523
+  },
+  "152": {
+    "point_id": 1866,
+    "latitude": 59.62591759,
+    "longitude": 28.54776242,
+    "height": 46.70195684
+  },
+  "153": {
+    "point_id": 1867,
+    "latitude": 59.62596607,
+    "longitude": 28.54747764,
+    "height": 46.70880852
+  },
+  "154": {
+    "point_id": 1868,
+    "latitude": 59.62602026,
+    "longitude": 28.54716868,
+    "height": 46.69506136
+  },
+  "155": {
+    "point_id": 1869,
+    "latitude": 59.62580796,
+    "longitude": 28.54820396,
+    "height": 46.59078641
+  },
+  "156": {
+    "point_id": 1870,
+    "latitude": 59.62585356,
+    "longitude": 28.54773676,
+    "height": 46.52660022
+  },
+  "157": {
+    "point_id": 1871,
+    "latitude": 59.62590039,
+    "longitude": 28.54743892,
+    "height": 46.43533801
+  },
+  "158": {
+    "point_id": 1872,
+    "latitude": 59.62595244,
+    "longitude": 28.54714989,
+    "height": 46.36203146
+  },
+  "159": {
+    "point_id": 1873,
+    "latitude": 59.62575469,
+    "longitude": 28.54844858,
+    "height": 46.36487381
+  },
+  "160": {
+    "point_id": 1875,
+    "latitude": 59.62576488,
+    "longitude": 28.54819282,
+    "height": 46.40951597
+  },
+  "161": {
+    "point_id": 1876,
+    "latitude": 59.62580912,
+    "longitude": 28.54769885,
+    "height": 46.34104395
+  },
+  "162": {
+    "point_id": 1877,
+    "latitude": 59.62585727,
+    "longitude": 28.54740333,
+    "height": 46.18645769
+  },
+  "163": {
+    "point_id": 1878,
+    "latitude": 59.62590886,
+    "longitude": 28.54711461,
+    "height": 46.0410745
+  },
+  "164": {
+    "point_id": 1879,
+    "latitude": 59.62571731,
+    "longitude": 28.54842433,
+    "height": 46.21270392
+  },
+  "165": {
+    "point_id": 1880,
+    "latitude": 59.62572414,
+    "longitude": 28.54817847,
+    "height": 46.23726054
+  },
+  "166": {
+    "point_id": 1881,
+    "latitude": 59.62576749,
+    "longitude": 28.54767385,
+    "height": 46.11528249
+  },
+  "167": {
+    "point_id": 1882,
+    "latitude": 59.6258125,
+    "longitude": 28.54737385,
+    "height": 45.90108334
+  },
+  "168": {
+    "point_id": 1883,
+    "latitude": 59.62586514,
+    "longitude": 28.54708085,
+    "height": 45.67825389
+  },
+  "169": {
+    "point_id": 1884,
+    "latitude": 59.62567893,
+    "longitude": 28.54841412,
+    "height": 46.01378744
+  },
+  "170": {
+    "point_id": 1885,
+    "latitude": 59.62568405,
+    "longitude": 28.54816794,
+    "height": 46.03385215
+  },
+  "171": {
+    "point_id": 1886,
+    "latitude": 59.62572756,
+    "longitude": 28.54764431,
+    "height": 45.8877936
+  },
+  "172": {
+    "point_id": 1887,
+    "latitude": 59.6257681,
+    "longitude": 28.54733856,
+    "height": 45.55354561
+  },
+  "173": {
+    "point_id": 1888,
+    "latitude": 59.62582348,
+    "longitude": 28.54704537,
+    "height": 45.29577403
+  },
+  "174": {
+    "point_id": 1889,
+    "latitude": 59.6256396,
+    "longitude": 28.5483342,
+    "height": 45.81192436
+  },
+  "175": {
+    "point_id": 1890,
+    "latitude": 59.62564388,
+    "longitude": 28.54815072,
+    "height": 45.80638113
+  },
+  "176": {
+    "point_id": 1891,
+    "latitude": 59.6256823,
+    "longitude": 28.54761159,
+    "height": 45.60247384
+  },
+  "177": {
+    "point_id": 1892,
+    "latitude": 59.62572456,
+    "longitude": 28.54731242,
+    "height": 45.21362359
+  },
+  "178": {
+    "point_id": 1893,
+    "latitude": 59.62577757,
+    "longitude": 28.54701456,
+    "height": 44.88095233
+  },
+  "179": {
+    "point_id": 1929,
+    "latitude": 59.62930082,
+    "longitude": 28.52934927,
+    "height": 45.80894885
+  },
+  "180": {
+    "point_id": 1930,
+    "latitude": 59.62925562,
+    "longitude": 28.52932876,
+    "height": 45.8140712
+  },
+  "181": {
+    "point_id": 1931,
+    "latitude": 59.62920965,
+    "longitude": 28.52930178,
+    "height": 45.82113415
+  },
+  "182": {
+    "point_id": 1932,
+    "latitude": 59.62914713,
+    "longitude": 28.52925575,
+    "height": 45.79077298
+  },
+  "183": {
+    "point_id": 1933,
+    "latitude": 59.62910285,
+    "longitude": 28.52923073,
+    "height": 45.73473076
+  },
+  "184": {
+    "point_id": 1934,
+    "latitude": 59.62905636,
+    "longitude": 28.52920481,
+    "height": 45.66428365
+  },
+  "185": {
+    "point_id": 1935,
+    "latitude": 59.62901038,
+    "longitude": 28.5291779,
+    "height": 45.55431799
+  },
+  "186": {
+    "point_id": 1936,
+    "latitude": 59.62896409,
+    "longitude": 28.52915331,
+    "height": 45.4428052
+  },
+  "187": {
+    "point_id": 1937,
+    "latitude": 59.62894065,
+    "longitude": 28.52900406,
+    "height": 45.30311869
+  },
+  "188": {
+    "point_id": 1967,
+    "latitude": 59.62934553,
+    "longitude": 28.52911955,
+    "height": 45.89207994
+  },
+  "189": {
+    "point_id": 1968,
+    "latitude": 59.62929923,
+    "longitude": 28.52908729,
+    "height": 45.87820436
+  },
+  "190": {
+    "point_id": 1969,
+    "latitude": 59.62925394,
+    "longitude": 28.52905649,
+    "height": 45.84152613
+  },
+  "191": {
+    "point_id": 1970,
+    "latitude": 59.62918906,
+    "longitude": 28.52902246,
+    "height": 45.77763491
+  },
+  "192": {
+    "point_id": 1971,
+    "latitude": 59.62914304,
+    "longitude": 28.52899305,
+    "height": 45.70432774
+  },
+  "193": {
+    "point_id": 1972,
+    "latitude": 59.62909838,
+    "longitude": 28.52896418,
+    "height": 45.61882301
+  },
+  "194": {
+    "point_id": 1973,
+    "latitude": 59.62935845,
+    "longitude": 28.52851646,
+    "height": 45.96272387
+  },
+  "195": {
+    "point_id": 1974,
+    "latitude": 59.62950122,
+    "longitude": 28.52793206,
+    "height": 45.90402766
+  },
+  "196": {
+    "point_id": 1975,
+    "latitude": 59.62940223,
+    "longitude": 28.52853739,
+    "height": 46.00068938
+  },
+  "197": {
+    "point_id": 1976,
+    "latitude": 59.62947685,
+    "longitude": 28.52822191,
+    "height": 46.0008602
+  },
+  "198": {
+    "point_id": 1977,
+    "latitude": 59.62955266,
+    "longitude": 28.52794144,
+    "height": 45.95912017
+  },
+  "199": {
+    "point_id": 1978,
+    "latitude": 59.62939176,
+    "longitude": 28.52885568,
+    "height": 45.96045576
+  },
+  "200": {
+    "point_id": 1979,
+    "latitude": 59.62945744,
+    "longitude": 28.52855833,
+    "height": 46.03784065
+  },
+  "201": {
+    "point_id": 1980,
+    "latitude": 59.62960932,
+    "longitude": 28.52796474,
+    "height": 46.01827128
+  },
+  "202": {
+    "point_id": 2018,
+    "latitude": 59.62914633,
+    "longitude": 28.52817405,
+    "height": 45.56094323
+  },
+  "203": {
+    "point_id": 2019,
+    "latitude": 59.62910011,
+    "longitude": 28.5281364,
+    "height": 45.46836598
+  },
+  "204": {
+    "point_id": 2485,
+    "latitude": 59.62538189,
+    "longitude": 28.55440323,
+    "height": 47.95539526
+  },
+  "205": {
+    "point_id": 2486,
+    "latitude": 59.62522817,
+    "longitude": 28.55518538,
+    "height": 45.75117163
+  },
+  "206": {
+    "point_id": 2487,
+    "latitude": 59.62532696,
+    "longitude": 28.55433442,
+    "height": 47.33339766
+  },
+  "207": {
+    "point_id": 2575,
+    "latitude": 59.62924405,
+    "longitude": 28.52872375,
+    "height": 45.84125402
+  },
+  "208": {
+    "point_id": 2576,
+    "latitude": 59.62930373,
+    "longitude": 28.52844612,
+    "height": 45.90760283
+  },
+  "209": {
+    "point_id": 2577,
+    "latitude": 59.62940978,
+    "longitude": 28.52802235,
+    "height": 45.83456751
+  },
+  "210": {
+    "point_id": 2578,
+    "latitude": 59.62956339,
+    "longitude": 28.52753131,
+    "height": 45.77141053
+  },
+  "211": {
+    "point_id": 2581,
+    "latitude": 59.62921565,
+    "longitude": 28.52859988,
+    "height": 45.80701339
+  },
+  "212": {
+    "point_id": 2582,
+    "latitude": 59.62932637,
+    "longitude": 28.52813879,
+    "height": 45.80339519
+  },
+  "213": {
+    "point_id": 2583,
+    "latitude": 59.62946227,
+    "longitude": 28.5276624,
+    "height": 45.72223548
+  },
+  "214": {
+    "point_id": 2584,
+    "latitude": 59.62960625,
+    "longitude": 28.52725604,
+    "height": 45.6793677
+  },
+  "215": {
+    "point_id": 2613,
+    "latitude": 59.62552156,
+    "longitude": 28.5535474,
+    "height": 48.28251719
+  },
+  "216": {
+    "point_id": 2614,
+    "latitude": 59.62557918,
+    "longitude": 28.55303083,
+    "height": 47.95192706
+  },
+  "217": {
+    "point_id": 2615,
+    "latitude": 59.62560765,
+    "longitude": 28.55266524,
+    "height": 47.81873259
+  },
+  "218": {
+    "point_id": 2616,
+    "latitude": 59.62562545,
+    "longitude": 28.55221567,
+    "height": 47.46781874
+  },
+  "219": {
+    "point_id": 2617,
+    "latitude": 59.62562786,
+    "longitude": 28.55189942,
+    "height": 47.41616727
+  },
+  "220": {
+    "point_id": 2618,
+    "latitude": 59.62561879,
+    "longitude": 28.55152181,
+    "height": 47.33195313
+  },
+  "221": {
+    "point_id": 2619,
+    "latitude": 59.62558655,
+    "longitude": 28.55084729,
+    "height": 45.91353306
+  },
+  "222": {
+    "point_id": 2620,
+    "latitude": 59.62551719,
+    "longitude": 28.54963635,
+    "height": 44.86415857
+  },
+  "223": {
+    "point_id": 2621,
+    "latitude": 59.62548792,
+    "longitude": 28.54916869,
+    "height": 44.55492526
+  },
+  "224": {
+    "point_id": 2622,
+    "latitude": 59.62547068,
+    "longitude": 28.54856621,
+    "height": 44.78763544
+  },
+  "225": {
+    "point_id": 2623,
+    "latitude": 59.62546952,
+    "longitude": 28.54811109,
+    "height": 44.83462478
+  },
+  "226": {
+    "point_id": 2624,
+    "latitude": 59.62548473,
+    "longitude": 28.54756324,
+    "height": 44.63832156
+  },
+  "227": {
+    "point_id": 2625,
+    "latitude": 59.6255116,
+    "longitude": 28.54703809,
+    "height": 44.08286524
+  },
+  "228": {
+    "point_id": 2626,
+    "latitude": 59.62556215,
+    "longitude": 28.54643944,
+    "height": 43.6213372
+  },
+  "229": {
+    "point_id": 2627,
+    "latitude": 59.62562185,
+    "longitude": 28.54591413,
+    "height": 42.91001556
+  },
+  "230": {
+    "point_id": 2628,
+    "latitude": 59.62573499,
+    "longitude": 28.54513586,
+    "height": 42.72982269
+  },
+  "231": {
+    "point_id": 2629,
+    "latitude": 59.62584952,
+    "longitude": 28.54439231,
+    "height": 42.6258547
+  },
+  "232": {
+    "point_id": 2630,
+    "latitude": 59.62592992,
+    "longitude": 28.54392169,
+    "height": 42.74235012
+  },
+  "233": {
+    "point_id": 2631,
+    "latitude": 59.62678604,
+    "longitude": 28.53912195,
+    "height": 43.27167185
+  },
+  "234": {
+    "point_id": 2632,
+    "latitude": 59.62689809,
+    "longitude": 28.53855347,
+    "height": 43.43948896
+  },
+  "235": {
+    "point_id": 2633,
+    "latitude": 59.62700473,
+    "longitude": 28.53817363,
+    "height": 42.97295464
+  },
+  "236": {
+    "point_id": 2634,
+    "latitude": 59.62707296,
+    "longitude": 28.53794874,
+    "height": 43.10956473
+  },
+  "237": {
+    "point_id": 2635,
+    "latitude": 59.62717259,
+    "longitude": 28.53750934,
+    "height": 43.52497052
+  },
+  "238": {
+    "point_id": 2636,
+    "latitude": 59.62725803,
+    "longitude": 28.53703281,
+    "height": 44.11406675
+  },
+  "239": {
+    "point_id": 2662,
+    "latitude": 59.62810608,
+    "longitude": 28.55151073,
+    "height": 43.9087722
+  },
+  "240": {
+    "point_id": 2663,
+    "latitude": 59.62807711,
+    "longitude": 28.55180028,
+    "height": 43.92706634
+  },
+  "241": {
+    "point_id": 2664,
+    "latitude": 59.62805623,
+    "longitude": 28.55200811,
+    "height": 43.86153602
+  },
+  "242": {
+    "point_id": 2665,
+    "latitude": 59.6280042,
+    "longitude": 28.55238157,
+    "height": 43.83092431
+  },
+  "243": {
+    "point_id": 2666,
+    "latitude": 59.62792443,
+    "longitude": 28.55291697,
+    "height": 43.82596249
+  },
+  "244": {
+    "point_id": 2667,
+    "latitude": 59.62785022,
+    "longitude": 28.55334883,
+    "height": 43.75332461
+  },
+  "245": {
+    "point_id": 2668,
+    "latitude": 59.62776578,
+    "longitude": 28.55370666,
+    "height": 43.69142451
+  },
+  "246": {
+    "point_id": 2669,
+    "latitude": 59.6276737,
+    "longitude": 28.55400114,
+    "height": 43.58573925
+  },
+  "247": {
+    "point_id": 2670,
+    "latitude": 59.62755142,
+    "longitude": 28.55431863,
+    "height": 43.51706225
+  },
+  "248": {
+    "point_id": 2671,
+    "latitude": 59.62744163,
+    "longitude": 28.55455368,
+    "height": 43.4736493
+  },
+  "249": {
+    "point_id": 2672,
+    "latitude": 59.62727857,
+    "longitude": 28.5548322,
+    "height": 43.32930696
+  },
+  "250": {
+    "point_id": 2673,
+    "latitude": 59.62709813,
+    "longitude": 28.55507204,
+    "height": 43.09649413
+  },
+  "251": {
+    "point_id": 2674,
+    "latitude": 59.62690697,
+    "longitude": 28.55526296,
+    "height": 42.64985319
+  },
+  "252": {
+    "point_id": 2675,
+    "latitude": 59.62669414,
+    "longitude": 28.55541545,
+    "height": 42.02046489
+  },
+  "253": {
+    "point_id": 2676,
+    "latitude": 59.62650595,
+    "longitude": 28.55550226,
+    "height": 41.52314203
+  },
+  "254": {
+    "point_id": 2677,
+    "latitude": 59.62628473,
+    "longitude": 28.55555299,
+    "height": 41.27131663
+  },
+  "255": {
+    "point_id": 2678,
+    "latitude": 59.62610625,
+    "longitude": 28.55555394,
+    "height": 41.46510699
+  },
+  "256": {
+    "point_id": 2679,
+    "latitude": 59.62594465,
+    "longitude": 28.55552711,
+    "height": 42.03237178
+  },
+  "257": {
+    "point_id": 2680,
+    "latitude": 59.62581685,
+    "longitude": 28.5554832,
+    "height": 42
+  },
+  "258": {
+    "point_id": 2681,
+    "latitude": 59.62570207,
+    "longitude": 28.555423,
+    "height": 42
+  },
+  "259": {
+    "point_id": 2682,
+    "latitude": 59.62560579,
+    "longitude": 28.55536647,
+    "height": 42
+  },
+  "260": {
+    "point_id": 2683,
+    "latitude": 59.6253917,
+    "longitude": 28.55520973,
+    "height": 42
+  },
+  "261": {
+    "point_id": 2684,
+    "latitude": 59.62518571,
+    "longitude": 28.55495429,
+    "height": 42
+  },
+  "262": {
+    "point_id": 2748,
+    "latitude": 59.62917606,
+    "longitude": 28.52826908,
+    "height": 45.66519223
+  },
+  "263": {
+    "point_id": 2749,
+    "latitude": 59.62932653,
+    "longitude": 28.52759183,
+    "height": 45.48943007
+  },
+  "264": {
+    "point_id": 2750,
+    "latitude": 59.62950357,
+    "longitude": 28.52683695,
+    "height": 45.56515653
+  },
+  "265": {
+    "point_id": 2751,
+    "latitude": 59.62976451,
+    "longitude": 28.52585503,
+    "height": 45.58898771
+  },
+  "266": {
+    "point_id": 2752,
+    "latitude": 59.63068861,
+    "longitude": 28.52269615,
+    "height": 45.73168603
+  },
+  "267": {
+    "point_id": 2753,
+    "latitude": 59.63115333,
+    "longitude": 28.52109758,
+    "height": 45.71218663
+  },
+  "268": {
+    "point_id": 2754,
+    "latitude": 59.63147478,
+    "longitude": 28.52002387,
+    "height": 46.02216397
+  },
+  "269": {
+    "point_id": 2756,
+    "latitude": 59.62919453,
+    "longitude": 28.52844003,
+    "height": 45.75784687
+  },
+  "270": {
+    "point_id": 2757,
+    "latitude": 59.62938432,
+    "longitude": 28.52757032,
+    "height": 45.55139475
+  },
+  "271": {
+    "point_id": 2758,
+    "latitude": 59.62960763,
+    "longitude": 28.52663737,
+    "height": 45.60176528
+  },
+  "272": {
+    "point_id": 2759,
+    "latitude": 59.62983278,
+    "longitude": 28.5257969,
+    "height": 45.60424279
+  },
+  "273": {
+    "point_id": 2760,
+    "latitude": 59.63033888,
+    "longitude": 28.52408566,
+    "height": 45.85744555
+  },
+  "274": {
+    "point_id": 2761,
+    "latitude": 59.63113067,
+    "longitude": 28.52136041,
+    "height": 45.70300804
+  },
+  "275": {
+    "point_id": 2964,
+    "latitude": 59.62592714,
+    "longitude": 28.54852279,
+    "height": 46.85379902
+  },
+  "276": {
+    "point_id": 2966,
+    "latitude": 59.6264687,
+    "longitude": 28.54466441,
+    "height": 45.3325935
+  },
+  "277": {
+    "point_id": 3000,
+    "latitude": 59.629687,
+    "longitude": 28.5270542,
+    "height": 45.74373552
+  },
+  "278": {
+    "point_id": 3001,
+    "latitude": 59.62971784,
+    "longitude": 28.52710713,
+    "height": 45.78129962
+  },
+  "279": {
+    "point_id": 3022,
+    "latitude": 59.62530962,
+    "longitude": 28.55512883,
+    "height": 42
+  },
+  "280": {
+    "point_id": 3023,
+    "latitude": 59.62550816,
+    "longitude": 28.55530245,
+    "height": 42
+  },
+  "281": {
+    "point_id": 3024,
+    "latitude": 59.62719961,
+    "longitude": 28.55494392,
+    "height": 43.22916343
+  },
+  "282": {
+    "point_id": 3025,
+    "latitude": 59.62699864,
+    "longitude": 28.55517585,
+    "height": 42.90530279
+  },
+  "283": {
+    "point_id": 3026,
+    "latitude": 59.62680124,
+    "longitude": 28.55534407,
+    "height": 42.34858026
+  },
+  "284": {
+    "point_id": 3027,
+    "latitude": 59.62658983,
+    "longitude": 28.55546887,
+    "height": 41.73473028
+  },
+  "285": {
+    "point_id": 3028,
+    "latitude": 59.6263935,
+    "longitude": 28.55553406,
+    "height": 41.32800944
+  },
+  "286": {
+    "point_id": 3029,
+    "latitude": 59.62619182,
+    "longitude": 28.55555813,
+    "height": 41.30659094
+  },
+  "287": {
+    "point_id": 3030,
+    "latitude": 59.6260218,
+    "longitude": 28.55554374,
+    "height": 41.72094596
+  },
+  "288": {
+    "point_id": 3031,
+    "latitude": 59.62588111,
+    "longitude": 28.5555091,
+    "height": 42
+  },
+  "289": {
+    "point_id": 3039,
+    "latitude": 59.62733027,
+    "longitude": 28.55475073,
+    "height": 43.38835131
+  },
+  "290": {
+    "point_id": 3040,
+    "latitude": 59.62738548,
+    "longitude": 28.55465613,
+    "height": 43.44343714
+  },
+  "291": {
+    "point_id": 3041,
+    "latitude": 59.62750693,
+    "longitude": 28.55441951,
+    "height": 43.5106697
+  },
+  "292": {
+    "point_id": 3042,
+    "latitude": 59.62761448,
+    "longitude": 28.55416424,
+    "height": 43.56069304
+  },
+  "293": {
+    "point_id": 3043,
+    "latitude": 59.62779246,
+    "longitude": 28.55360212,
+    "height": 43.71452725
+  },
+  "294": {
+    "point_id": 3044,
+    "latitude": 59.62781816,
+    "longitude": 28.55349124,
+    "height": 43.74020529
+  },
+  "295": {
+    "point_id": 3045,
+    "latitude": 59.62788358,
+    "longitude": 28.5531693,
+    "height": 43.78200027
+  },
+  "296": {
+    "point_id": 3049,
+    "latitude": 59.62800866,
+    "longitude": 28.54808058,
+    "height": 44.18253354
+  },
+  "297": {
+    "point_id": 3075,
+    "latitude": 59.62950848,
+    "longitude": 28.52833699,
+    "height": 46.0560337
+  },
+  "298": {
+    "point_id": 3079,
+    "latitude": 59.62906486,
+    "longitude": 28.52858368,
+    "height": 45.52404691
+  },
+  "299": {
+    "point_id": 3080,
+    "latitude": 59.62902417,
+    "longitude": 28.52851801,
+    "height": 45.43802615
+  },
+  "300": {
+    "point_id": 3081,
+    "latitude": 59.62927402,
+    "longitude": 28.52834498,
+    "height": 45.85040475
+  },
+  "301": {
+    "point_id": 3082,
+    "latitude": 59.62938857,
+    "longitude": 28.52790694,
+    "height": 45.75308316
+  },
+  "302": {
+    "point_id": 3083,
+    "latitude": 59.62948779,
+    "longitude": 28.5277581,
+    "height": 45.82251569
+  },
+  "303": {
+    "point_id": 3084,
+    "latitude": 59.6295638,
+    "longitude": 28.52771675,
+    "height": 45.8814785
+  },
+  "304": {
+    "point_id": 3085,
+    "latitude": 59.62961013,
+    "longitude": 28.52774914,
+    "height": 45.94047499
+  },
+  "305": {
+    "point_id": 3216,
+    "latitude": 59.62560663,
+    "longitude": 28.54792318,
+    "height": 45.47023059
+  },
+  "306": {
+    "point_id": 3217,
+    "latitude": 59.62565363,
+    "longitude": 28.54793687,
+    "height": 45.74494247
+  },
+  "307": {
+    "point_id": 3218,
+    "latitude": 59.62569616,
+    "longitude": 28.54794609,
+    "height": 45.99224288
+  },
+  "308": {
+    "point_id": 3219,
+    "latitude": 59.62573929,
+    "longitude": 28.54794341,
+    "height": 46.19558685
+  },
+  "309": {
+    "point_id": 3220,
+    "latitude": 59.62578004,
+    "longitude": 28.54797048,
+    "height": 46.39026075
+  },
+  "310": {
+    "point_id": 3221,
+    "latitude": 59.62582599,
+    "longitude": 28.54798178,
+    "height": 46.59337403
+  },
+  "311": {
+    "point_id": 3222,
+    "latitude": 59.62588399,
+    "longitude": 28.54799903,
+    "height": 46.70745285
+  },
+  "312": {
+    "point_id": 3223,
+    "latitude": 59.6259295,
+    "longitude": 28.54801628,
+    "height": 46.79282729
+  },
+  "313": {
+    "point_id": 3224,
+    "latitude": 59.6259756,
+    "longitude": 28.5480261,
+    "height": 46.80847363
+  },
+  "314": {
+    "point_id": 3235,
+    "latitude": 59.62773801,
+    "longitude": 28.5491718,
+    "height": 44.48960309
+  },
+  "315": {
+    "point_id": 3236,
+    "latitude": 59.62751575,
+    "longitude": 28.54978383,
+    "height": 44.41054344
+  },
+  "316": {
+    "point_id": 3237,
+    "latitude": 59.6262238,
+    "longitude": 28.55257614,
+    "height": 45.50676301
+  }
+}
