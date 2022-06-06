@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import json
-from main import get_json
+from utils import get_json
 
 POINTS_PATH = "jsons/map_points.json"
 LINES_PATH = "jsons/map_lines.json"
