@@ -1,3 +1,5 @@
+import pymap3d as pm
+
 class BasicMap:
     @staticmethod
     def line_transform(lines):
@@ -10,8 +12,11 @@ class BasicMap:
     def point_transform(dict_point):
         res = []
         for i in range(len(dict_point)):
+            #x, y, z = pm.geodetic2ecef(dict_point["{}".format(i)]["latitude"], dict_point["{}".format(i)]["longitude"],
+            #                           0)
+            x, y = dict_point["{}".format(i)]["latitude"], dict_point["{}".format(i)]["longitude"]
             res.append({"id": dict_point['{}'.format(i)]["point_id"],
-                        "coords": [dict_point["{}".format(i)]["latitude"], dict_point["{}".format(i)]["longitude"]]})#,
+                        "coords": [x, y]})#,
                                    #dict_point["{}".format(i)]["height"]]})
         return res
 
