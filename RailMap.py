@@ -6,13 +6,13 @@ from BasicMap import BasicMap
 
 
 class RailLines(BasicMap):
-    def __init__(self,path_to_lines, path_to_points):
+    def __init__(self, path_to_lines, path_to_points):
         old_lines = get_json(path_to_lines)
         old_points = get_json(path_to_points)
         self.lines = self.line_transform(old_lines)
         self.points = self.point_transform(old_points)
 
-    def print_lines(self):
+    def print_lines(self) -> None:
         print(self.lines)
 
 

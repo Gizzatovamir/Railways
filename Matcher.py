@@ -1,4 +1,4 @@
-from constants import GPS_POINTS_PATH, POINTS_PATH, LINES_PATH
+from constants import GPS_POINTS_PATH, POINTS_PATH, LINES_PATH, MIN_DIST, R_MAX
 from RailMap import RailLines
 from GPSPoints import GPSPoints
 from numpy.linalg import norm
@@ -6,7 +6,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from skspatial.objects import Line
 from PointClass import Point
-"""перевести в геоцентрические координаты (pymap3d.ecef)"""
 
 
 class Matcher:
@@ -17,20 +16,22 @@ class Matcher:
         self.points = rail_lines.points
         self.gps_points = gps_points.points
 
-    def find_min_dist_among_every_line(self, gps_point):
+    def find_min_dist_among_every_line(self, gps_point: dict, lines: list, min_dist=MIN_DIST) -> dict:
         points = {}
-        for i in range(len(self.lines)):
-            min_dist = 1000
-            for j in range(len(self.lines[i]["points"]) - 1):
-                line_points = [self.find_dict(self.lines[i]["points"][j]), self.find_dict(self.lines[i]["points"][j+1])]
-                cur_dist = self.point_to_segment_distance(gps_point['coords'], line_points[0], line_points[1])
-                if cur_dist < min_dist:
-                    min_dist = cur_dist
-                    points = {"gps_point" : gps_point, "line_p1" : line_points[0], "line_p2" : line_points[1]}
+        for line in lines:
+            line_points = [line["line_p1"], line["line_p2"]]
+            current_dict = self.point_to_segment_distance(gps_point['coords'], line_points[0], line_points[1])
+
+            if current_dict["dist"] < min_dist:
+                print(current_dict["dist"], " - cur_dist")
+
+                min_dist = current_dict["dist"]
+                points = {"gps_point": gps_point, "line_p1": line_points[0], "line_p2": line_points[1],
+                          "line_point_id": current_dict['point_id']}
 
         return points
 
-    def find_dict(self, point_id):
+    def find_dict(self, point_id) -> Point:
         found_dict = next(item for item in self.points if item["id"] == point_id)
         return found_dict["coords"]
 
@@ -52,44 +53,63 @@ class Matcher:
 
         v = b - a
         res = a + v * (v.dot(p - a) / v.dot(v))
-        return {"coords" : res}
+        return res
 
     @staticmethod
-    def point_to_segment_distance(p: Point, a: Point, b: Point) -> float:
+    def point_to_segment_distance(p: Point, a: Point, b: Point) -> dict:
         ab = b - a
         ap = p - a
 
         if ap.dot(ab) <= 0.0:  # Point is lagging behind start of the segment, so perpendicular distance is not viable.
-            return ap.norm  # Use distance to start of segment instead.
+            return {"dist": ap.norm, "point_id": 'line_p1'}  # Use distance to start of segment instead.
 
         bp = p - b
 
         if bp.dot(ab) >= 0.0:  # Point is advanced past the end of the segment, so perpendicular distance is not viable.
-            return bp.norm  # Use distance to end of the segment instead.
+            return {"dist": bp.norm, "point_id": 'line_p2'}  # Use distance to end of the segment instead.
 
-        return (ab.cross(ap)).norm / ab.norm  # Perpendicular distance of point to segment.
+        return {"dist": (ab.cross(ap)).norm / ab.norm, "point_id": "gps_point"}
+        # Perpendicular distance of point to segment. Use distance to start of segment instead.
 
     def draw_full_map(self, new_points: list) -> None:
         fig = plt.figure()
-        #ax = fig.add_subplot(111, projection='3d')
         ax = fig.add_subplot(111)
         RailLines.draw_lines(self.lines, self.points, ax)
-        RailLines.draw_points(self.gps_points, ax, "red")
-        RailLines.draw_points(new_points, ax, 'blue')
+        # RailLines.draw_points(self.gps_points, ax, "green")
+        # RailLines.draw_points(new_points, ax, 'blue')
+        RailLines.draw_connected_points(new_points, ax)
         plt.savefig("res_map_before.png")
         plt.show()
 
+    def find_condition(self, gps_point: Point, p1: Point, p2: Point) -> bool:
+        if self.point_to_segment_distance(gps_point, p1, p2)["dist"] <= R_MAX:
+            return True
+        else:
+            return False
+
+    def select_lines_in_range(self, gps_point: Point) -> list:
+        res_points = []
+        for i in range(len(self.lines)):
+            for j in range(len(self.lines[i]["points"]) - 1):
+                line_points = [self.find_dict(self.lines[i]["points"][j]),
+                               self.find_dict(self.lines[i]["points"][j + 1])]
+                if self.find_condition(gps_point, line_points[0], line_points[1]):
+                    res_points.append({"line_p1": line_points[0], "line_p2": line_points[1]})
+        return res_points
+
     def match(self) -> None:
         res_points = []
-        #print(self.gps_points)
         for gps_point in self.gps_points:
-            points = self.find_min_dist_among_every_line(gps_point)
-            res_point = self.point_to_segment_projection(points)
-            #print(res_point, " - res_point")
-            if self.point_to_segment_projection(points) != {}:
-                res_points.append(res_point)
+            lines = self.select_lines_in_range(gps_point['coords'])
+            points = self.find_min_dist_among_every_line(gps_point, lines)
+            if points != {}:
+                if points["line_point_id"] != "gps_points":
+                    res_point = self.point_to_segment_projection(points)
+                else:
+                    print(points[points['line_point_id']])
+                    res_point = points[points['line_point_id']]['coords']
+                res_points.append([gps_point, res_point])
         self.draw_full_map(res_points)
-
 
 
 if __name__ == "__main__":

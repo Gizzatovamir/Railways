@@ -84,6 +84,9 @@ class Point:
             self.x * other.y - self.y * other.x
         )
 
+    def dist(self, other: "Point") -> float:
+        return sqrt((self.x - other.x) ** 2 + (self.y - other.y) ** 2 + (self.z - other.z) ** 2)
+
     # ----------------------------------------------------------------------------------------------
     @property
     def norm(self) -> float:
@@ -93,7 +96,6 @@ class Point:
     @property
     def vector(self) -> list:
         return [self.x, self.y, self.z]
-
 
     # ----------------------------------------------------------------------------------------------
     @property
@@ -106,3 +108,5 @@ class Point:
     def anglesd(self) -> "Point":
         tmp = self.angles
         return Point(rad2deg(tmp.x), rad2deg(tmp.y), rad2deg(tmp.z))
+
+

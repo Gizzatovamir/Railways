@@ -16,8 +16,10 @@ class GPSPoints(BasicMap):
         res = []
         for i in range(len(dict_point)):
             point = Point(
-                *pm.geodetic2ecef(dict_point["{}".format(i)]["latitude"], dict_point["{}".format(i)]["longitude"],
-                                  dict_point["{}".format(i)]["height"]))
+                *pm.geodetic2ecef(dict_point["{}".format(i)]["latitude"],
+                                  dict_point["{}".format(i)]["longitude"],
+                                  dict_point["{}".format(i)]["height"])
+            )
             res.append({"id": i,
                         "coords": point})
         return res
