@@ -10,7 +10,7 @@ class RailLines(BasicMap):
         old_lines = get_json(path_to_lines)
         old_points = get_json(path_to_points)
         self.lines = self.line_transform(old_lines)
-        self.points = self.point_transform(old_points)
+        self.points = self.point_transform(old_points, self.lines)
 
     def print_lines(self) -> None:
         print(self.lines)

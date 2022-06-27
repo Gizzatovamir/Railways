@@ -23,7 +23,7 @@ class Matcher:
             current_dict = self.point_to_segment_distance(gps_point['coords'], line_points[0], line_points[1])
 
             if current_dict["dist"] < min_dist:
-                print(current_dict["dist"], " - cur_dist")
+                #print(current_dict["dist"], " - cur_dist")
 
                 min_dist = current_dict["dist"]
                 points = {"gps_point": gps_point, "line_p1": line_points[0], "line_p2": line_points[1],
