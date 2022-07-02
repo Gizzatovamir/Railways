@@ -134,16 +134,17 @@ class StateMachineMatcher(Matcher):
             if (p1["coords"] - self.gps_points[i]["coords"]).norm > R_CROSS and (p2["coords"] - self.gps_points[i]["coords"]).norm > R_CROSS:
                 self.gps_points[i]['cur_line'] = initial_dict['cur_line']
                 continue
-            if p1["cross"] and (p1["coords"] - self.gps_points[i]["coords"]).norm <= R_CROSS:
-                self.gps_points[i]['last_line'] = initial_dict['cur_line']
-                self.gps_points[i]['cur_line'] = None
-            if p1["cross"] and (p2["coords"] - self.gps_points[i]["coords"]).norm <= R_CROSS:
-                self.gps_points[i]['last_line'] = initial_dict['cur_line']
-                self.gps_points[i]['cur_line'] = None
-            initial_dict = self.initialize(self.gps_points[i], last_line=None)
-            for j in range(1, i):
-                if self.gps_points[j]['cur_line'] is None:
-                    self.gps_points[j]['cur_line'] = initial_dict['cur_line']
+            else:
+                if p1["cross"] and (p1["coords"] - self.gps_points[i]["coords"]).norm <= R_CROSS:
+                    self.gps_points[i]['last_line'] = initial_dict['cur_line']
+                    self.gps_points[i]['cur_line'] = None
+                if p1["cross"] and (p2["coords"] - self.gps_points[i]["coords"]).norm <= R_CROSS:
+                    self.gps_points[i]['last_line'] = initial_dict['cur_line']
+                    self.gps_points[i]['cur_line'] = None
+                initial_dict = self.initialize(self.gps_points[i], last_line=None)
+                for j in range(1, i):
+                    if self.gps_points[j]['cur_line'] is None:
+                        self.gps_points[j]['cur_line'] = initial_dict['cur_line']
         result.extend(self.lower_all_ortho())
         self.draw_full_map(result)
 
