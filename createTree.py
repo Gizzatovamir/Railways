@@ -1,6 +1,7 @@
 import binarytree as bt
-from stateMachineMatcher import StateMachineMatcher
+#from stateMachineMatcher import StateMachineMatcher
 from utils import find_min_by_x, find_min_by_y, find_max_by_x, find_max_by_y
+from copy import deepcopy
 
 
 class Node:
@@ -11,21 +12,19 @@ class Node:
 
     # Insert Node
     def insert(self, data):
-        print(data)
-        if self.data.x:
-            print(data.x)
-            if data.x < self.data.x:
+        if self.data:
+            if data["coords"].x < self.data["coords"].x:
                 if self.left is None:
                     self.left = Node(data)
                 else:
                     self.left.insert(data)
-            elif data.x == self.data.x:
-                if data.y < self.data.y:
+            elif data["coords"].x == self.data["coords"].x:
+                if data["coords"].y < self.data["coords"].y:
                     if self.left is None:
                         self.left = Node(data)
                     else:
                         self.left.insert(data)
-            elif data.x > self.data.x:
+            elif data["coords"].x > self.data["coords"].x:
                 if self.right is None:
                     self.right = Node(data)
                 else:
@@ -52,7 +51,14 @@ class Node:
         return res
 
     def __copy__(self):
-        return self
+        return deepcopy(self)
+
+    def draw_tree(self, ax):
+        if self.left:
+            self.left.draw_tree(ax)
+        if self.right:
+            self.right.draw_tree(ax)
+        ax.plot(self.data['coords'].x, self.data['coords'].y, "ro")
 
 
 if __name__ == "__main__":
