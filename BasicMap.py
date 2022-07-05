@@ -46,8 +46,6 @@ class BasicMap:
     def draw_connected_points(points: list, new_points: list, ax) -> None:
         for gps_point, new_gps_point in new_points:
             lat_0, lon_0, h_0 = find_l0_h0()
-            print(gps_point)
-            print(new_gps_point)
             gps_x, gps_y, gps_z = pm.ecef2ned(*gps_point['coords'].vector, lat_0, lon_0, h_0)
             new_x, new_y, new_z = pm.ecef2ned(*new_gps_point.vector, lat_0, lon_0, h_0)
             ax.plot([gps_x, new_x],
