@@ -44,6 +44,7 @@ class BasicMap:
 
     @staticmethod
     def draw_connected_points(points: list, new_points: list, ax) -> None:
+        #[print(x) for x in new_points]
         for gps_point, new_gps_point in new_points:
             lat_0, lon_0, h_0 = find_l0_h0()
             gps_x, gps_y, gps_z = pm.ecef2ned(*gps_point['coords'].vector, lat_0, lon_0, h_0)
@@ -54,6 +55,7 @@ class BasicMap:
                     )
             ax.plot(new_x, new_y, 'ro', color='b')
             ax.plot(gps_x, gps_y, 'ro', color='r')
+            #ax.text(gps_x, gps_y, gps_point['id'],fontsize=10)
 
     @staticmethod
     def draw_lines(lines: dict, points: list, ax) -> None:

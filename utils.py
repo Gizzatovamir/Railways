@@ -47,8 +47,6 @@ def find_max_dict_y(line: list) -> dict:
 def find_sublist(to_find: int, original_list: list, condition: bool) -> dict:
     for i in range(len(original_list)):
         if to_find == original_list[i]:
-            print(original_list)
-            print(i)
             if condition:
                 return original_list[i]
             else:
