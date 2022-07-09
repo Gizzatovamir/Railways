@@ -22,13 +22,14 @@ class BasicMap:
         res = []
         under_line_ids = self.find_dict(lines, 967)
         for i in range(len(dict_point)):
+            if dict_point["{}".format(i)]["point_id"] in under_line_ids:
+                old_z = -10
+            else:
+                old_z = 0
             x, y, z = pm.geodetic2ecef(dict_point["{}".format(i)]["latitude"],
                                        dict_point["{}".format(i)]["longitude"],
-                                       dict_point["{}".format(i)]["height"])
-            if dict_point["{}".format(i)]["point_id"] in under_line_ids:
-                z = -10
-            else:
-                z = 0
+                                       old_z)
+
             point = Point(x, y, z)
             res.append({"id": dict_point['{}'.format(i)]["point_id"],
                         "coords": point})
@@ -45,6 +46,8 @@ class BasicMap:
     @staticmethod
     def draw_connected_points(points: list, new_points: list, ax) -> None:
         #[print(x) for x in new_points]
+
+        #[print(x,len(x)) for x in new_points]
         for gps_point, new_gps_point in new_points:
             lat_0, lon_0, h_0 = find_l0_h0()
             gps_x, gps_y, gps_z = pm.ecef2ned(*gps_point['coords'].vector, lat_0, lon_0, h_0)
