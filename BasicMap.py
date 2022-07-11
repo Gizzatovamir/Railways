@@ -73,7 +73,10 @@ class BasicMap:
                         new_x, new_y, new_z = pm.ecef2ned(*true_point["coords"].vector, lat_0, lon_0, h_0)
                         x.append(new_x)
                         y.append(new_y)
+                        ax.text(new_x, new_y, true_point['id'], fontsize=10)
                         #z.append(true_point["coords"].z)
-                        #ax.text(true_point["coords"].x, true_point["coords"].y, true_point["coords"].z)
+
                 ax.plot(x, y)
+
+                #ax.text(x[-1],y[-1], coord_id[-1],fontsize=10)
                 #ax.plot(x, y)

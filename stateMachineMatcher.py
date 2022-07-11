@@ -184,6 +184,27 @@ class StateMachineMatcher(Matcher):
         except:
             return 10000
 
+    def create_tree(self, root: Node, condition: bool) -> Node:
+        if condition:
+            segments = self.find_segments_from_point(root.data)
+        else:
+            segments = self.find_segments_from_point_left(root.data)
+        if segments[0][-1]['cross']:
+            if segments[0][-1]['cross']:
+                if condition and segments[0][-1]['coords'].x > root.data['coords'].x:
+                    root.left = self.create_tree(Node(segments[0][-1]), condition)
+                if not condition and segments[1][-1]['coords'].x < root.data['coords'].x:
+                    root.left = self.create_tree(Node(segments[0][-1]), condition)
+        try:
+            if segments[1][-1]['cross']:
+                if condition and segments[1][-1]['coords'].x > root.data['coords'].x:
+                    root.right = self.create_tree(Node(segments[1][-1]), condition)
+                if not condition and segments[1][-1]['coords'].x < root.data['coords'].x:
+                    root.right = self.create_tree(Node(segments[1][-1]), condition)
+        except:
+            pass
+        return root
+
     def add_point_on_cross(self, i: int, line_point: dict, condition: bool) -> (list, int):
         dist1 = 0
         dist2 = 0
@@ -193,12 +214,8 @@ class StateMachineMatcher(Matcher):
         else:
             segments = self.find_segments_from_point_left(line_point)
         if segments[0][1]['cross']:
-            print(segments, 'seg')
             return self.add_point_on_cross(i, segments[0][1], condition)
-        print(segments)
         if len(segments) == 1:
-
-            print("else")
             self.initial_dict = self.initialize(self.gps_points[i])
             result = [[self.gps_points[i], self.point_to_segment_projection(
                 {"gps_point": self.gps_points[i], "cur_line": segments[0]})]]
@@ -227,14 +244,9 @@ class StateMachineMatcher(Matcher):
 
         if dist1 > dist2:
             result = self.get_result(segments[1][1], line_point, points)
-            #self.initial_dict = {"gps_point": self.point_to_segment_projection(ortho_points_2), "cur_line": segments[1][:2]}
         else:
-            #self.initial_dict = {"gps_point": self.point_to_segment_projection(ortho_points_1), "cur_line": segments[0][:2]}
             result = self.get_result(segments[0][1], line_point, points)
         return [result, len(points)]
-
-    #def add_point_on_cross(self):
-
 
     def match(self) -> None:
         self.find_all_cross()
@@ -252,27 +264,21 @@ class StateMachineMatcher(Matcher):
                 self.result.append([self.gps_points[i], self.point_to_segment_projection(
                     {"gps_point": self.gps_points[i], "cur_line": self.initial_dict["cur_line"]})])
             elif not ortho_point_dist['line_point'] and p1["cross"] is False and p2['cross'] is True:
-                print(self.gps_points[i]['id'], ' cross right')
-                new_points, step = self.add_point_on_cross(i, p2, True)
-            elif not ortho_point_dist['line_point'] and self.initial_dict['cur_line'][1] == p1 and p2['cross'] is True:
-                print(self.gps_points[i]['id'], ' cross right')
-                new_points1, step = self.add_point_on_cross(i, p2, True)
-                new_points2, step = self.add_point_on_cross(i, p1, True)
-                new_points = [*new_points1,*new_points2]
+                print(p2)
+                root = Node(p2)
+                tree = self.create_tree(root, True)
+                tree.PrintTree()
+                print()
+                continue
             elif not ortho_point_dist['line_point'] and p1["cross"] is False and p2['cross'] is False:
-                print(self.gps_points[i]['id'], ' straight right')
                 new_points, step = self.add_point_to_result(i, p2, ortho_point_dist, True)
             elif ortho_point_dist['line_point'] and p1["cross"] is True and p2['cross'] is False:
                 new_points, step = self.add_point_on_cross(i, p1, False)
-                print(self.gps_points[i]['id'], ' cross left')
             elif ortho_point_dist['line_point'] and p1["cross"] is True and p2['cross'] is True:
-                new_points, step = self.add_point_to_result(i, p1, ortho_point_dist, False)
-                print(self.gps_points[i]['id'], ' cross left')
+                new_points, step = self.add_point_on_cross(i, p1, False)
             elif ortho_point_dist['line_point'] and p1["cross"] is False and p2['cross'] is False:
                 new_points, step = self.add_point_to_result(i, p1, ortho_point_dist, False)
-                print(self.gps_points[i]['id'], ' straight left')
             else:
-                print(self.gps_points[i]['id'], ' else(not included)')
                 self.initial_dict = self.initialize(self.gps_points[i])
                 new_points = [[self.gps_points[i], self.initial_dict['gps_point']]]
             #print(self.gps_points[i])

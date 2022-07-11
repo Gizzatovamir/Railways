@@ -36,7 +36,9 @@ class Node:
     def PrintTree(self):
         if self.left:
             self.left.PrintTree()
-        print(self.data)
+        print(self.data['coords'], end=' data | ')
+        print(self.data['id'], end=' id')
+        print()
         if self.right:
             self.right.PrintTree()
 
@@ -59,6 +61,9 @@ class Node:
         if self.right:
             self.right.draw_tree(ax)
         ax.plot(self.data['coords'].x, self.data['coords'].y, "ro")
+
+    def data(self):
+        return self.data
 
 
 if __name__ == "__main__":
