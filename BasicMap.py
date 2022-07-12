@@ -66,6 +66,7 @@ class BasicMap:
             x = []
             y = []
             z = []
+            text = []
             for point_id in lines[i]["points"]:
                 for true_point in points:
                     if true_point['id'] == point_id:
@@ -73,7 +74,9 @@ class BasicMap:
                         new_x, new_y, new_z = pm.ecef2ned(*true_point["coords"].vector, lat_0, lon_0, h_0)
                         x.append(new_x)
                         y.append(new_y)
+                        text.append(true_point['id'])
                         #z.append(true_point["coords"].z)
-                        #ax.text(true_point["coords"].x, true_point["coords"].y, true_point["coords"].z)
+
                 ax.plot(x, y)
+                ax.text(x[0], y[0], text[0])
                 #ax.plot(x, y)
