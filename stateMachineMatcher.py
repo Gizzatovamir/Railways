@@ -190,11 +190,10 @@ class StateMachineMatcher(Matcher):
         else:
             segments = self.find_segments_from_point_left(root.data)
         if segments[0][-1]['cross']:
-            if segments[0][-1]['cross']:
-                if condition and segments[0][-1]['coords'].x > root.data['coords'].x:
-                    root.left = self.create_tree(Node(segments[0][-1]), condition)
-                if not condition and segments[1][-1]['coords'].x < root.data['coords'].x:
-                    root.left = self.create_tree(Node(segments[0][-1]), condition)
+            if condition and segments[0][-1]['coords'].x > root.data['coords'].x:
+                root.left = self.create_tree(Node(segments[0][-1]), condition)
+            if not condition and segments[1][-1]['coords'].x < root.data['coords'].x:
+                root.left = self.create_tree(Node(segments[0][-1]), condition)
         try:
             if segments[1][-1]['cross']:
                 if condition and segments[1][-1]['coords'].x > root.data['coords'].x:
