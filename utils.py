@@ -11,7 +11,7 @@ def get_json(path: str):
 
 
 def find_l0_h0() -> (float, float, float):
-    return 55, 39, 0
+    return 59.62569003, 28.55332764, 0
 
 
 def find_min_by_x(line: list) -> Point:

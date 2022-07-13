@@ -195,7 +195,7 @@ class StateMachineMatcher(Matcher):
             self.initial_dict = self.initialize(self.gps_points[i])
             result = [[self.gps_points[i], self.point_to_segment_projection(
                 {"gps_point": self.gps_points[i], "cur_line": segments[0]})]]
-            return [result, 1]
+            return [result, 0]
         if (segments[0][0]['coords'] - segments[0][1]['coords']).norm < R_CROSS:
             try:
                 observed_segments = [[segments[0][1], segments[0][2]],[segments[1][0], segments[1][1]]]
@@ -209,6 +209,7 @@ class StateMachineMatcher(Matcher):
         else:
             observed_segments = [[segments[0][0], segments[0][1]],[segments[1][0], segments[1][1]]]
         while (self.gps_points[i]["coords"] - line_point['coords']).norm <= R_CROSS:
+            self.gps_points[i]['color'] = 'lime'
             points.append(self.gps_points[i])
             i += 1
         dist_1 = self.point_to_segment_distance(self.gps_points[i]['coords'], observed_segments[0][0]['coords'], observed_segments[0][1]['coords'])['dist']
@@ -221,23 +222,20 @@ class StateMachineMatcher(Matcher):
         result.append([self.gps_points[i], self.point_to_segment_projection({"gps_point": self.gps_points[i], 'cur_line': cur_line})])
         self.initial_dict = self.initialize(self.gps_points[i])
         print(i, ' end i')
-        return [result, len(points)-1]
+        return [result, len(points)]
 
     def add_point_on_cross(self, i: int, line_point: dict, condition: bool) -> list:
         if (self.gps_points[i]["coords"] - line_point['coords']).norm > R_CROSS:
             result = []
             self.initial_dict = self.initialize(self.gps_points[i])
             result.append([self.gps_points[i], self.initial_dict['gps_point']])
-            return [result, 1]
+            return [result, 0]
         else:
             return self.accumulate_dist(i, line_point, condition)
 
 
     def match(self) -> None:
-        [print(x) for x in self.gps_points]
-        self.gps_points = self.gps_points[::-1]
-        print()
-        [print(x) for x in self.gps_points]
+        #self.gps_points = self.gps_points[::-1]
         self.initial_dict = self.initialize(self.gps_points[0])
         result = [[self.gps_points[0], self.initial_dict['gps_point']]]
         i = 1
@@ -259,17 +257,21 @@ class StateMachineMatcher(Matcher):
                             result.append([self.gps_points[i], self.point_to_segment_projection(
                                 {"gps_point": self.gps_points[i], "cur_line": self.initial_dict["cur_line"]})]
                                           )
+                            continue
                     elif p2['cross'] is True and next_seg is None:
                         new_points, step = self.add_point_on_cross(i, p2, True)
                         result.extend(new_points)
                         i += step
+                        continue
                     elif p2['cross'] is True and p1['cross'] is True:
                         new_points, step = self.add_point_on_cross(i, p1, True)
                         result.extend(new_points)
                         i += step
+                        continue
                     else:
                         self.initial_dict = self.initialize(self.gps_points[i])
-                elif ortho_point_dist['line_point']:
+                        continue
+                elif not ortho_point_dist['line_point']:
                     next_seg = self.find_next_segment_in_line(p1, False)
                     if p1['cross'] is False and next_seg is not None:
                         if not next_seg[1]['cross']:
@@ -277,14 +279,17 @@ class StateMachineMatcher(Matcher):
                             result.append([self.gps_points[i], self.point_to_segment_projection(
                                 {"gps_point": self.gps_points[i], "cur_line": self.initial_dict["cur_line"]})]
                                       )
+                            continue
                     elif p1['cross'] is True and next_seg is None:
                         new_points, step = self.add_point_on_cross(i, p1, False)
                         result.extend(new_points)
                         i += step
+                        continue
                     elif p2['cross'] is True and p1['cross'] is True:
                         new_points, step = self.add_point_on_cross(i, p2, False)
                         result.extend(new_points)
                         i += step
+                        continue
                     else:
                         self.initial_dict = self.initialize(self.gps_points[i])
                 else:
