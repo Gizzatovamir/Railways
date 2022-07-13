@@ -3,13 +3,15 @@ import numpy as np
 import pymap3d as pm
 from PointClass import Point
 
+
 def get_json(path: str):
     with open(path, 'r') as f:
         data = json.load(f)
     return data
 
+
 def find_l0_h0() -> (float, float, float):
-    return 55,39,0
+    return 55, 39, 0
 
 
 def find_min_by_x(line: list) -> Point:
@@ -50,10 +52,14 @@ def find_sublist(to_find: int, original_list: list, condition: bool) -> dict:
             if condition:
                 return original_list[i]
             else:
-                return original_list[i-1]
+                return original_list[i - 1]
 
 
-def find_index(to_find: int, original_list: list) -> int:
+def find_index(to_find: dict, original_list: list) -> int:
     for i in range(len(original_list)):
-        if to_find == original_list[i]:
+        if to_find['id'] == original_list[i]:
             return i
+
+
+def find_dict(points, point_id) -> dict:
+    return next(item for item in points if item["id"] == point_id)
