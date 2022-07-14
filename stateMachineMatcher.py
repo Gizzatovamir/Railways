@@ -1,4 +1,4 @@
-
+from matplotlib.axis import Axis
 from constants import GPS_POINTS_PATH, POINTS_PATH, LINES_PATH, MIN_DIST, R_MAX
 from RailMap import RailLines
 from GPSPoints import GPSPoints
@@ -150,9 +150,11 @@ class StateMachineMatcher(Matcher):
             result.append([self.gps_points[i], line_point["coords"]])
             self.initial_dict = self.initialize(self.gps_points[i])
         else:
+            if new_line_segment['end']:
+                return [result, True, 0]
             self.initial_dict = self.initialize(self.gps_points[i])
             result.append([self.gps_points[i], self.initial_dict['gps_point']])
-        return [result, 0]
+        return [result, False, 0]
 
     def check_for_jump(self, result: list) -> list:
         result = list(set(result[0][:]['id']))
@@ -261,7 +263,9 @@ class StateMachineMatcher(Matcher):
             elif not ortho_point_dist['flag']:
                 if ortho_point_dist['line_point'] is False:
                     if p1['cross'] is False and p2['cross'] is False:
-                        new_points, step = self.add_point_to_result(i, p2, ortho_point_dist, True)
+                        new_points, break_condition, step = self.add_point_to_result(i, p2, ortho_point_dist, True)
+                        if break_condition:
+                            break
                         result.extend(new_points)
                         i += step
                     elif p2['cross'] is True:
@@ -276,7 +280,9 @@ class StateMachineMatcher(Matcher):
                         self.initial_dict = self.initialize(self.gps_points[i])
                 elif ortho_point_dist['line_point']:
                     if p1['cross'] is False and p2['cross'] is False:
-                        new_points, step = self.add_point_to_result(i, p1, ortho_point_dist, False)
+                        new_points,break_condition, step = self.add_point_to_result(i, p1, ortho_point_dist, False)
+                        if break_condition:
+                            break
                         result.extend(new_points)
                         i += step
                     elif p1['cross'] is True:

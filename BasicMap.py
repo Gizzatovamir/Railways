@@ -81,7 +81,7 @@ class BasicMap:
                         x.append(new_x)
                         y.append(new_y)
                         text.append("{}, {}".format(true_point['id'], true_point['cross']))
-                        #ax.text(new_x, new_y, "{}, {}".format(true_point['id'], true_point['cross']), fontsize=9)
+                        ax.text(new_x, new_y, "{}, {}, {}".format(true_point['id'], true_point['cross'], true_point['end']), fontsize=9)
                         #z.append(true_point["coords"].z)
 
 
