@@ -11,7 +11,7 @@ from Matcher import Matcher
 from utils import find_min_dict_x, find_min_dict_y, find_max_dict_x, find_max_by_y, find_sublist, find_index, find_dict
 from createTree import Node
 
-R_CROSS = 20
+R_CROSS = 15
 
 
 class StateMachineMatcher(Matcher):
@@ -152,7 +152,7 @@ class StateMachineMatcher(Matcher):
         else:
             self.initial_dict = self.initialize(self.gps_points[i])
             result.append([self.gps_points[i], self.initial_dict['gps_point']])
-        return [result, 1]
+        return [result, 0]
 
     def check_for_jump(self, result: list) -> list:
         result = list(set(result[0][:]['id']))
@@ -210,7 +210,8 @@ class StateMachineMatcher(Matcher):
                 observed_segments = [[segments[0][0], segments[0][1]], [segments[1][0], segments[1][1]]]
         else:
             observed_segments = [[segments[0][0], segments[0][1]], [segments[1][0], segments[1][1]]]
-        while (self.gps_points[i]["coords"] - line_point['coords']).norm <= R_CROSS:
+        while (self.gps_points[i]["coords"] - line_point['coords']).norm <= R_CROSS and i < len(self.gps_points)-1:
+            print(i)
             self.gps_points[i]['color'] = 'lime'
             points.append(self.gps_points[i])
             i += 1
@@ -243,10 +244,12 @@ class StateMachineMatcher(Matcher):
 
     def match(self) -> None:
         #self.gps_points = self.gps_points[::-1]
+        print(len(self.gps_points))
+        self.gps_points = sorted(self.gps_points, key=lambda point: (point['coords'].x, point['coords'].y))
         self.initial_dict = self.initialize(self.gps_points[0])
         result = [[self.gps_points[0], self.initial_dict['gps_point']]]
         i = 1
-        while i < len(self.gps_points[1:])+1:
+        while i < len(self.gps_points[1:]):
             p1, p2 = self.initial_dict['cur_line']
             ortho_point_dist = self.state_point_to_segment_distance(
                 self.gps_points[i]['coords'], self.initial_dict["cur_line"]
@@ -261,45 +264,29 @@ class StateMachineMatcher(Matcher):
                         new_points, step = self.add_point_to_result(i, p2, ortho_point_dist, True)
                         result.extend(new_points)
                         i += step
-                        continue
                     elif p2['cross'] is True:
                         new_points, step = self.add_point_on_cross(i, p2, True)
                         result.extend(new_points)
                         i += step
-                        continue
                     elif p2['cross'] is True and p1['cross'] is True:
                         new_points, step = self.add_point_on_cross(i, p1, True)
                         result.extend(new_points)
                         i += step
-                        continue
                     else:
                         self.initial_dict = self.initialize(self.gps_points[i])
-                        continue
                 elif ortho_point_dist['line_point']:
-                    next_seg = self.find_next_segment_in_line(p1, False)
-                    print(next_seg)
                     if p1['cross'] is False and p2['cross'] is False:
                         new_points, step = self.add_point_to_result(i, p1, ortho_point_dist, False)
                         result.extend(new_points)
                         i += step
-                        continue
                     elif p1['cross'] is True:
-                    #if p1['cross'] is True:
                         new_points, step = self.add_point_on_cross(i, p1, False)
                         result.extend(new_points)
                         i += step
-                        continue
                     elif p2['cross'] is True and p1['cross'] is True:
                         new_points, step = self.add_point_on_cross(i, p2, False)
                         result.extend(new_points)
                         i += step
-                        continue
-                    else:
-                        self.initial_dict = self.initialize(self.gps_points[i])
-                else:
-                    self.initial_dict = self.initialize(self.gps_points[i])
-            else:
-                self.initial_dict = self.initialize(self.gps_points[i])
             i += 1
 
         self.draw_full_map(result)
