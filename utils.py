@@ -45,16 +45,6 @@ def find_max_dict_x(line: list) -> dict:
 def find_max_dict_y(line: list) -> dict:
     return line[0] if line[0]['coords'].y < line[1]['coords'].y else line[1]
 
-
-def find_sublist(to_find: int, original_list: list, condition: bool) -> dict:
-    for i in range(len(original_list)):
-        if to_find == original_list[i]:
-            if condition:
-                return original_list[i]
-            else:
-                return original_list[i - 1]
-
-
 def find_index(to_find: dict, original_list: list) -> int:
     for i in range(len(original_list)):
         if to_find['id'] == original_list[i]:
@@ -79,3 +69,7 @@ def consider_segments(segments: list, r_cross: float) -> list:
     else:
         observed_segments = [[segments[0][0], segments[0][1]], [segments[1][0], segments[1][1]]]
     return observed_segments
+
+
+def print_dict(to_print: dict) -> None:
+    [print(el) for el in to_print]

@@ -44,6 +44,7 @@ class BasicMap:
                 ax.plot(x, y, 'o', color=point['color'])
             except:
                 ax.plot(x, y, 'o', color=color)
+            #ax.text(x, y, point['id'])
             #ax.plot(point["coords"].x, point["coords"].y, point["coords"].z, 'ro', color=color)
 
     @staticmethod
@@ -60,6 +61,7 @@ class BasicMap:
                     linestyle='--', color='black'
                     )
             ax.plot(new_x, new_y, 'o', color='b')
+            #ax.text(gps_x, gps_y, gps_point['id'])
             try:
                 ax.plot(gps_x, gps_y, 'o', color=gps_point['color'])
             except:
