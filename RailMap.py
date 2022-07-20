@@ -10,7 +10,7 @@ class RailLines(BasicMap):
         self.lines = self.line_transform(old_lines)
         self.points = self.point_transform(old_points, self.lines)
         self.find_all_cross()
-        #self.merge_lines()
+       # self.merge_lines()
 
     def find_all_cross(self) -> None:
         for i in range(len(self.points)):
@@ -33,25 +33,12 @@ class RailLines(BasicMap):
     def print_lines(self) -> None:
         print(self.lines)
 
-    def merge_lines(self) -> None:
-        j = 0
+    '''def merge_lines(self) -> None:
         i = 0
-        print(len(self.lines))
         while i < len(self.lines):
-            while j < len(self.lines):
-                for point in self.points:
-                    print(len(self.points))
-                    if point['id'] == self.lines[i]['points'][-1] and point['id'] == self.lines[j]['points'][0] and point['cross'] is False:
-                        print(self.lines[i]['points'])
-                        self.lines[i]['points'] = self.lines[i]['points'] + self.lines[j]['points'][1:]
-                        print(self.lines[i]['points'])
-                        print(self.lines[j]['points'])
-                        self.lines.remove(self.lines[j])
-                        j = 0
-                        i = 0
-                j += 1
-            i += 1
-        print(len(self.lines))
+            line_points = [find_dict(self.points, self.lines[i]['points'][x]) for x in range(len(self.lines[i]['points']))]
+            if line_points[0]['cross']
+        print(len(self.lines))'''
 
 if __name__ == "__main__":
     new_map = RailLines(LINES_PATH, POINTS_PATH)

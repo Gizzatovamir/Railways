@@ -73,3 +73,15 @@ def consider_segments(segments: list, r_cross: float) -> list:
 
 def print_dict(to_print: dict) -> None:
     [print(el) for el in to_print]
+
+
+def find_line_from_start_point(start_point: dict, lines: list) -> dict:
+    for line in lines:
+        if line['points'][0] == start_point['id']:
+            return line
+
+
+def find_line_from_end_point(end_point: dict, lines: list) -> dict:
+    for line in lines:
+        if line['points'][-1] == end_point['id']:
+            return line
