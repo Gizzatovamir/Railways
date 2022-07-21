@@ -58,7 +58,7 @@ def find_dict(points, point_id) -> dict:
 def consider_segments(segments: list, r_cross: float) -> list:
     if (segments[0][0]['coords'] - segments[0][1]['coords']).norm < r_cross:
         try:
-            observed_segments = [[segments[0][1], segments[0][2]],[segments[1][0], segments[1][1]]]
+            observed_segments = [[segments[0][1], segments[0][2]], [segments[1][0], segments[1][1]]]
         except:
             observed_segments = [[segments[0][0], segments[0][1]], [segments[1][0], segments[1][1]]]
     elif (segments[1][0]['coords'] - segments[1][1]['coords']).norm < r_cross:
