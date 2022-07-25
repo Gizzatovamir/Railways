@@ -80,7 +80,7 @@ class StateMachineMatcher(Matcher):
     def find_segments_from_point_left(self, point: dict) -> list:
         result = []
         for i in range(len(self.lines)):
-            if point['id'] == self.lines[i]["points"][-1]:
+            if point['id'] in self.lines[i]['points'] and point['id'] != self.lines[i]["points"][0]:
                 result.append([utils.find_dict(self.points, x) for x in self.lines[i]["points"][::-1]])
         return result
 
@@ -97,27 +97,27 @@ class StateMachineMatcher(Matcher):
 
     def add_point_to_result(self, i: int, line_point: dict, ortho_point_dist: dict, condition: bool) -> list:
         next_segment = self.find_next_segment(line_point, condition)
-        self.initial_dict['cur_line'] = next_segment
         next_seg_dist = self.state_point_to_segment_distance(self.gps_points[i]['coords'], next_segment)
-        if abs(next_seg_dist['dist'] - ortho_point_dist['dist']) < 0.000001:
-            print("YES")
-            print(abs(next_seg_dist['dist'] - ortho_point_dist['dist']))
-            print(self.gps_points[i])
-            if line_point['end']:
+        print("________")
+        print(next_seg_dist)
+        print(ortho_point_dist)
+        print("________")
+
+        if next_seg_dist['flag']:
+            self.initial_dict['cur_line'] = next_segment
+            if next_segment[0]['end'] or next_segment[1]['end']:
                 break_condition = True
             else:
                 break_condition = False
-            return [[[self.gps_points[i], line_point['coords']]], break_condition, 0]
+            return [[[self.gps_points[i], self.point_to_segment_projection({"gps_point": self.gps_points[i], "cur_line": next_segment})]], break_condition, 0]
         else:
-            points = {'gps_point': self.gps_points[i], 'cur_line': next_segment}
-            new_point = self.point_to_segment_projection(points)
-            if condition and next_segment[1]['end']:
-                break_condition = True
-            elif not condition and next_segment[0]['end']:
-                break_condition = True
+            if next_seg_dist['line_point'] ^ ortho_point_dist['line_point']:
+                self.initial_dict['cur_line'] = next_segment
+                return [[[self.gps_points[i], line_point['coords']]], False, 0]
             else:
-                break_condition = False
-            return [[[self.gps_points[i], new_point]], break_condition, 0]
+                points = {'gps_point': self.gps_points[i], 'cur_line': self.initial_dict['cur_line']}
+                new_point = self.point_to_segment_projection(points)
+                return [[[self.gps_points[i], new_point]], False, 0]
 
     def find_next_segment(self, line_point: dict, condition: bool) -> list:
         for line in self.lines:
@@ -197,7 +197,7 @@ class StateMachineMatcher(Matcher):
             self.initial_dict['cur_line'] = segments[0]
             result = [[self.gps_points[i], self.point_to_segment_projection(
                 {"gps_point": self.gps_points[i], "cur_line": segments[0]})]]
-            return [result, True if segments[0][1]['end'] else False, 0]
+            return [result, True if segments[0][1]['end'] or segments[0][0]['end'] else False, 0]
 
 
         while (self.gps_points[i]["coords"] - line_point['coords']).norm <= R_CROSS and i < len(self.gps_points)-1:
@@ -236,15 +236,11 @@ class StateMachineMatcher(Matcher):
         self.initial_dict['cur_line'] = cur_line
         return [result, False, len(points)]
 
-    def add_point_on_cross(self, i: int, line_point: dict, condition: bool) -> list:
+    def add_point_on_cross(self, i: int, line_point: dict, ortho_point_dist: dict, condition: bool) -> list:
         if (self.gps_points[i]["coords"] - line_point['coords']).norm > R_CROSS:
-            next_segment = self.find_next_segment(line_point, condition)
-            ortho_point_dist = self.state_point_to_segment_distance(self.gps_points[i]['coords'], next_segment)
-            new_points, break_condition, step = self.add_point_to_result(i, line_point, ortho_point_dist, True)
-            return [new_points, break_condition,step]
+            return self.add_point_to_result(i, line_point, ortho_point_dist, condition)
         else:
             return self.accumulate_dist(i, line_point, condition)
-
 
     def match(self) -> None:
         #self.gps_points = sorted(self.gps_points, key=lambda point: (point['coords'].x, point['coords'].y))
@@ -267,18 +263,18 @@ class StateMachineMatcher(Matcher):
                     if p1['cross'] is False and p2['cross'] is False:
                         new_points, break_condition, step = self.add_point_to_result(i, p1, ortho_point_dist, False)
                     elif p1['cross'] is True:
-                        new_points, break_condition, step = self.add_point_on_cross(i, p1, False)
+                        new_points, break_condition, step = self.add_point_on_cross(i, p1,ortho_point_dist, False)
                     elif p2['cross'] is True and p1['cross'] is True:
-                        new_points, break_condition, step = self.add_point_on_cross(i, p2, False)
+                        new_points, break_condition, step = self.add_point_on_cross(i, p2,ortho_point_dist, False)
                     else:
-                        new_points, break_condition, step = self.add_point_to_result(i, p1, ortho_point_dist, False)
+                        new_points, break_condition, step = self.add_point_to_result(i, p2, ortho_point_dist, False)
                 else:
                     if p1['cross'] is False and p2['cross'] is False:
                         new_points, break_condition, step = self.add_point_to_result(i, p2, ortho_point_dist, True)
                     elif p2['cross'] is True:
-                        new_points,break_condition, step = self.add_point_on_cross(i, p2, True)
+                        new_points,break_condition, step = self.add_point_on_cross(i, p2,ortho_point_dist, True)
                     elif p2['cross'] is True and p1['cross'] is True:
-                        new_points,break_condition, step = self.add_point_on_cross(i, p1, True)
+                        new_points,break_condition, step = self.add_point_on_cross(i, p1,ortho_point_dist, True)
                     else:
                         new_points, break_condition, step = self.add_point_to_result(i, p1, ortho_point_dist, True)
                 result.extend(new_points)
