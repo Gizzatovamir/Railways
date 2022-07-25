@@ -40,7 +40,11 @@ class BasicMap:
         for point in points:
             lat_0, lon_0, h_0 = find_l0_h0()
             x, y, z = pm.ecef2ned(*point["coords"].vector, lat_0, lon_0, h_0)
-            ax.plot(x, y, 'ro', color=color)
+            try:
+                ax.plot(x, y, 'o', color=point['color'])
+            except:
+                ax.plot(x, y, 'o', color=color)
+            #ax.text(x, y, point['id'])
             #ax.plot(point["coords"].x, point["coords"].y, point["coords"].z, 'ro', color=color)
 
     @staticmethod
@@ -56,8 +60,12 @@ class BasicMap:
                     [gps_y, new_y],
                     linestyle='--', color='black'
                     )
-            ax.plot(new_x, new_y, 'ro', color='b')
-            ax.plot(gps_x, gps_y, 'ro', color='r')
+            ax.plot(new_x, new_y, 'o', color='b')
+            #ax.text(gps_x, gps_y, gps_point['id'])
+            try:
+                ax.plot(gps_x, gps_y, 'o', color=gps_point['color'])
+            except:
+                ax.plot(gps_x, gps_y, 'o', color='r')
             #ax.text(gps_x, gps_y, gps_point['id'],fontsize=10)
 
     @staticmethod
@@ -66,6 +74,7 @@ class BasicMap:
             x = []
             y = []
             z = []
+            text = []
             for point_id in lines[i]["points"]:
                 for true_point in points:
                     if true_point['id'] == point_id:
@@ -73,10 +82,11 @@ class BasicMap:
                         new_x, new_y, new_z = pm.ecef2ned(*true_point["coords"].vector, lat_0, lon_0, h_0)
                         x.append(new_x)
                         y.append(new_y)
-                        ax.text(new_x, new_y, true_point['id'], fontsize=10)
+                        text.append("{}, {}".format(true_point['id'], true_point['cross']))
+                        ax.text(new_x, new_y, "{}, {}, {}".format(true_point['id'], true_point['cross'], true_point['end']), fontsize=9)
                         #z.append(true_point["coords"].z)
 
-                ax.plot(x, y)
 
-                #ax.text(x[-1],y[-1], coord_id[-1],fontsize=10)
+                ax.plot(x, y)
+                #ax.text(x[-1], y[-1], text[-1], fontsize=9)
                 #ax.plot(x, y)

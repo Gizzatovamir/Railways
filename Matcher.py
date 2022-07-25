@@ -17,6 +17,8 @@ class Matcher:
         self.gps_points = gps_points.points
         self.initial_dict = {}
         self.result = []
+        self.sub_points = []
+        self.sub_segments = []
 
     def find_min_dist_among_every_line(self, gps_point: dict, lines: list, min_dist=MIN_DIST) -> dict:
         points = {}
