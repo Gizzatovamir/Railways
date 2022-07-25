@@ -205,24 +205,35 @@ class StateMachineMatcher(Matcher):
             self.gps_points[i]['color'] = 'lime'
             points.append(self.gps_points[i])
             i += 1
-        #observed_segments = utils.consider_segments(segments, R_CROSS)
-        cur_line = self.find_cur_line(self.gps_points[i], segments)
-        print(cur_line[1])
-        '''print(len(cur_line))
-        for point in points:
+        observed_segments = utils.consider_segments(segments, R_CROSS)
+        cur_line = self.find_cur_line(self.gps_points[i], observed_segments)
+        print(cur_line)
+        for point in points[::-1]:
             ortho_point_dist = self.state_point_to_segment_distance(
-                self.gps_points[i]['coords'], cur_line[0]
-            )'''
+                point['coords'], cur_line
+            )
+            if ortho_point_dist['flag']:
+                result.append([point, self.point_to_segment_projection(
+                    {"gps_point": point, "cur_line": cur_line})]
+                              )
+            else:
+                if ortho_point_dist['line_point']:
+                    next_segment = self.find_next_segment(cur_line[0], False)
+                    result.append([point, self.point_to_segment_projection(
+                        {"gps_point": point, "cur_line": next_segment})]
+                                  )
+                else:
+                    next_segment = self.find_next_segment(cur_line[1], True)
+                    result.append([point, self.point_to_segment_projection(
+                        {"gps_point": point, "cur_line": next_segment})]
+                                  )
+
         if cur_line[1]['end']:
             return [result, True, len(points)]
-        [result.append([x, self.point_to_segment_projection({"gps_point": x, 'cur_line': cur_line})]) for x in points]
+        #[result.append([x, self.point_to_segment_projection({"gps_point": x, 'cur_line': cur_line})]) for x in points]
         result.append([self.gps_points[i], self.point_to_segment_projection({"gps_point": self.gps_points[i],
                                                                              'cur_line': cur_line})])
-        #self.initial_dict = self.initialize(self.gps_points[i])
         self.initial_dict['cur_line'] = cur_line
-        #print(self.initial_dict['cur_line'], " line_found")
-        #print(cur_line, ' cur_line')
-        #self.initial_dict['cur_line'] = cur_line
         return [result, False, len(points)]
 
     def add_point_on_cross(self, i: int, line_point: dict, condition: bool) -> list:
@@ -237,12 +248,12 @@ class StateMachineMatcher(Matcher):
 
     def match(self) -> None:
         #self.gps_points = sorted(self.gps_points, key=lambda point: (point['coords'].x, point['coords'].y))
-        #self.gps_points = self.gps_points[::-1]
+        self.gps_points = self.gps_points[::-1]
         self.initial_dict = self.initialize(self.gps_points[0])
         result = [[self.gps_points[0], self.initial_dict['gps_point']]]
         i = 1
         while i < len(self.gps_points[1:]):
-            print(len(self.initial_dict['cur_line']))
+            #print(len(self.initial_dict['cur_line']))
             p1, p2 = self.initial_dict['cur_line']
             ortho_point_dist = self.state_point_to_segment_distance(
                 self.gps_points[i]['coords'], self.initial_dict["cur_line"]
