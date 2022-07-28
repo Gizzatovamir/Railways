@@ -111,33 +111,22 @@ class StateMachineMatcher(Matcher):
                 points = {'gps_point': self.gps_points[i], 'cur_line': self.initial_dict['cur_line']}
                 new_point = self.point_to_segment_projection(points)
                 return [[[self.gps_points[i], new_point]], False, 0]
-            if next_seg_dist['line_point'] ^ ortho_point_dist['line_point']:
+            else:
                 self.initial_dict['cur_line'] = next_segment
                 return [[[self.gps_points[i], line_point['coords']]], False, 0]
-            '''if ortho_point_dist['flag']:
-                points = {'gps_point': self.gps_points[i], 'cur_line': self.initial_dict['cur_line']}
-                new_point = self.point_to_segment_projection(points)
-                return [[[self.gps_points[i], new_point]], False, 0]'''
 
     def find_next_segment(self, line_point: dict, condition: bool) -> list:
         for line in self.lines:
             if line_point['id'] in line['points']:
                 if line_point['id'] != line['points'][0] and line_point['id'] != line['points'][-1]:
                     next_line_point = self.find_next_point_in_line(line_point, line['points'], condition)
-                    self.initial_dict['cur_line'] = [line_point, next_line_point]
                     return [line_point, next_line_point]
                 else:
                     if condition:
                         next_line_point = self.find_new_line_from_point_right(line_point)
-                        self.initial_dict['cur_line'] = [line_point, next_line_point]
                         return [line_point, next_line_point]
                     else:
                         next_line_point = self.find_new_line_from_point_left(line_point)
-                        print('left - ', next_line_point)
-                        print('point - ', line_point)
-                        print("line - ", line['points'])
-                        self.initial_dict['cur_line'] = [line_point, next_line_point]
-                        print('cur_line - ', self.initial_dict['cur_line'])
                         return [line_point, next_line_point]
 
     def find_new_line_from_point_right(self, line_point: dict):
@@ -204,7 +193,7 @@ class StateMachineMatcher(Matcher):
             #self.initial_dict = self.initialize(self.gps_points[i])
             self.initial_dict['cur_line'] = segments[0]
             result = [[self.gps_points[i], self.point_to_segment_projection(
-                {"gps_point": self.gps_points[i], "cur_line": segments[0]})]]
+                {"gps_point": self.gps_points[i], "cur_line": self.initial_dict['cur_line']})]]
             return [result, True if segments[0][1]['end'] or segments[0][0]['end'] else False, 0]
 
 
@@ -215,27 +204,27 @@ class StateMachineMatcher(Matcher):
             i += 1
         observed_segments = utils.consider_segments(segments, R_CROSS)
         cur_line = self.find_cur_line(self.gps_points[i], observed_segments)
-        print(cur_line)
+        self.initial_dict['cur_line'] = cur_line
         for point in points[::-1]:
             ortho_point_dist = self.state_point_to_segment_distance(
-                point['coords'], cur_line
+                point['coords'], self.initial_dict['cur_line']
             )
             if ortho_point_dist['flag']:
                 result.append([point, self.point_to_segment_projection(
-                    {"gps_point": point, "cur_line": cur_line})]
+                    {"gps_point": point, "cur_line": self.initial_dict['cur_line']})]
                               )
             else:
                 if ortho_point_dist['line_point']:
-                    next_segment = self.find_next_segment(cur_line[0], False)
+                    next_segment = self.find_next_segment(self.initial_dict['cur_line'][0], False)
                     result.append([point, self.point_to_segment_projection(
                         {"gps_point": point, "cur_line": next_segment})]
                                   )
                 else:
-                    next_segment = self.find_next_segment(cur_line[1], True)
+                    next_segment = self.find_next_segment(self.initial_dict['cur_line'][1], True)
                     result.append([point, self.point_to_segment_projection(
                         {"gps_point": point, "cur_line": next_segment})]
                                   )
-        self.initial_dict['cur_line'] = cur_line
+
 
         #[result.append([x, self.point_to_segment_projection({"gps_point": x, 'cur_line': cur_line})]) for x in points]
         result.append([self.gps_points[i], self.point_to_segment_projection({"gps_point": self.gps_points[i],
@@ -252,7 +241,7 @@ class StateMachineMatcher(Matcher):
 
     def match(self) -> None:
         #self.gps_points = sorted(self.gps_points, key=lambda point: (point['coords'].x, point['coords'].y))
-        #self.gps_points = self.gps_points[::-1]
+        self.gps_points = self.gps_points[::-1]
         self.initial_dict = self.initialize(self.gps_points[0])
         result = [[self.gps_points[0], self.initial_dict['gps_point']]]
         i = 1
