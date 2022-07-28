@@ -95,9 +95,9 @@ class StateMachineMatcher(Matcher):
         plt.grid()
         plt.show()
 
-    def add_point_to_result(self, i: int, line_point: dict, ortho_point_dist: dict, condition: bool) -> list:
+    def add_point_to_result(self, point: dict, line_point: dict, ortho_point_dist: dict, condition: bool) -> (list, bool):
         next_segment = self.find_next_segment(line_point, condition)
-        next_seg_dist = self.state_point_to_segment_distance(self.gps_points[i]['coords'], next_segment)
+        next_seg_dist = self.state_point_to_segment_distance(point['coords'], next_segment)
 
         if next_seg_dist['flag']:
             self.initial_dict['cur_line'] = next_segment
@@ -105,17 +105,17 @@ class StateMachineMatcher(Matcher):
                 break_condition = True
             else:
                 break_condition = False
-            return [[[self.gps_points[i],
-                      self.point_to_segment_projection({"gps_point": self.gps_points[i], "cur_line": next_segment})]],
-                    break_condition, 0]
+            return [[[point,
+                      self.point_to_segment_projection({"gps_point": point, "cur_line": next_segment})]],
+                    break_condition]
         else:
             if ortho_point_dist['flag']:
-                points = {'gps_point': self.gps_points[i], 'cur_line': self.initial_dict['cur_line']}
+                points = {'gps_point': point, 'cur_line': self.initial_dict['cur_line']}
                 new_point = self.point_to_segment_projection(points)
-                return [[[self.gps_points[i], new_point]], False, 0]
+                return [[[point, new_point]], False]
             else:
                 self.initial_dict['cur_line'] = next_segment
-                return [[[self.gps_points[i], line_point['coords']]], False, 0]
+                return [[[point, line_point['coords']]], False]
 
     def find_next_segment(self, line_point: dict, condition: bool) -> list:
         for line in self.lines:
@@ -213,16 +213,16 @@ class StateMachineMatcher(Matcher):
             )
             if ortho_point_dist['flag']:
                 result.append([point, self.point_to_segment_projection(
-                    {"gps_point": point, "cur_line": self.initial_dict['cur_line']})]
+                    {"gps_point": point, "cur_line": cur_line})]
                               )
             else:
                 if ortho_point_dist['line_point']:
-                    next_segment = self.find_next_segment(self.initial_dict['cur_line'][0], False)
+                    next_segment = self.find_next_segment(cur_line[0], False)
                     result.append([point, self.point_to_segment_projection(
                         {"gps_point": point, "cur_line": next_segment})]
                                   )
                 else:
-                    next_segment = self.find_next_segment(self.initial_dict['cur_line'][1], True)
+                    next_segment = self.find_next_segment(cur_line[1], True)
                     result.append([point, self.point_to_segment_projection(
                         {"gps_point": point, "cur_line": next_segment})]
                                   )
@@ -239,17 +239,19 @@ class StateMachineMatcher(Matcher):
             ortho_point_dist = self.state_point_to_segment_distance(
                 self.gps_points[i]['coords'], self.initial_dict["cur_line"]
             )
-            return self.add_point_to_result(i, line_point, ortho_point_dist, condition)
+            new_points, break_condition = self.add_point_to_result(self.gps_points[i], line_point, ortho_point_dist, condition)
+            return [new_points, break_condition, 0]
         else:
             return self.accumulate_dist(i, line_point, condition)
 
 
     def match(self) -> None:
         #self.gps_points = sorted(self.gps_points, key=lambda point: (point['coords'].x, point['coords'].y))
-        #self.gps_points = self.gps_points[::-1]
+        self.gps_points = self.gps_points[::-1]
         self.initial_dict = self.initialize(self.gps_points[0])
         result = [[self.gps_points[0], self.initial_dict['gps_point']]]
         i = 1
+        step = 0
         while i < len(self.gps_points[1:]):
             #print(len(self.initial_dict['cur_line']))
             p1, p2 = self.initial_dict['cur_line']
@@ -259,7 +261,7 @@ class StateMachineMatcher(Matcher):
             if ortho_point_dist['flag']:
                 result.append([self.gps_points[i], self.point_to_segment_projection(
                     {"gps_point": self.gps_points[i], "cur_line": self.initial_dict["cur_line"]})]
-                               )
+                              )
             else:
                 if not ortho_point_dist['line_point']:
                     if p2['cross'] is True:
@@ -267,18 +269,19 @@ class StateMachineMatcher(Matcher):
                     elif p2['cross'] is True and p1['cross'] is True:
                         new_points, break_condition, step = self.add_point_on_cross(i, p1, True)
                     else:
-                        new_points, break_condition, step = self.add_point_to_result(i, p2, ortho_point_dist, True)
+                        new_points, break_condition = self.add_point_to_result(self.gps_points[i], p2, ortho_point_dist, True)
                 else:
                     if p1['cross'] is True:
                         new_points, break_condition, step = self.add_point_on_cross(i, p1, False)
                     elif p2['cross'] is True and p1['cross'] is True:
                         new_points,break_condition, step = self.add_point_on_cross(i, p2,False)
                     else:
-                        new_points, break_condition, step = self.add_point_to_result(i, p1, ortho_point_dist, False)
+                        new_points, break_condition = self.add_point_to_result(self.gps_points[i], p1, ortho_point_dist, False)
                 if break_condition:
                     break
                 result.extend(new_points)
                 i += step
+                step = 0
             i += 1
         self.draw_full_map(result)
 
