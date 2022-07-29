@@ -188,19 +188,6 @@ class StateMachineMatcher(Matcher):
             pass
         return root
 
-    def add_point_on_cross(self, i: int, line_point: dict, condition: bool) -> (list, int):
-        dist1 = 0
-        dist2 = 0
-        points = []
-        if condition:
-            segments = self.find_segments_from_point(line_point)
-        else:
-            segments = self.find_segments_from_point_left(line_point)
-        if segments[0][1]['cross']:
-            return self.add_point_on_cross(i, segments[0][1], condition)
-        if len(segments) == 1:
-            self.initial_dict = self.initialize(self.gps_points[i])
-
     def find_next_segment_in_line(self, line_point: dict, condition: bool) -> list:
         for line in self.lines:
             if line_point['id'] in line['points']:
@@ -286,7 +273,7 @@ class StateMachineMatcher(Matcher):
 
     def match(self) -> None:
         #self.gps_points = sorted(self.gps_points, key=lambda point: (point['coords'].x, point['coords'].y))
-        self.gps_points = self.gps_points[::-1]
+        #self.gps_points = self.gps_points[::-1]
         self.initial_dict, i = self.initialize()
         print(i)
         print(len(self.gps_points))
