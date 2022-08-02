@@ -61,7 +61,7 @@ class BasicMap:
                     linestyle='--', color='black'
                     )
             ax.plot(new_x, new_y, 'o', color='b')
-            #ax.text(gps_x, gps_y, gps_point['id'])
+            ax.text(gps_x, gps_y, gps_point['id'], fontsize=9)
             try:
                 ax.plot(gps_x, gps_y, 'o', color=gps_point['color'])
             except:
