@@ -69,3 +69,98 @@ def find_line_from_end_point(end_point: dict, lines: list) -> dict:
     for line in lines:
         if line['points'][-1] == end_point['id']:
             return line
+
+def point_to_segment_distance(p: Point, line: list) -> dict:
+    try:
+        a = line[0]["coords"]
+        b = line[1]["coords"]
+    except TypeError:
+        return {"dist": -1, "break": True}
+    ab = b - a
+    ap = p - a
+
+    if ap.dot(ab) <= 0.0:  # Point is lagging behind start of the segment, so perpendicular distance is not viable.
+        return {"dist": ap.norm, "flag": False, "line_point": True,
+                'cur_line': line, "break": False}  # Use distance to start of segment instead.
+
+    bp = p - b
+
+    if bp.dot(ab) >= 0.0:  # Point is advanced past the end of the segment, so perpendicular distance is not viable.
+        return {"dist": bp.norm, "flag": False, "line_point": False,
+                'cur_line': line, "break": False}  # Use distance to end of the segment instead.
+
+    # Perpendicular distance of point to segment. Use distance to start of segment instead.
+    return {"dist": (ab.cross(ap)).norm / ab.norm, "flag": True, 'cur_line': line, "break": False}
+
+
+def point_to_segment_projection(points: dict) -> Point:
+    """ Finds point projection on a line segment.
+        Args:
+            points['gps_point']: point from projection is made
+            points['line_p1']: start of the segment
+            points['line_p2']: end of the segment
+        Returns:
+            Point: projection of p to line segment [a,b].
+    """
+
+    p = points['gps_point']['coords']
+    b = points['cur_line'][0]["coords"]
+    a = points['cur_line'][1]["coords"]
+
+    v = b - a
+    res = a + v * (v.dot(p - a) / v.dot(v))
+    return res
+
+
+def find_cur_line_by_sin_of_angle(gps_points: list, observed_segments: list) -> list:
+    angle_1 = 0
+    angle_2 = 0
+    for point in gps_points:
+        angle_1 += point_to_segment_distance(point['coords'], observed_segments[0])['dist'] / (
+                point['coords'] - observed_segments[0][0]['coords']).norm
+        angle_2 += point_to_segment_distance(point['coords'], observed_segments[1])['dist'] / (
+                point['coords'] - observed_segments[1][0]['coords']).norm
+    if angle_2 > angle_1:
+        cur_line = observed_segments[0]
+    else:
+        cur_line = observed_segments[1]
+    return cur_line
+
+
+def find_cur_line_by_accum_dist(gps_points: list, observed_segments: list) -> list:
+    dist_1 = 0
+    dist_2 = 0
+    for point in gps_points:
+        dist_1 += point_to_segment_distance(point['coords'], observed_segments[0])['dist']
+        dist_2 += point_to_segment_distance(point['coords'], observed_segments[1])['dist']
+    if dist_2 > dist_1:
+        cur_line = observed_segments[0]
+    else:
+        cur_line = observed_segments[1]
+    return cur_line
+
+
+def find_cur_line_min_by__last_point_min_dist(gps_points: list, observed_segments: list) -> list:
+    dist_1 = point_to_segment_distance(gps_points[-1]['coords'],
+                                             observed_segments[0])['dist']
+    dist_2 = point_to_segment_distance(gps_points[-1]['coords'],
+                                             observed_segments[1])['dist']
+    if dist_2 > dist_1:
+        cur_line = observed_segments[0]
+    else:
+        cur_line = observed_segments[1]
+    return cur_line
+
+def find_cur_line_min_by_multiply_dists(gps_points: list, observed_segments: list) -> list:
+    dist_1 = 0
+    dist_2 = 0
+    for point in gps_points:
+        dist_1 += 1 / (point_to_segment_distance(point['coords'], observed_segments[0])['dist'] * (
+                point['coords'] - observed_segments[0][0]['coords']).norm)
+        dist_2 += 1 / (point_to_segment_distance(point['coords'], observed_segments[1])['dist'] * (
+                point['coords'] - observed_segments[1][0]['coords']).norm)
+    if dist_2 > dist_1:
+        cur_line = observed_segments[0]
+    else:
+        cur_line = observed_segments[1]
+    return cur_line
