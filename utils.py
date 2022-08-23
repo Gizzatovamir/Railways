@@ -166,7 +166,7 @@ def find_cur_line_min_by_multiply_dists(gps_points: list, observed_segments: lis
     return cur_line
 
 
-def find_cur_line_cos_beta(gps_points: list, observed_segments: list) -> list:
+def find_cur_line_cos_beta_adjacent_angle(gps_points: list, observed_segments: list) -> list:
     dist_1 = 0
     dist_2 = 0
     for point in gps_points:

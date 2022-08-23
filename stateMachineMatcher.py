@@ -8,21 +8,11 @@ import matplotlib.pyplot as plt
 from skspatial.objects import Line
 from PointClass import Point
 from Matcher import Matcher
-from createTree import Node
 import utils
+from SwitchClass import SwitchClass
 
 from utils import point_to_segment_distance, point_to_segment_projection
 R_CROSS = 25
-
-methods_dict = {
-    1: utils.find_cur_line_by_sin_of_angle,
-    2: utils.find_cur_line_by_accum_dist,
-    3: utils.find_cur_line_min_by__last_point_min_dist,
-    4: utils.find_cur_line_min_by_multiply_dists,
-    5: utils.find_cur_line_cos_beta,
-    6: utils.find_cur_line_by_min_dist_with_multiplier,
-    7: utils.find_cur_line_by_sin_of_angle_with_multiplier
-}
 
 
 class StateMachineMatcher:
@@ -38,6 +28,7 @@ class StateMachineMatcher:
         self.result = []
         self.sub_points = []
         self.sub_segments = []
+        self.switch_method = SwitchClass(method_id).choose_method()
 
     def find_initial_state(self, initial_point: dict, last_line=None, min_dist=MIN_DIST) -> dict:
         points = None
@@ -193,7 +184,7 @@ class StateMachineMatcher:
             observed_segments = [[segments[0][0], segments[0][1]], [segments[1][0], segments[1][1]]]
         return observed_segments
 
-    def accumulate_dist(self, i: int, line_point: dict, last_line_ortho_point_dist: dict, condition: bool) -> (
+    def get_result_on_switch(self, i: int, line_point: dict, last_line_ortho_point_dist: dict, condition: bool) -> (
             list, bool, int):
         # print(i, ' start i')
         points = []
@@ -216,7 +207,7 @@ class StateMachineMatcher:
             i += 1
 
         observed_segments = self.consider_segments(segments, R_CROSS)
-        cur_line = methods_dict[self.matching_method_id](points, observed_segments)
+        cur_line = self.switch_method(points, observed_segments)
         print("added final point on cross. Point id - {}".format(self.gps_points[i]['id']))
         self.initial_dict['cur_line'] = cur_line
         for point in points:
@@ -254,7 +245,7 @@ class StateMachineMatcher:
 
     def add_point_on_cross(self, i: int, line_point: dict, ortho_point_dist: dict, condition: bool) -> list:
         if (self.gps_points[i]["coords"] - line_point['coords']).norm <= R_CROSS:
-            return self.accumulate_dist(i, line_point, ortho_point_dist, condition)
+            return self.get_result_on_switch(i, line_point, ortho_point_dist, condition)
         else:
             new_points, break_condition = self.add_point_to_result(self.gps_points[i], line_point, ortho_point_dist,
                                                                    condition)
