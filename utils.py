@@ -119,7 +119,7 @@ def find_cur_line_by_sin_of_angle(gps_points: list, observed_segments: list) -> 
         angle_1 += point_to_segment_distance(point['coords'], observed_segments[0])['dist'] / (
                 point['coords'] - observed_segments[0][0]['coords']).norm
         angle_2 += point_to_segment_distance(point['coords'], observed_segments[1])['dist'] / (
-                point['coords'] - observed_segments[1][0]['coords']).norm
+                point['coords'] - observed_segments[0][0]['coords']).norm
     if angle_2 > angle_1:
         cur_line = observed_segments[0]
     else:
@@ -158,8 +158,61 @@ def find_cur_line_min_by_multiply_dists(gps_points: list, observed_segments: lis
         dist_1 += 1 / (point_to_segment_distance(point['coords'], observed_segments[0])['dist'] * (
                 point['coords'] - observed_segments[0][0]['coords']).norm)
         dist_2 += 1 / (point_to_segment_distance(point['coords'], observed_segments[1])['dist'] * (
-                point['coords'] - observed_segments[1][0]['coords']).norm)
+                point['coords'] - observed_segments[0][0]['coords']).norm)
     if dist_2 > dist_1:
+        cur_line = observed_segments[0]
+    else:
+        cur_line = observed_segments[1]
+    return cur_line
+
+
+def find_cur_line_cos_beta(gps_points: list, observed_segments: list) -> list:
+    dist_1 = 0
+    dist_2 = 0
+    for point in gps_points:
+        dist_1 += np.pi - (point_to_segment_distance(point['coords'], observed_segments[0])['dist'] / (
+                point['coords'] - observed_segments[0][0]['coords']).norm)
+        dist_2 += np.pi - (point_to_segment_distance(point['coords'], observed_segments[1])['dist'] / (
+                point['coords'] - observed_segments[0][0]['coords']).norm)
+    if dist_2 < dist_1:
+        cur_line = observed_segments[0]
+    else:
+        cur_line = observed_segments[1]
+    return cur_line
+
+
+def find_cur_line_by_min_dist_with_multiplier(gps_points: list, observed_segments: list) -> list:
+    dist_1 = 0
+    dist_2 = 0
+    for multiplier in range(len(gps_points)):
+        dist_1 += point_to_segment_distance(gps_points[multiplier]['coords'], observed_segments[0])['dist'] * multiplier
+        dist_2 += point_to_segment_distance(gps_points[multiplier]['coords'], observed_segments[1])['dist'] * multiplier
+    if dist_2 > dist_1:
+        cur_line = observed_segments[0]
+    else:
+        cur_line = observed_segments[1]
+    return cur_line
+
+
+def find_cur_line_by_sin_of_angle_with_multiplier(gps_points: list, observed_segments: list) -> list:
+    angle_1 = 0
+    angle_2 = 0
+    for multiplier in range(len(gps_points)):
+        angle_1 += point_to_segment_distance(gps_points[multiplier]['coords'], observed_segments[0])['dist'] / ((
+                gps_points[multiplier]['coords'] - observed_segments[0][0]['coords']).norm * (multiplier+1))
+        angle_2 += point_to_segment_distance(gps_points[multiplier]['coords'], observed_segments[1])['dist'] / ((
+                gps_points[multiplier]['coords'] - observed_segments[0][0]['coords']).norm * (multiplier+1))
+    [print(point['id'], end=' ') for point in gps_points]
+    print()
+    print(observed_segments[0][0]['id'], ' start id of the switch')
+    print(observed_segments[1][0]['id'], ' start id of the switch')
+    [print(x['id'], end=' ') for x in observed_segments[0]]
+    print()
+    [print(x['id'], end=' ') for x in observed_segments[1]]
+    print()
+    print(angle_1, ' angle 1')
+    print(angle_2, ' angle 2')
+    if angle_2 > angle_1:
         cur_line = observed_segments[0]
     else:
         cur_line = observed_segments[1]

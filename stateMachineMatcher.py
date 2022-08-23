@@ -18,7 +18,10 @@ methods_dict = {
     1: utils.find_cur_line_by_sin_of_angle,
     2: utils.find_cur_line_by_accum_dist,
     3: utils.find_cur_line_min_by__last_point_min_dist,
-    4: utils.find_cur_line_min_by_multiply_dists
+    4: utils.find_cur_line_min_by_multiply_dists,
+    5: utils.find_cur_line_cos_beta,
+    6: utils.find_cur_line_by_min_dist_with_multiplier,
+    7: utils.find_cur_line_by_sin_of_angle_with_multiplier
 }
 
 
@@ -87,17 +90,17 @@ class StateMachineMatcher:
     def add_point_to_result(self, point: dict, line_point: dict, ortho_point_dist: dict, condition: bool) -> (
             list, bool):
         next_segment = self.find_next_segment(line_point, condition)
-        print(next_segment)
+        #print(next_segment)
         next_seg_dist = point_to_segment_distance(point['coords'], next_segment)
         if next_seg_dist['break']:
             return [[[point, point['coords']]], True]
         if next_seg_dist['flag']:
             self.initial_dict['cur_line'] = next_segment
             if next_segment[0]['end'] and not condition:
-                print("BREAK, left add point")
+                #print("BREAK, left add point")
                 break_condition = True
             elif next_segment[1]['end'] and condition:
-                print("BREAK, right add point")
+                #print("BREAK, right add point")
                 break_condition = True
             else:
                 break_condition = False
@@ -120,11 +123,11 @@ class StateMachineMatcher:
     def find_next_segment(self, line_point: dict, condition: bool) -> list:
         for line in self.lines:
             if line_point['id'] in line['points']:
-                print(line_point['id'], ' id of point to find next segment from')
-                print(line['points'], ' line to check in find next segment')
+                #print(line_point['id'], ' id of point to find next segment from')
+                #print(line['points'], ' line to check in find next segment')
                 if line_point['id'] != line['points'][0] and line_point['id'] != line['points'][-1]:
                     next_line_point = self.find_next_point_in_line(line_point, line['points'], condition)
-                    print(next_line_point,' next line point')
+                    #print(next_line_point,' next line point')
                     return [line_point, next_line_point]
                 else:
                     if condition:
@@ -213,11 +216,8 @@ class StateMachineMatcher:
             i += 1
 
         observed_segments = self.consider_segments(segments, R_CROSS)
-        # cur_line = self.find_cur_line_min_by__last_point_min_dist(self.gps_points[i], observed_segments)
-        # cur_line = self.find_cur_line_by_sin_of_angle(points, observed_segments)
         cur_line = methods_dict[self.matching_method_id](points, observed_segments)
-        result.append([self.gps_points[i], point_to_segment_projection({"gps_point": self.gps_points[i],
-                                                                        'cur_line': self.initial_dict['cur_line']})])
+        print("added final point on cross. Point id - {}".format(self.gps_points[i]['id']))
         self.initial_dict['cur_line'] = cur_line
         for point in points:
             ortho_point_dist = point_to_segment_distance(
@@ -241,7 +241,8 @@ class StateMachineMatcher:
                         {"gps_point": point, "cur_line": next_segment})]
                                   )
 
-
+        result.append([self.gps_points[i], point_to_segment_projection({"gps_point": self.gps_points[i],
+                                                                        'cur_line': self.initial_dict['cur_line']})])
         #self.initial_dict['cur_line'] = cur_line
         if cur_line[1]['end'] and condition:
             print("BREAK, right add on cross")
@@ -267,7 +268,7 @@ class StateMachineMatcher:
         result = [[self.gps_points[i - 1], self.initial_dict['gps_point']]]
         step = 0
         while i < len(self.gps_points):
-            print(i)
+            #print(i)
             p1, p2 = self.initial_dict['cur_line']
             ortho_point_dist = point_to_segment_distance(
                 self.gps_points[i]['coords'], self.initial_dict["cur_line"]
