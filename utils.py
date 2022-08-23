@@ -93,7 +93,7 @@ def point_to_segment_distance(p: Point, line: list) -> dict:
     return {"dist": (ab.cross(ap)).norm / ab.norm, "flag": True, 'cur_line': line, "break": False}
 
 
-def point_to_segment_projection(points: dict) -> Point:
+def point_to_segment_projection(p: Point, line: list) -> Point:
     """ Finds point projection on a line segment.
         Args:
             points['gps_point']: point from projection is made
@@ -103,9 +103,8 @@ def point_to_segment_projection(points: dict) -> Point:
             Point: projection of p to line segment [a,b].
     """
 
-    p = points['gps_point']['coords']
-    b = points['cur_line'][0]["coords"]
-    a = points['cur_line'][1]["coords"]
+    b = line[0]["coords"]
+    a = line[1]["coords"]
 
     v = b - a
     res = a + v * (v.dot(p - a) / v.dot(v))
@@ -187,7 +186,7 @@ def find_cur_line_by_min_dist_with_multiplier(gps_points: list, observed_segment
     for multiplier in range(len(gps_points)):
         dist_1 += point_to_segment_distance(gps_points[multiplier]['coords'], observed_segments[0])['dist'] * multiplier
         dist_2 += point_to_segment_distance(gps_points[multiplier]['coords'], observed_segments[1])['dist'] * multiplier
-    if dist_2 > dist_1:
+    if dist_2 < dist_1:
         cur_line = observed_segments[0]
     else:
         cur_line = observed_segments[1]
@@ -217,3 +216,7 @@ def find_cur_line_by_sin_of_angle_with_multiplier(gps_points: list, observed_seg
     else:
         cur_line = observed_segments[1]
     return cur_line
+
+
+def find_cur_line_by_separation_of_segments(gps_points: list, segments: list):
+    pass

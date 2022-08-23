@@ -28,7 +28,7 @@ class StateMachineMatcher:
         self.result = []
         self.sub_points = []
         self.sub_segments = []
-        self.switch_method = SwitchClass(method_id).choose_method()
+        self.find_path_class = SwitchClass(method_id)
 
     def find_initial_state(self, initial_point: dict, last_line=None, min_dist=MIN_DIST) -> dict:
         points = None
@@ -41,7 +41,7 @@ class StateMachineMatcher:
                     min_dist = current_dict["dist"]
                     points = {"gps_point": initial_point, "cur_line": line_points, "last_line": last_line}
         if points:
-            points['gps_point'] = point_to_segment_projection(points)
+            points['gps_point'] = point_to_segment_projection(points['gps_point']['coords'], points['cur_line'])
         return points
 
     def initialize(self) -> (dict, int):
@@ -50,7 +50,7 @@ class StateMachineMatcher:
             state = self.find_initial_state(self.gps_points[i])
             i += 1
             if state:
-                self.gps_points[0]['cur_line'] = state['cur_line']
+                self.gps_points[i]['cur_line'] = state['cur_line']
                 return state, i
 
     def find_segments_from_point(self, point: dict) -> list:
@@ -96,7 +96,7 @@ class StateMachineMatcher:
             else:
                 break_condition = False
             return [[[point,
-                      point_to_segment_projection({"gps_point": point, "cur_line": next_segment})]],
+                      point_to_segment_projection(point['coords'], next_segment)]],
                     break_condition]
         else:
             if ortho_point_dist['cur_line'][0]['end'] or ortho_point_dist['cur_line'][1]['end']:
@@ -104,8 +104,7 @@ class StateMachineMatcher:
             else:
                 break_condition = False
             if ortho_point_dist['flag']:
-                points = {'gps_point': point, 'cur_line': ortho_point_dist['cur_line']}
-                new_point = point_to_segment_projection(points)
+                new_point = point_to_segment_projection(point['coords'], ortho_point_dist['cur_line'])
                 return [[[point, new_point]], break_condition]
             else:
                 self.initial_dict['cur_line'] = next_segment
@@ -197,7 +196,7 @@ class StateMachineMatcher:
             # self.initial_dict = self.initialize(self.gps_points[i])
             self.initial_dict['cur_line'] = segments[0]
             result = [[self.gps_points[i], point_to_segment_projection(
-                {"gps_point": self.gps_points[i], "cur_line": last_line_ortho_point_dist['cur_line']})]]
+                self.gps_points[i]['coords'], last_line_ortho_point_dist['cur_line'])]]
             return [result, True if segments[0][1]['end'] or segments[0][0]['end'] else False, 0]
 
         while (self.gps_points[i]["coords"] - line_point['coords']).norm <= R_CROSS and i < len(self.gps_points) - 1:
@@ -206,34 +205,33 @@ class StateMachineMatcher:
             points.append(self.gps_points[i])
             i += 1
 
-        observed_segments = self.consider_segments(segments, R_CROSS)
-        cur_line = self.switch_method(points, observed_segments)
+        cur_line = self.find_path_class.choose_method(points, segments, R_CROSS, self.consider_segments)
         print("added final point on cross. Point id - {}".format(self.gps_points[i]['id']))
         self.initial_dict['cur_line'] = cur_line
-        for point in points:
+        for point in points[::-1] if condition else points:
             ortho_point_dist = point_to_segment_distance(
                 point['coords'], cur_line
             )
             if ortho_point_dist['flag']:
                 result.append([point, point_to_segment_projection(
-                    {"gps_point": point, "cur_line": cur_line})]
+                    point['coords'], cur_line)]
                               )
             else:
                 if ortho_point_dist['line_point']:
                     next_segment = self.find_next_segment(cur_line[0], False)
                     cur_line = next_segment
                     result.append([point, point_to_segment_projection(
-                        {"gps_point": point, "cur_line": next_segment})]
+                        point['coords'], next_segment)]
                                   )
                 else:
                     next_segment = self.find_next_segment(cur_line[1], True)
                     cur_line = next_segment
                     result.append([point, point_to_segment_projection(
-                        {"gps_point": point, "cur_line": next_segment})]
+                        point['coords'], next_segment)]
                                   )
 
-        result.append([self.gps_points[i], point_to_segment_projection({"gps_point": self.gps_points[i],
-                                                                        'cur_line': self.initial_dict['cur_line']})])
+        result.append([self.gps_points[i], point_to_segment_projection(self.gps_points[i]['coords'],
+                                                                        self.initial_dict['cur_line'])])
         #self.initial_dict['cur_line'] = cur_line
         if cur_line[1]['end'] and condition:
             print("BREAK, right add on cross")
@@ -266,7 +264,7 @@ class StateMachineMatcher:
             )
             if ortho_point_dist['flag']:
                 result.append([self.gps_points[i], point_to_segment_projection(
-                    {"gps_point": self.gps_points[i], "cur_line": self.initial_dict["cur_line"]})]
+                    self.gps_points[i]['coords'], self.initial_dict["cur_line"])]
                               )
             else:
                 if not ortho_point_dist['line_point']:

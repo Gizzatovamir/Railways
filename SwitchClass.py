@@ -13,7 +13,7 @@ class SwitchClass:
             7: utils.find_cur_line_by_sin_of_angle_with_multiplier
         }
 
-    def choose_method(self):
-        return self.methods_dict[self.method_id]
+    def choose_method(self, points, segments, R_CROSS, consider_segments):
+        return self.methods_dict[self.method_id](points, consider_segments(segments, R_CROSS))
 
 
