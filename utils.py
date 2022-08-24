@@ -103,8 +103,8 @@ def point_to_segment_projection(p: Point, line: list) -> Point:
             Point: projection of p to line segment [a,b].
     """
 
-    b = line[0]["coords"]
-    a = line[1]["coords"]
+    b = line[1]["coords"]
+    a = line[0]["coords"]
 
     v = b - a
     res = a + v * (v.dot(p - a) / v.dot(v))
@@ -184,9 +184,11 @@ def find_cur_line_by_min_dist_with_multiplier(gps_points: list, observed_segment
     dist_1 = 0
     dist_2 = 0
     for multiplier in range(len(gps_points)):
-        dist_1 += point_to_segment_distance(gps_points[multiplier]['coords'], observed_segments[0])['dist'] * multiplier
-        dist_2 += point_to_segment_distance(gps_points[multiplier]['coords'], observed_segments[1])['dist'] * multiplier
-    if dist_2 < dist_1:
+        dist_1 += point_to_segment_distance(gps_points[multiplier]['coords'], observed_segments[0])['dist']\
+                  * multiplier * 100
+        dist_2 += point_to_segment_distance(gps_points[multiplier]['coords'], observed_segments[1])['dist']\
+                  * multiplier * 100
+    if dist_2 > dist_1:
         cur_line = observed_segments[0]
     else:
         cur_line = observed_segments[1]
@@ -218,5 +220,5 @@ def find_cur_line_by_sin_of_angle_with_multiplier(gps_points: list, observed_seg
     return cur_line
 
 
-def find_cur_line_by_separation_of_segments(gps_points: list, segments: list):
+def find_cur_line_by_sum_of_dists_in_interval(gps_points: list, observed_segments: list) -> list:
     pass

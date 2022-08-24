@@ -4,7 +4,7 @@ from PointClass import Point
 from utils import find_l0_h0
 
 
-class BasicMap:
+class basicMap:
     @staticmethod
     def line_transform(lines) -> list:
         res = []
@@ -40,9 +40,9 @@ class BasicMap:
         for point in points:
             lat_0, lon_0, h_0 = find_l0_h0()
             x, y, z = pm.ecef2ned(*point["coords"].vector, lat_0, lon_0, h_0)
-            try:
-                ax.plot(x, y, 'o', color=point['color'])
-            except:
+            if point['is_on_switch']:
+                ax.plot(x, y, 'o', color='lime')
+            else:
                 ax.plot(x, y, 'o', color=color)
             #ax.text(x, y, point['id'])
             #ax.plot(point["coords"].x, point["coords"].y, point["coords"].z, 'ro', color=color)
@@ -62,10 +62,10 @@ class BasicMap:
                     )
             ax.plot(new_x, new_y, 'o', color='b')
             ax.text(gps_x, gps_y, gps_point['id'], fontsize=9)
-            try:
-                ax.plot(gps_x, gps_y, 'o', color=gps_point['color'])
-            except:
-                ax.plot(gps_x, gps_y, 'o', color='r')
+            if gps_point['is_on_switch']:
+                ax.plot(gps_x, gps_y, 'o', color='lime')
+            else:
+                ax.plot(gps_x, gps_y, 'o', color="red")
             #ax.text(gps_x, gps_y, gps_point['id'],fontsize=10)
 
     @staticmethod

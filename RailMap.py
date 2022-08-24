@@ -1,9 +1,9 @@
 from utils import get_json, find_dict
 from constants import POINTS_PATH, LINES_PATH, GPS_POINTS_PATH
-from BasicMap import BasicMap
+from basicMap import basicMap
 
 
-class RailLines(BasicMap):
+class RailLines(basicMap):
     def __init__(self, path_to_lines, path_to_points):
         old_lines = get_json(path_to_lines)
         old_points = get_json(path_to_points)

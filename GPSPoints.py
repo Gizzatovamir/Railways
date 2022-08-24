@@ -1,10 +1,10 @@
 from utils import get_json
 from constants import GPS_POINTS_PATH
-from BasicMap import BasicMap
+from basicMap import basicMap
 import pymap3d as pm
 from PointClass import Point
 
-class GPSPoints(BasicMap):
+class GPSPoints(basicMap):
     def __init__(self, gps_points_path):
         self.points = self.point_transform(get_json(gps_points_path))
 
@@ -20,5 +20,6 @@ class GPSPoints(BasicMap):
                                   0)
             point = Point(x, y, z)
             res.append({"id": i,
-                        "coords": point})
+                        "coords": point,
+                        "is_on_switch": False})
         return res
