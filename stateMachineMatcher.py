@@ -1,5 +1,5 @@
 from matplotlib.axis import Axis
-from constants import GPS_POINTS_PATH, POINTS_PATH, LINES_PATH, MIN_DIST, R_MAX
+from constants import GPS_POINTS_PATH, POINTS_PATH, LINES_PATH, MIN_DIST, R_MAX, STEP
 from RailMap import RailLines
 from GPSPoints import GPSPoints
 from numpy.linalg import norm
@@ -10,7 +10,7 @@ import utils
 from switchClass import SwitchClass
 
 from utils import point_to_segment_distance, point_to_segment_projection
-R_CROSS = 20
+R_CROSS = 25
 
 
 
@@ -25,33 +25,48 @@ class stateMachineMatcher:
         self.initial_dict = {}
         self.matching_method_id = method_id
         self.result = []
-        self.sub_points = []
-        self.sub_segments = []
         self.find_path_class = SwitchClass(method_id)
         self.switches = []
         self.switch_id = 0
+        self.point_buffer = []
 
-    def find_initial_state(self, initial_point: dict, last_line=None, min_dist=MIN_DIST) -> dict:
+    def find_initial_state(self, index: int, last_line=None, min_dist=MIN_DIST) -> (dict, int):
         points = None
         for i in range(len(self.lines)):
             for j in range(len(self.lines[i]["points"]) - 1):
                 line_points = [utils.find_dict(self.points, self.lines[i]["points"][j]),
                                utils.find_dict(self.points, self.lines[i]["points"][j + 1])]
-                current_dict = point_to_segment_distance(initial_point["coords"], line_points)
+                current_dict = point_to_segment_distance(self.gps_points[index]["coords"], line_points)
                 if current_dict["dist"] < min_dist and current_dict['flag']:
                     min_dist = current_dict["dist"]
-                    points = {"gps_point": initial_point, "cur_line": line_points, "last_line": last_line}
+                    points = {"gps_point": self.gps_points[index]['coords'], "cur_line": line_points, "last_line": last_line}
         if points:
-            points['gps_point'] = point_to_segment_projection(points['gps_point']['coords'], points['cur_line'])
+            if all([not line_point['cross'] for line_point in points["cur_line"]]):
+                points['gps_point'] = point_to_segment_projection(points['gps_point'], points['cur_line'])
+            elif points["cur_line"][0]['cross']:
+                if (self.gps_points[index]["coords"] - points["cur_line"][0]['coords']).norm <= R_CROSS:
+                    self.point_buffer.append(self.gps_points[index])
+                    self.gps_points[index]['is_on_switch'] = True
+                    points = None
+            elif points["cur_line"][1]['cross']:
+                if (self.gps_points[index]["coords"] - points["cur_line"][1]['coords']).norm <= R_CROSS:
+                    self.point_buffer.append(self.gps_points[index])
+                    self.gps_points[index]['is_on_switch'] = True
+                    points = None
         return points
 
     def initialize(self) -> (dict, int):
         i = 0
         while i < len(self.gps_points):
-            state = self.find_initial_state(self.gps_points[i])
+            state = self.find_initial_state(i)
             i += 1
             if state:
                 self.gps_points[i]['cur_line'] = state['cur_line']
+                print(self.point_buffer)
+                for point in self.point_buffer:
+                    print("APPENDED")
+                    print(point['id'])
+                    self.result.append([point, utils.point_to_segment_projection(point['coords'], state['cur_line'])])
                 return state, i
 
     def find_segments_from_point(self, point: dict) -> list:
@@ -73,7 +88,7 @@ class stateMachineMatcher:
         ax = fig.add_subplot(111)
         ax.set_aspect("equal")
         RailLines.draw_lines(self.lines, self.points, ax)
-        #RailLines.draw_points(self.gps_points, ax, "green")
+        RailLines.draw_points(self.gps_points, ax, "green")
         # RailLines.draw_points(new_points, ax, 'blue')
         RailLines.draw_connected_points(self.points, new_points, ax)
         plt.grid()
@@ -253,7 +268,7 @@ class stateMachineMatcher:
         #self.gps_points = self.gps_points[::-1]
         self.initial_dict, i = self.initialize()
         #print(len(self.gps_points))
-        self.result = [[self.gps_points[i - 1], self.initial_dict['gps_point']]]
+        self.result.append([self.gps_points[i - 1], self.initial_dict['gps_point']])
         step = 0
         while i < len(self.gps_points):
             #print(i)

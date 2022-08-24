@@ -29,7 +29,9 @@ class RailLines(basicMap):
                 self.points[i]['end'] = True
             else:
                 self.points[i]['end'] = False
-
+            if self.points[i]['id'] == 271:
+                self.points[i]["cross"] = True
+                self.points[i]['end'] = True
     def print_lines(self) -> None:
         print(self.lines)
 

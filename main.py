@@ -11,7 +11,7 @@ if __name__ == "__main__":
     matcher.match()
     matcher.draw_full_map(matcher.result)
     checker = Checker(matcher.switches, gps_points_path=args.path)
-    #checker.matcher.draw_full_map(checker.matcher.result)
+    checker.matcher.draw_full_map(checker.matcher.result)
     checker.check_for_success_switch_choosing()
 
     #matcher.draw_full_map(matcher.result)
