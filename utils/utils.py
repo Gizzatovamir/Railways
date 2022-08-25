@@ -44,6 +44,7 @@ def find_max_dict_x(line: list) -> dict:
 def find_max_dict_y(line: list) -> dict:
     return line[0] if line[0]['coords'].y < line[1]['coords'].y else line[1]
 
+
 def find_index(to_find: dict, original_list: list) -> int:
     for i in range(len(original_list)):
         if to_find['id'] == original_list[i]:
@@ -68,6 +69,7 @@ def find_line_from_end_point(end_point: dict, lines: list) -> dict:
     for line in lines:
         if line['points'][-1] == end_point['id']:
             return line
+
 
 def point_to_segment_distance(p: Point, line: list) -> dict:
     try:
@@ -110,9 +112,9 @@ def point_to_segment_projection(p: Point, line: list) -> Point:
     return res
 
 
-def find_cur_line_by_sin_of_angle(gps_points: list, observed_segment: list, i: int) -> float:
+def find_cur_line_by_sin_of_angle(gps_points: list, observed_segment: list, i: int, **kwargs) -> float:
     return point_to_segment_distance(gps_points[i]['coords'], observed_segment)['dist'] / (
-                gps_points[i]['coords'] - observed_segment[0]['coords']).norm
+            gps_points[i]['coords'] - observed_segment[0]['coords']).norm
 
 
 def find_cur_line_by_accum_dist(gps_points: list, observed_segment: list, i: int, **kwargs) -> float:
@@ -123,31 +125,37 @@ def find_cur_line_min_by__last_point_min_dist(gps_point: dict, observed_segment:
     return point_to_segment_distance(gps_point['coords'], observed_segment)['dist']
 
 
-def find_cur_line_min_by_multiply_dists(gps_points: list, observed_segment: list, i:int, **kwargs) -> float:
+def find_cur_line_min_by_multiply_dists(gps_points: list, observed_segment: list, i: int, **kwargs) -> float:
     return (point_to_segment_distance(gps_points[i]['coords'], observed_segment)['dist'] * (
-                gps_points[i]['coords'] - observed_segment[0]['coords']).norm)
+            gps_points[i]['coords'] - observed_segment[0]['coords']).norm)
 
 
-def find_cur_line_cos_beta_adjacent_angle(gps_points: list, observed_segment: list, i:int, **kwargs) -> float:
+def find_cur_line_cos_beta_adjacent_angle(gps_points: list, observed_segment: list, i: int, **kwargs) -> float:
     return np.pi - (point_to_segment_distance(gps_points[i]['coords'], observed_segment)['dist'] / (
-                gps_points[i]['coords'] - observed_segment[0]['coords']).norm)
+            gps_points[i]['coords'] - observed_segment[0]['coords']).norm)
 
 
-def find_cur_line_by_min_dist_with_multiplier(gps_points: list, observed_segment: list, i:int, **kwargs) -> float:
-    return point_to_segment_distance(gps_points[i]['coords'], observed_segment)['dist']\
-                  * i
+def find_cur_line_by_min_dist_with_multiplier(gps_points: list, observed_segment: list, i: int, **kwargs) -> float:
+    return point_to_segment_distance(gps_points[i]['coords'], observed_segment)['dist'] \
+           * i
 
 
-def find_cur_line_by_sin_of_angle_with_multiplier(gps_points: list, observed_segment: list, i:int, **kwargs) -> float:
+def find_cur_line_by_sin_of_angle_with_multiplier(gps_points: list, observed_segment: list, i: int, **kwargs) -> float:
     return point_to_segment_distance(gps_points[i]['coords'], observed_segment)['dist'] / ((
-                gps_points[i]['coords'] - observed_segment[0]['coords']).norm * (i+1))
+                                                                                                   gps_points[i][
+                                                                                                       'coords'] -
+                                                                                                   observed_segment[0][
+                                                                                                       'coords']).norm * (
+                                                                                                   i + 1))
 
 
-def find_cur_line_by_sum_of_dists_in_interval(gps_points: list, observed_segment: list, i: int, **kwargs) -> float:
-    print(kwargs['r_1']**2)
-    print((gps_points[i]['coords'].x - kwargs['line_point']['coords'].x)**2 + (gps_points[i]['coords'].y - kwargs['line_point']['coords'].y)**2)
-    print(kwargs['r_2']**2)
-    print("_________________-")
-    return point_to_segment_distance(gps_points[i]['coords'], observed_segment)['dist'] if \
-        kwargs['r_1']**2 < ((gps_points[i]['coords'].x - kwargs['line_point']['coords'].x)**2 +
-                            (gps_points[i]['coords'].y - kwargs['line_point']['coords'].y)**2) <= kwargs['r_2'] else 0
+def whole_radius_inclusion(gps_point, **kwargs) -> list:
+    return gps_point
+
+
+def segment_radius_inclusion(gps_points, **kwargs) -> list:
+    return [gps_point for gps_point in gps_points if kwargs['r_start'] < (gps_point["coords"] - kwargs['line_point']['coords']).norm <= kwargs['r_end']]
+
+
+def last_n_points(gps_points, **kwargs) -> list:
+    return [gps_point for gps_point in gps_points[-kwargs["n"]:]]
