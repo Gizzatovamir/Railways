@@ -12,13 +12,13 @@ class Matcher:
     def __init__(self, path_to_lines=LINES_PATH, path_to_points=POINTS_PATH, gps_points_path=GPS_POINTS_PATH):
         rail_lines = RailLines(path_to_lines=path_to_lines, path_to_points=path_to_points)
         gps_points = GPSPoints(gps_points_path=gps_points_path)
-        self.lines = rail_lines.lines
-        self.points = rail_lines.points
-        self.gps_points = gps_points.points
-        self.initial_dict = {}
-        self.result = []
-        self.sub_points = []
-        self.sub_segments = []
+        utils.lines = rail_lines.lines
+        utils.points = rail_lines.points
+        utils.gps_points = gps_points.points
+        utils.initial_dict = {}
+        utils.result = []
+        utils.sub_points = []
+        utils.sub_segments = []
 
     def find_min_dist_among_every_line(self, gps_point: dict, lines: list, min_dist=MIN_DIST) -> dict:
         points = {}

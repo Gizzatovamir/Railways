@@ -10,11 +10,10 @@ import utils
 from switchClass import SwitchClass
 
 from utils import point_to_segment_distance, point_to_segment_projection
-R_CROSS = 25
+R_CROSS = 20
 
 
-
-class stateMachineMatcher:
+class StateMatcher:
     def __init__(self, method_id, path_to_lines=LINES_PATH, path_to_points=POINTS_PATH,
                  gps_points_path=GPS_POINTS_PATH):
         rail_lines = RailLines(path_to_lines=path_to_lines, path_to_points=path_to_points)
@@ -185,10 +184,8 @@ class stateMachineMatcher:
         try:
             if (segments[0][0]['coords'] - segments[0][1]['coords']).norm < r_cross:
                 observed_segments = [[segments[0][1], segments[0][2]], [segments[1][0], segments[1][1]]]
-                self.initial_dict['last_line'] = [segments[0][0], segments[0][1]]
             elif (segments[1][0]['coords'] - segments[1][1]['coords']).norm < r_cross:
                 observed_segments = [[segments[0][0], segments[0][1]], [segments[1][1], segments[1][2]]]
-                self.initial_dict['last_line'] = [segments[1][0], segments[1][1]]
             else:
                 observed_segments = [[segments[0][0], segments[0][1]], [segments[1][0], segments[1][1]]]
         except:
@@ -217,7 +214,7 @@ class stateMachineMatcher:
             points.append(self.gps_points[i])
             i += 1
 
-        cur_line = self.find_path_class.choose_method(points, segments, r_cross, self.consider_segments)
+        cur_line = self.find_path_class.find_cur_line(points, segments, r_cross, self.consider_segments)
         self.switches.append({"id": self.switch_id, "line": cur_line})
         self.switch_id += 1
         #print("added final point on cross. Point id - {}".format(self.gps_points[i]['id']))
@@ -310,5 +307,5 @@ class stateMachineMatcher:
 
 
 if __name__ == "__main__":
-    matcher = stateMachineMatcher(3)
+    matcher = StateMatcher(3)
     matcher.match()
