@@ -1,7 +1,6 @@
-import numpy as np
 import pymap3d as pm
-from PointClass import Point
-from utils import find_l0_h0
+from src.PointClass import Point
+from utils.utils import find_l0_h0
 
 
 class basicMap:

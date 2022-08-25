@@ -1,5 +1,5 @@
-from StateMatcher import StateMatcher
-from constants import LINES_PATH, POINTS_PATH, GPS_POINTS_PATH
+from src.StateMatcher import StateMatcher
+from utils.constants import LINES_PATH, POINTS_PATH, GPS_POINTS_PATH
 from itertools import zip_longest
 
 R_CROSS = 30
@@ -9,7 +9,7 @@ class Checker:
     def __init__(self, switches: list, path_to_lines=LINES_PATH, path_to_points=POINTS_PATH,
                  gps_points_path=GPS_POINTS_PATH):
         self.res_switches = switches
-        self.matcher = StateMatcher(3, path_to_lines, path_to_points, gps_points_path)
+        self.matcher = StateMatcher(7, path_to_lines, path_to_points, gps_points_path)
         self.matcher.match(R_CROSS)
         self.new_switches = self.matcher.switches
         self.coincidence_counter = 0

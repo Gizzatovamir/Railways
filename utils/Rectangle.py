@@ -1,6 +1,5 @@
-from RailMap import RailLines
-from constants import POINTS_PATH, LINES_PATH, GPS_POINTS_PATH
-from utils import get_json
+from constants import POINTS_PATH
+from utils.utils import get_json
 
 if __name__ == "__main__":
     old_points = get_json(POINTS_PATH)

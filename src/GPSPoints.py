@@ -1,8 +1,7 @@
-from utils import get_json
-from constants import GPS_POINTS_PATH
-from basicMap import basicMap
+from utils.utils import get_json
+from src.basicMap import basicMap
 import pymap3d as pm
-from PointClass import Point
+from src.PointClass import Point
 
 class GPSPoints(basicMap):
     def __init__(self, gps_points_path):

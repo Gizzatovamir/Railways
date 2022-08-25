@@ -1,12 +1,9 @@
-from constants import GPS_POINTS_PATH, POINTS_PATH, LINES_PATH, MIN_DIST, R_MAX
-from RailMap import RailLines
-from GPSPoints import GPSPoints
-from numpy.linalg import norm
-import numpy as np
+from utils.constants import GPS_POINTS_PATH, POINTS_PATH, LINES_PATH, MIN_DIST, R_MAX
+from src.RailMap import RailLines
+from src.GPSPoints import GPSPoints
 import matplotlib.pyplot as plt
-from skspatial.objects import Line
-from PointClass import Point
-
+from src.PointClass import Point
+import utils.utils
 
 class Matcher:
     def __init__(self, path_to_lines=LINES_PATH, path_to_points=POINTS_PATH, gps_points_path=GPS_POINTS_PATH):

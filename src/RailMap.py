@@ -1,6 +1,6 @@
-from utils import get_json, find_dict
-from constants import POINTS_PATH, LINES_PATH, GPS_POINTS_PATH
-from basicMap import basicMap
+from utils.utils import get_json, find_dict
+from utils.constants import POINTS_PATH, LINES_PATH
+from src.basicMap import basicMap
 
 
 class RailLines(basicMap):

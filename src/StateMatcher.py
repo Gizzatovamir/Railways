@@ -1,20 +1,16 @@
-from matplotlib.axis import Axis
-from constants import GPS_POINTS_PATH, POINTS_PATH, LINES_PATH, MIN_DIST, R_MAX, STEP
-from RailMap import RailLines
-from GPSPoints import GPSPoints
-from numpy.linalg import norm
-import numpy as np
+from utils.constants import GPS_POINTS_PATH, POINTS_PATH, LINES_PATH, MIN_DIST
+from src.RailMap import RailLines
+from src.GPSPoints import GPSPoints
 import matplotlib.pyplot as plt
-from PointClass import Point
-import utils
-from switchClass import SwitchClass
+import utils.utils as utils
+from src.switchClass import SwitchClass
 
-from utils import point_to_segment_distance, point_to_segment_projection
-R_CROSS = 20
+from utils.utils import point_to_segment_distance, point_to_segment_projection
+R_CROSS = 30
 
 
 class StateMatcher:
-    def __init__(self, method_id, path_to_lines=LINES_PATH, path_to_points=POINTS_PATH,
+    def __init__(self, method_id, start_r, end_r, path_to_lines=LINES_PATH, path_to_points=POINTS_PATH,
                  gps_points_path=GPS_POINTS_PATH):
         rail_lines = RailLines(path_to_lines=path_to_lines, path_to_points=path_to_points)
         gps_points = GPSPoints(gps_points_path=gps_points_path)
@@ -28,6 +24,8 @@ class StateMatcher:
         self.switches = []
         self.switch_id = 0
         self.point_buffer = []
+        self.start_r = start_r
+        self.end_r = end_r
 
     def find_initial_state(self, index: int, last_line=None, min_dist=MIN_DIST) -> (dict, int):
         points = None
@@ -214,7 +212,8 @@ class StateMatcher:
             points.append(self.gps_points[i])
             i += 1
 
-        cur_line = self.find_path_class.find_cur_line(points, segments, r_cross, self.consider_segments)
+        cur_line = self.find_path_class.find_cur_line(points, segments, r=r_cross, consider=self.consider_segments,
+                                                      line_point=line_point, r_1=self.start_r, r_2=self.end_r)
         self.switches.append({"id": self.switch_id, "line": cur_line})
         self.switch_id += 1
         #print("added final point on cross. Point id - {}".format(self.gps_points[i]['id']))

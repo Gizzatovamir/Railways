@@ -1,7 +1,6 @@
 import json
 import numpy as np
-import pymap3d as pm
-from PointClass import Point
+from src.PointClass import Point
 
 
 def get_json(path: str):
@@ -111,38 +110,44 @@ def point_to_segment_projection(p: Point, line: list) -> Point:
     return res
 
 
-def find_cur_line_by_sin_of_angle(gps_points: list, observed_segment: list, i: int) -> list:
+def find_cur_line_by_sin_of_angle(gps_points: list, observed_segment: list, i: int) -> float:
     return point_to_segment_distance(gps_points[i]['coords'], observed_segment)['dist'] / (
                 gps_points[i]['coords'] - observed_segment[0]['coords']).norm
 
 
-def find_cur_line_by_accum_dist(gps_points: list, observed_segment: list, i: int, *args) -> int:
+def find_cur_line_by_accum_dist(gps_points: list, observed_segment: list, i: int, **kwargs) -> float:
     return point_to_segment_distance(gps_points[i]['coords'], observed_segment)['dist']
 
 
-def find_cur_line_min_by__last_point_min_dist(gps_point: dict, observed_segment: list, *args) -> list:
+def find_cur_line_min_by__last_point_min_dist(gps_point: dict, observed_segment: list, **kwargs) -> float:
     return point_to_segment_distance(gps_point['coords'], observed_segment)['dist']
 
 
-def find_cur_line_min_by_multiply_dists(gps_points: list, observed_segment: list, i:int, *args) -> list:
+def find_cur_line_min_by_multiply_dists(gps_points: list, observed_segment: list, i:int, **kwargs) -> float:
     return (point_to_segment_distance(gps_points[i]['coords'], observed_segment)['dist'] * (
                 gps_points[i]['coords'] - observed_segment[0]['coords']).norm)
 
 
-def find_cur_line_cos_beta_adjacent_angle(gps_points: list, observed_segment: list, i:int, *args) -> list:
+def find_cur_line_cos_beta_adjacent_angle(gps_points: list, observed_segment: list, i:int, **kwargs) -> float:
     return np.pi - (point_to_segment_distance(gps_points[i]['coords'], observed_segment)['dist'] / (
                 gps_points[i]['coords'] - observed_segment[0]['coords']).norm)
 
 
-def find_cur_line_by_min_dist_with_multiplier(gps_points: list, observed_segment: list, i:int, *args) -> list:
+def find_cur_line_by_min_dist_with_multiplier(gps_points: list, observed_segment: list, i:int, **kwargs) -> float:
     return point_to_segment_distance(gps_points[i]['coords'], observed_segment)['dist']\
                   * i
 
 
-def find_cur_line_by_sin_of_angle_with_multiplier(gps_points: list, observed_segment: list, i:int, *args) -> list:
+def find_cur_line_by_sin_of_angle_with_multiplier(gps_points: list, observed_segment: list, i:int, **kwargs) -> float:
     return point_to_segment_distance(gps_points[i]['coords'], observed_segment)['dist'] / ((
                 gps_points[i]['coords'] - observed_segment[0]['coords']).norm * (i+1))
 
 
-def find_cur_line_by_sum_of_dists_in_interval(gps_points: list, observed_segments: list) -> list:
-    pass
+def find_cur_line_by_sum_of_dists_in_interval(gps_points: list, observed_segment: list, i: int, **kwargs) -> float:
+    print(kwargs['r_1']**2)
+    print((gps_points[i]['coords'].x - kwargs['line_point']['coords'].x)**2 + (gps_points[i]['coords'].y - kwargs['line_point']['coords'].y)**2)
+    print(kwargs['r_2']**2)
+    print("_________________-")
+    return point_to_segment_distance(gps_points[i]['coords'], observed_segment)['dist'] if \
+        kwargs['r_1']**2 < ((gps_points[i]['coords'].x - kwargs['line_point']['coords'].x)**2 +
+                            (gps_points[i]['coords'].y - kwargs['line_point']['coords'].y)**2) <= kwargs['r_2'] else 0
