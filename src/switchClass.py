@@ -9,11 +9,12 @@ class SwitchClass:
         self.methods_list = {
             1: utils.find_cur_line_by_sin_of_angle,
             2: utils.find_cur_line_by_accum_dist,
-            3: utils.find_cur_line_min_by_multiply_dists,
-            4: utils.find_cur_line_cos_beta_adjacent_angle,
-            5: utils.find_cur_line_by_min_dist_with_multiplier,
-            6: utils.find_cur_line_by_sin_of_angle_with_multiplier,
+            3: utils.find_cur_line_cos_beta_adjacent_angle,
+            4: utils.find_cur_line_min_by_multiply_dists,
+            5: utils.find_cur_line_by_sin_of_angle_with_multiplier,
+            6: utils.find_cur_line_by_min_dist_with_multiplier,
             7: utils.find_cur_line_min_by__last_point_min_dist,
+            8: utils.find_cur_line_by_sin_of_angle_multiplied
         }
         self.method_point_connection = {
             1: self.multiple_points_method,
@@ -23,6 +24,7 @@ class SwitchClass:
             5: self.multiple_points_method,
             6: self.multiple_points_method,
             7: self.single_point_method,
+            8: self.multiple_points_method
         }
         self.selection_list = {
             "whole": utils.whole_radius_inclusion,
@@ -41,6 +43,9 @@ class SwitchClass:
         return self.methods_list[self.method_id](gps_points[-1], observed_segments[0]), \
                self.methods_list[self.method_id](gps_points[-1], observed_segments[1])
 
+    def change_config(self, **kwargs):
+        self.method_id = kwargs['method']
+        self.selection_mode = kwargs['mode']
     def find_cur_line(self, gps_points: list, segments: list, **kwargs):
         selected_gps_points = self.selection_list[self.selection_mode](gps_points, **kwargs)
         criterion_1, criterion_2 = self.method_point_connection[self.method_id](selected_gps_points, segments, **kwargs)

@@ -22,9 +22,18 @@ class StateMatcher:
         self.switches = []
         self.switch_id = 0
         self.point_buffer = []
-        self.start_r = kwargs['start_r']
         self.end_r = kwargs['end_r']
-        self.n = kwargs['n']
+        self.switch_information = {
+            "constants": {
+                "start_r": kwargs['start_r'],
+                "end_r": kwargs['end_r'],
+                "n": kwargs['n']
+            },
+            "method_id": kwargs['method'],
+            "mode": kwargs['mode'],
+            "switch_class": self.find_path_class,
+            "switches": []
+        }
 
     def find_initial_state(self, index: int, last_line=None, min_dist=MIN_DIST) -> (dict, int):
         points = None
@@ -33,7 +42,7 @@ class StateMatcher:
                 line_points = [utils.find_dict(self.points, self.lines[i]["points"][j]),
                                utils.find_dict(self.points, self.lines[i]["points"][j + 1])]
                 current_dict = point_to_segment_distance(self.gps_points[index]["coords"], line_points)
-                if current_dict["dist"] < min_dist and current_dict['flag']:
+                if current_dict["dist"] < min_dist and current_dict['is_ortho']:
                     min_dist = current_dict["dist"]
                     points = {"gps_point": self.gps_points[index]['coords'], "cur_line": line_points, "last_line": last_line}
         if points:
@@ -98,7 +107,7 @@ class StateMatcher:
         next_seg_dist = point_to_segment_distance(point['coords'], next_segment)
         if next_seg_dist['break']:
             return [[[point, point['coords']]], True]
-        if next_seg_dist['flag']:
+        if next_seg_dist['is_ortho']:
             self.initial_dict['cur_line'] = next_segment
             if next_segment[0]['end'] and not condition:
                 #print("BREAK, left add point")
@@ -116,7 +125,7 @@ class StateMatcher:
                 break_condition = True
             else:
                 break_condition = False
-            if ortho_point_dist['flag']:
+            if ortho_point_dist['is_ortho']:
                 new_point = point_to_segment_projection(point['coords'], ortho_point_dist['cur_line'])
                 return [[[point, new_point]], break_condition]
             else:
@@ -159,16 +168,6 @@ class StateMatcher:
             if line_point['id'] == originial_list[i]:
                 return utils.find_dict(self.points, originial_list[i + 1 if condition else i - 1])
 
-    def dist_to_switch_segment(self, gps_point: dict, line_point: dict, segments: list, condition: bool) -> int:
-        try:
-            if condition:
-                return point_to_segment_distance(gps_point['coords'], [line_point,
-                                                                             segments[0]])["dist"]
-            else:
-                return point_to_segment_distance(gps_point['coords'], [line_point,
-                                                                             segments[1]])["dist"]
-        except:
-            return 10000
 
     def find_next_segment_in_line(self, line_point: dict, condition: bool) -> list:
         for line in self.lines:
@@ -212,17 +211,17 @@ class StateMatcher:
             i += 1
         observed_segments = self.consider_segments(segments)
         cur_line = self.find_path_class.find_cur_line(points, observed_segments,
-                                                      line_point=line_point, r_start=self.start_r,
-                                                      r_end=self.end_r, n=self.n)
-        self.switches.append({"id": self.switch_id, "line": cur_line})
+                                                      constants=self.switch_information['constants'],
+                                                      line_point=line_point)
+        self.switch_information['switches'].append(
+            {"id": self.switch_id, "line": cur_line, "points": points, "segments": observed_segments, "line_point": line_point})
         self.switch_id += 1
-        #print("added final point on cross. Point id - {}".format(self.gps_points[i]['id']))
         self.initial_dict['cur_line'] = cur_line
-        for point in points:
+        for point in points if condition else points[::-1]:
             ortho_point_dist = point_to_segment_distance(
                 point['coords'], cur_line
             )
-            if ortho_point_dist['flag']:
+            if ortho_point_dist['is_ortho']:
                 result.append([point, point_to_segment_projection(
                     point['coords'], cur_line)]
                               )
@@ -241,7 +240,6 @@ class StateMatcher:
                                   )
         if condition:
             self.initial_dict['cur_line'] = cur_line
-
         result.append([self.gps_points[i], point_to_segment_projection(self.gps_points[i]['coords'],
                                                                        self.initial_dict['cur_line'])])
         #self.initial_dict['cur_line'] = cur_line
@@ -261,23 +259,26 @@ class StateMatcher:
                                                                    condition)
             return [new_points, break_condition, 0]
 
+    def get_switch_info(self):
+        return self.switch_information
+
     def match(self) -> None:
         # self.gps_points = sorted(self.gps_points, key=lambda point: (point['coords'].x, point['coords'].y))
         #self.gps_points = self.gps_points[::-1]
         self.initial_dict, i = self.initialize()
         #print(len(self.gps_points))
         self.result.append([self.gps_points[i - 1], self.initial_dict['gps_point']])
-        step = 0
         while i < len(self.gps_points):
             #print(i)
+            step = 0
             p1, p2 = self.initial_dict['cur_line']
             ortho_point_dist = point_to_segment_distance(
                 self.gps_points[i]['coords'], self.initial_dict["cur_line"]
             )
-            if ortho_point_dist['flag']:
+            if ortho_point_dist['is_ortho']:
                 self.result.append([self.gps_points[i], point_to_segment_projection(
                     self.gps_points[i]['coords'], self.initial_dict["cur_line"])]
-                              )
+                                   )
             else:
                 if not ortho_point_dist['line_point']:
                     if p2['cross']:
@@ -301,10 +302,14 @@ class StateMatcher:
                 self.result.extend(new_points)
                 i += step
                 # print(step, "- step")
-                step = 0
             i += 1
 
+    def draw_trajectory(self):
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        ax.set_aspect("equal")
+        RailLines.draw_lines(self.lines, self.points, ax)
+        RailLines.draw_points(self.gps_points, ax, "green")
+        plt.grid()
+        plt.show()
 
-if __name__ == "__main__":
-    matcher = StateMatcher(3)
-    matcher.match()

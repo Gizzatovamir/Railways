@@ -81,17 +81,17 @@ def point_to_segment_distance(p: Point, line: list) -> dict:
     ap = p - a
 
     if ap.dot(ab) <= 0.0:  # Point is lagging behind start of the segment, so perpendicular distance is not viable.
-        return {"dist": ap.norm, "flag": False, "line_point": True,
+        return {"dist": ap.norm, "is_ortho": False, "line_point": True,
                 'cur_line': line, "break": False}  # Use distance to start of segment instead.
 
     bp = p - b
 
     if bp.dot(ab) >= 0.0:  # Point is advanced past the end of the segment, so perpendicular distance is not viable.
-        return {"dist": bp.norm, "flag": False, "line_point": False,
+        return {"dist": bp.norm, "is_ortho": False, "line_point": False,
                 'cur_line': line, "break": False}  # Use distance to end of the segment instead.
 
     # Perpendicular distance of point to segment. Use distance to start of segment instead.
-    return {"dist": (ab.cross(ap)).norm / ab.norm, "flag": True, 'cur_line': line, "break": False}
+    return {"dist": (ab.cross(ap)).norm / ab.norm, "is_ortho": True, 'cur_line': line, "break": False}
 
 
 def point_to_segment_projection(p: Point, line: list) -> Point:
@@ -104,8 +104,8 @@ def point_to_segment_projection(p: Point, line: list) -> Point:
             Point: projection of p to line segment [a,b].
     """
 
-    b = line[1]["coords"]
     a = line[0]["coords"]
+    b = line[1]["coords"]
 
     v = b - a
     res = a + v * (v.dot(p - a) / v.dot(v))
@@ -141,12 +141,13 @@ def find_cur_line_by_min_dist_with_multiplier(gps_points: list, observed_segment
 
 
 def find_cur_line_by_sin_of_angle_with_multiplier(gps_points: list, observed_segment: list, i: int, **kwargs) -> float:
-    return point_to_segment_distance(gps_points[i]['coords'], observed_segment)['dist'] / ((
-                                                                                                   gps_points[i][
-                                                                                                       'coords'] -
-                                                                                                   observed_segment[0][
-                                                                                                       'coords']).norm * (
-                                                                                                   i + 1))
+    return point_to_segment_distance(gps_points[i]['coords'], observed_segment)['dist'] / \
+           ((gps_points[i]['coords'] - observed_segment[0]['coords']).norm * (i + 1))
+
+
+def find_cur_line_by_sin_of_angle_multiplied(gps_points: list, observed_segment: list, i: int, **kwargs) -> float:
+    return point_to_segment_distance(gps_points[i]['coords'], observed_segment)['dist'] * (i + 1) / \
+           (gps_points[i]['coords'] - observed_segment[0]['coords']).norm
 
 
 def whole_radius_inclusion(gps_point, **kwargs) -> list:
@@ -154,8 +155,21 @@ def whole_radius_inclusion(gps_point, **kwargs) -> list:
 
 
 def segment_radius_inclusion(gps_points, **kwargs) -> list:
-    return [gps_point for gps_point in gps_points if kwargs['r_start'] < (gps_point["coords"] - kwargs['line_point']['coords']).norm <= kwargs['r_end']]
+    return [gps_point for gps_point in gps_points if kwargs['constants']['start_r'] <
+            (gps_point["coords"] - kwargs['line_point']['coords']).norm <= kwargs['constants']['end_r']]
 
 
 def last_n_points(gps_points, **kwargs) -> list:
-    return [gps_point for gps_point in gps_points[-kwargs["n"]:]]
+    return [gps_point for gps_point in gps_points[-kwargs['constants']["n"]:]]
+
+
+def dist_to_switch_segment(gps_point: dict, line_point: dict, segments: list, condition: bool) -> int:
+    try:
+        if condition:
+            return point_to_segment_distance(gps_point['coords'], [line_point,
+                                                                         segments[0]])["dist"]
+        else:
+            return point_to_segment_distance(gps_point['coords'], [line_point,
+                                                                         segments[1]])["dist"]
+    except:
+        return 10000

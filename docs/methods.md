@@ -1,6 +1,8 @@
 
-## All methods list with some information 
-![image of switch](../images/switch_1.png "Title")
+## All methods list with some information
+
+![image of switch](../images/switch_demonstration.png "Title")
+
 ## Multiple point methods
 #### Method 1
 
@@ -49,6 +51,14 @@ min(sum(H * i))
 ![img_6.png](../images/img_6.png)
 
 [comment]: (\min_N\sum_{i=0}^n{H_i\cdot\(i\)})
+
+#### Method 8
+
+min(sum(H * (i + 1)/L ))
+
+![img.png](../images/img_8.png)
+
+[comment]: (\min_N\sum_{i=0}^n{\frac{H_i\cdot\(i+1\)}{L_i}})
 
 ## Single point methods
 
