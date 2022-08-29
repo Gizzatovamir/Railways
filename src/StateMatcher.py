@@ -48,17 +48,16 @@ class StateMatcher:
         if points:
             if all([not line_point['cross'] for line_point in points["cur_line"]]):
                 points['gps_point'] = point_to_segment_projection(points['gps_point'], points['cur_line'])
-            for point in points['cur_line']:
-                if point['cross']:
-                    if (self.gps_points[index]["coords"] - point['coords']).norm <= self.end_r:
-                        self.point_buffer.append(self.gps_points[index])
-                        self.gps_points[index]['is_on_switch'] = True
-                        points = None
-            '''elif points["cur_line"][1]['cross']:
+            if points['cur_line'][0]['cross']:
+                if (self.gps_points[index]["coords"] - points["cur_line"][0]['coords']).norm <= self.end_r:
+                    self.point_buffer.append(self.gps_points[index])
+                    self.gps_points[index]['is_on_switch'] = True
+                    points = None
+            elif points["cur_line"][1]['cross']:
                 if (self.gps_points[index]["coords"] - points["cur_line"][1]['coords']).norm <= R_CROSS:
                     self.point_buffer.append(self.gps_points[index])
                     self.gps_points[index]['is_on_switch'] = True
-                    points = None'''
+                    points = None
         return points
 
     def initialize(self) -> (dict, int):
@@ -68,10 +67,9 @@ class StateMatcher:
             i += 1
             if state:
                 self.gps_points[i]['cur_line'] = state['cur_line']
-                print(self.point_buffer)
                 for point in self.point_buffer:
-                    print("APPENDED")
-                    print(point['id'])
+                    #print("APPENDED")
+                    #print(point['id'])
                     self.result.append([point, utils.point_to_segment_projection(point['coords'], state['cur_line'])])
                 return state, i
 
@@ -178,46 +176,22 @@ class StateMatcher:
                     return [line_point, new_end_point]
 
     def consider_segments(self, segments: list) -> list:
+        observed_segments = [segments[0], segments[1]]
         try:
-            if (segments[0][0]['coords'] - segments[0][1]['coords']).norm < self.end_r:
-                observed_segments = [[segments[0][1], segments[0][2]], [segments[1][0], segments[1][1]]]
-            elif (segments[1][0]['coords'] - segments[1][1]['coords']).norm < self.end_r:
-                observed_segments = [[segments[0][0], segments[0][1]], [segments[1][1], segments[1][2]]]
-            else:
-                observed_segments = [[segments[0][0], segments[0][1]], [segments[1][0], segments[1][1]]]
-        except IndexError:
+            for segment in segments[0]:
+                print(observed_segments)
+                if (segments[0][0]['coords'] - observed_segments[0][1]['coords']).norm < self.end_r:
+                    observed_segments[0] = segment
+            for segment in segments[1]:
+                if (segments[1][0]['coords'] - observed_segments[1][1]['coords']).norm < self.end_r:
+                    observed_segments[1] = segment
+        except:
             observed_segments = [[segments[0][0], segments[0][1]], [segments[1][0], segments[1][1]]]
         return observed_segments
 
-    def get_result_on_switch(self, i: int, line_point: dict, last_line_ortho_point_dist: dict, condition: bool) -> (
-            list, bool, int):
-        # print(i, ' start i')
-        points = []
+    def add_points_to_result_on_switch(self, points, cur_line) -> tuple:
         result = []
-        segments = self.find_segments_from_point(line_point) if condition else \
-            self.find_segments_from_point_left(line_point)
-
-        if len(segments) == 1:
-            # print(segments)
-            # self.initial_dict = self.initialize(self.gps_points[i])
-            self.initial_dict['cur_line'] = segments[0]
-            result = [[self.gps_points[i], point_to_segment_projection(
-                self.gps_points[i]['coords'], last_line_ortho_point_dist['cur_line'])]]
-            return [result, True if segments[0][1]['end'] or segments[0][0]['end'] else False, 0]
-
-        while (self.gps_points[i]["coords"] - line_point['coords']).norm <= self.end_r and i < len(self.gps_points) - 1:
-            self.gps_points[i]["is_on_switch"] = True
-            points.append(self.gps_points[i])
-            i += 1
-        observed_segments = self.consider_segments(segments)
-        cur_line = self.find_path_class.find_cur_line(points, observed_segments,
-                                                      constants=self.switch_information['constants'],
-                                                      line_point=line_point)
-        self.switch_information['switches'].append(
-            {"id": self.switch_id, "line": cur_line, "points": points, "segments": observed_segments, "line_point": line_point})
-        self.switch_id += 1
-        self.initial_dict['cur_line'] = cur_line
-        for point in points if condition else points[::-1]:
+        for point in points:
             ortho_point_dist = point_to_segment_distance(
                 point['coords'], cur_line
             )
@@ -238,24 +212,56 @@ class StateMatcher:
                     result.append([point, point_to_segment_projection(
                         point['coords'], next_segment)]
                                   )
-        if condition:
-            self.initial_dict['cur_line'] = cur_line
+        return result, cur_line
+
+    def get_result_on_switch(self, i: int, line: list, last_line_ortho_point_dist: dict, condition: bool) -> (
+            list, bool, int):
+        line_point = line[1]
+        points = []
+        result = []
+        segments = self.find_segments_from_point(line_point) if condition else \
+            self.find_segments_from_point_left(line_point)
+
+        if len(segments) == 1:
+            self.initial_dict['cur_line'] = segments[0]
+            result = [[self.gps_points[i], point_to_segment_projection(
+                self.gps_points[i]['coords'], last_line_ortho_point_dist['cur_line'])]]
+            return [result, True if segments[0][1]['end'] or segments[0][0]['end'] else False, 0]
+        is_valid_condition = utils.is_switch_valid(line, segments)
+        while (self.gps_points[i]["coords"] - line_point['coords']).norm <= self.end_r and i < len(self.gps_points) - 1:
+            points.append(self.gps_points[i])
+            self.gps_points[i]['is_on_switch'] = is_valid_condition['is_valid']
+            i += 1
+        if not is_valid_condition['is_valid']:
+            self.initial_dict['cur_line'] = is_valid_condition['line']
+            result, tmp_line = self.add_points_to_result_on_switch(points, self.initial_dict['cur_line'])
+            return [result, True if is_valid_condition['line'][0]['end'] or is_valid_condition['line'][1]['end'] else False, len(points)]
+
+        observed_segments = self.consider_segments(segments)
+        cur_line = self.find_path_class.find_cur_line(points, observed_segments,
+                                                      constants=self.switch_information['constants'],
+                                                      line_point=line_point)
+        self.switch_information['switches'].append(
+            {"id": self.switch_id, "line": cur_line, "points": points,
+             "segments": observed_segments, "line_point": line_point})
+        self.switch_id += 1
+        self.initial_dict['cur_line'] = cur_line
+        result, tmp_line = self.add_points_to_result_on_switch(points, cur_line)
+        if not condition:
+            self.initial_dict['cur_line'] = tmp_line
         result.append([self.gps_points[i], point_to_segment_projection(self.gps_points[i]['coords'],
                                                                        self.initial_dict['cur_line'])])
-        #self.initial_dict['cur_line'] = cur_line
         if cur_line[1]['end'] and condition:
-            #print("BREAK, right add on cross")
             return [result, True, len(points)]
         elif cur_line[0]['end'] and not condition:
-            #print("BREAK, left add on cross")
             return [result, True, len(points)]
         return [result, False, len(points)]
 
-    def add_point_on_cross(self, i: int, line_point: dict, ortho_point_dist: dict, condition: bool) -> list:
-        if (self.gps_points[i]["coords"] - line_point['coords']).norm <= self.end_r:
-            return self.get_result_on_switch(i, line_point, ortho_point_dist, condition)
+    def add_point_on_cross(self, i: int, line: list, ortho_point_dist: dict, condition: bool) -> list:
+        if (self.gps_points[i]["coords"] - line[1]['coords']).norm <= self.end_r:
+            return self.get_result_on_switch(i, line, ortho_point_dist, condition)
         else:
-            new_points, break_condition = self.add_point_to_result(self.gps_points[i], line_point, ortho_point_dist,
+            new_points, break_condition = self.add_point_to_result(self.gps_points[i], line[1], ortho_point_dist,
                                                                    condition)
             return [new_points, break_condition, 0]
 
@@ -264,7 +270,7 @@ class StateMatcher:
 
     def match(self) -> None:
         # self.gps_points = sorted(self.gps_points, key=lambda point: (point['coords'].x, point['coords'].y))
-        #self.gps_points = self.gps_points[::-1]
+        self.gps_points = self.gps_points[::-1]
         self.initial_dict, i = self.initialize()
         #print(len(self.gps_points))
         self.result.append([self.gps_points[i - 1], self.initial_dict['gps_point']])
@@ -282,17 +288,17 @@ class StateMatcher:
             else:
                 if not ortho_point_dist['line_point']:
                     if p2['cross']:
-                        new_points, break_condition, step = self.add_point_on_cross(i, p2, ortho_point_dist, True)
+                        new_points, break_condition, step = self.add_point_on_cross(i, [p1, p2], ortho_point_dist, True)
                     elif all([p2['cross'], p1['cross']]):
-                        new_points, break_condition, step = self.add_point_on_cross(i, p1, ortho_point_dist, True)
+                        new_points, break_condition, step = self.add_point_on_cross(i, [p2, p1], ortho_point_dist, True)
                     else:
                         new_points, break_condition = self.add_point_to_result(self.gps_points[i], p2, ortho_point_dist,
                                                                                True)
                 else:
                     if p1['cross']:
-                        new_points, break_condition, step = self.add_point_on_cross(i, p1, ortho_point_dist, False)
+                        new_points, break_condition, step = self.add_point_on_cross(i, [p2, p1], ortho_point_dist, False)
                     elif all([p2['cross'], p1['cross']]):
-                        new_points, break_condition, step = self.add_point_on_cross(i, p2, ortho_point_dist, False)
+                        new_points, break_condition, step = self.add_point_on_cross(i, [p1, p2], ortho_point_dist, False)
                     else:
                         new_points, break_condition = self.add_point_to_result(self.gps_points[i], p1, ortho_point_dist,
                                                                                False)

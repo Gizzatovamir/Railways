@@ -40,8 +40,11 @@ class SwitchClass:
         return criterion_1, criterion_2
 
     def single_point_method(self, gps_points: list, observed_segments: dict, **kwargs) -> tuple:
-        return self.methods_list[self.method_id](gps_points[-1], observed_segments[0]), \
+        criterion_1, criterion_2 = self.methods_list[self.method_id](gps_points[-1], observed_segments[0]), \
                self.methods_list[self.method_id](gps_points[-1], observed_segments[1])
+        print(criterion_1, " criterion 1")
+        print(criterion_2, " criterion 2")
+        return criterion_1, criterion_2
 
     def change_config(self, **kwargs):
         self.method_id = kwargs['method']
@@ -49,6 +52,11 @@ class SwitchClass:
     def find_cur_line(self, gps_points: list, segments: list, **kwargs):
         selected_gps_points = self.selection_list[self.selection_mode](gps_points, **kwargs)
         criterion_1, criterion_2 = self.method_point_connection[self.method_id](selected_gps_points, segments, **kwargs)
+        print(gps_points[-1]['id'])
+        print(segments[0], " segment 1")
+        print(segments[1], " segment 2")
+        print(point_to_segment_distance(gps_points[-1]['coords'], segments[0])['dist'])
+        print(point_to_segment_distance(gps_points[-1]['coords'], segments[1])['dist'])
         return segments[0] if criterion_2 > criterion_1 else segments[1]
 
 

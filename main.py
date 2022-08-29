@@ -17,5 +17,5 @@ if __name__ == "__main__":
     matcher = StateMatcher(**vars(args))
     matcher.match()
     matcher.draw_full_map(matcher.result)
-    tester = Tester(matcher.switch_information)
-    tester.test_switches()
+    #tester = Tester(matcher.switch_information)
+    #tester.test_switches()

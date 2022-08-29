@@ -150,16 +150,16 @@ def find_cur_line_by_sin_of_angle_multiplied(gps_points: list, observed_segment:
            (gps_points[i]['coords'] - observed_segment[0]['coords']).norm
 
 
-def whole_radius_inclusion(gps_point, **kwargs) -> list:
+def whole_radius_inclusion(gps_point: list, **kwargs) -> list:
     return gps_point
 
 
-def segment_radius_inclusion(gps_points, **kwargs) -> list:
+def segment_radius_inclusion(gps_points: list, **kwargs) -> list:
     return [gps_point for gps_point in gps_points if kwargs['constants']['start_r'] <
             (gps_point["coords"] - kwargs['line_point']['coords']).norm <= kwargs['constants']['end_r']]
 
 
-def last_n_points(gps_points, **kwargs) -> list:
+def last_n_points(gps_points: list, **kwargs) -> list:
     return [gps_point for gps_point in gps_points[-kwargs['constants']["n"]:]]
 
 
@@ -173,3 +173,27 @@ def dist_to_switch_segment(gps_point: dict, line_point: dict, segments: list, co
                                                                          segments[1]])["dist"]
     except:
         return 10000
+
+
+def get_angle(line_1, line_2) -> float:
+    vec_1 = line_1[1]['coords'] - line_1[0]['coords']
+    vec_2 = line_2[1]['coords'] - line_2[0]['coords']
+    cos_alpha = (float(np.dot(vec_1.vector, np.reshape(vec_2.vector, (3, 1))))) / (vec_1.norm * vec_2.norm)
+    '''print(cos_alpha, " - sin of alpha")
+    [print(el["id"], end=' ') for el in line_1]
+    print(" - line 1")
+    [print(el["id"], end=' ') for el in line_2]
+    print(" - line 2")'''
+    print(cos_alpha, ' - cos of alpha')
+    return cos_alpha > np.cos(np.pi / 2)
+
+
+def is_switch_valid(cur_line: list, segments: list) -> dict:
+    if all([get_angle(cur_line, segment) for segment in segments]):
+        return {"is_valid": True}
+    if get_angle(cur_line, segments[0]):
+        return {"is_valid": False, "line": segments[0][:2]}
+    else:
+        return {"is_valid": False, "line": segments[1][:2]}
+
+
