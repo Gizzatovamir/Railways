@@ -1,4 +1,4 @@
-from utils.constants import GPS_POINTS_PATH, POINTS_PATH, LINES_PATH, MIN_DIST
+from utils.constants import MIN_DIST
 from src.RailMap import RailLines
 from src.GPSPoints import GPSPoints
 import matplotlib.pyplot as plt
@@ -32,7 +32,21 @@ class StateMatcher:
             "switches": []
         }
 
-    def find_initial_state(self, index: int, last_line=None, min_dist=MIN_DIST) -> (dict, int):
+    def find_initial_state(self, index: int, min_dist=MIN_DIST) -> dict:
+        """
+        Function that finds starting point if the train starts from out of bounds.
+        Also checks if path is starting on switch.
+        Args:
+            index: index of point in list of points
+            min_dist: minimal distance that that is considered to choose start segment
+        Returns:
+            tuple:(
+                dict: {
+                    gps point,
+                    current line
+                }
+            )
+        """
         points = None
         for i in range(len(self.lines)):
             for j in range(len(self.lines[i]["points"]) - 1):
@@ -41,8 +55,7 @@ class StateMatcher:
                 current_dict = point_to_segment_distance(self.gps_points[index]["coords"], line_points)
                 if current_dict["dist"] < min_dist and current_dict['is_ortho']:
                     min_dist = current_dict["dist"]
-                    points = {"gps_point": self.gps_points[index]['coords'], "cur_line": line_points,
-                              "last_line": last_line}
+                    points = {"gps_point": self.gps_points[index]['coords'], "cur_line": line_points}
         if points:
             if all([not line_point['cross'] for line_point in points["cur_line"]]):
                 points['gps_point'] = point_to_segment_projection(points['gps_point'], points['cur_line'])
@@ -55,6 +68,15 @@ class StateMatcher:
         return points
 
     def initialize(self) -> (dict, int):
+        """
+        Initializing blocks
+        Returns:
+            tuple:
+            (
+                initial dictionary:contains orthogonal projection of point to current line, and current line,
+                i: index of point in list
+            )
+        """
         i = 0
         while i < len(self.gps_points):
             state = self.find_initial_state(i)
@@ -66,6 +88,14 @@ class StateMatcher:
                 return state, i
 
     def find_segments_from_point(self, point: dict) -> list:
+        """
+        Function that finds all points in line starts with given point
+        Args:
+            point: starting point in line
+
+        Returns:
+            list: list of point ids in line
+        """
         result = []
         for i in range(len(self.lines)):
             if point['id'] in self.lines[i]["points"] and point['id'] != self.lines[i]["points"][-1]:
@@ -73,6 +103,14 @@ class StateMatcher:
         return result
 
     def find_segments_from_point_left(self, point: dict) -> list:
+        """
+        Function that finds all points in line ends with given point
+        Args:
+            point: ending point in line
+
+        Returns:
+            list: list of point ids in line
+        """
         result = []
         for i in range(len(self.lines)):
             if point['id'] in self.lines[i]['points'] and point['id'] != self.lines[i]["points"][0]:
@@ -80,6 +118,10 @@ class StateMatcher:
         return result
 
     def draw_full_map(self, new_points: list) -> None:
+        """
+            Draws map with result points
+            Returns: None
+        """
         fig = plt.figure()
         ax = fig.add_subplot(111)
         ax.set_aspect("equal")
@@ -91,7 +133,18 @@ class StateMatcher:
 
     def add_point_to_result(self, point: dict, line_point: dict, ortho_point_dist: dict, condition: bool) -> (
             list, bool):
-        """function to add point with orthogonal projection to result. """
+        """function to add point with orthogonal projection to result.
+        Function is used to add points until switch is reached.
+            Args:
+                point: gps point from list (self.gps_point[i])
+                line_point: point to end of segment (segments consists of 2 points)
+                ortho_point_dist: dictionary obout distance, flag is_ortho
+                    (is it possible to lower the height on segment), e.t.c
+                condition: bool that demonstrates end or start of segment (True if start and False if end)
+            Returns:
+                list: list(point, point after letting orthogonal projection), break condition (if segment is on the end
+                    of the map True else if not)
+        """
         next_segment = self.find_next_segment(line_point, condition)
         next_seg_dist = point_to_segment_distance(point['coords'], next_segment)
         if next_seg_dist['break']:
@@ -120,6 +173,13 @@ class StateMatcher:
                 return [[[point, line_point['coords']]], break_condition]
 
     def find_next_segment(self, line_point: dict, condition: bool) -> list:
+        """Function to find next segment of current segment.
+            Args:
+                line_point: end of current segment
+                condition: bool that demonstrates end or start of segment (True if start and False if end)
+            Returns:
+                list: next segment in line or on new line.
+        """
         for line in self.lines:
             if line_point['id'] in line['points']:
                 if line_point['id'] != line['points'][0] and line_point['id'] != line['points'][-1]:
@@ -134,21 +194,52 @@ class StateMatcher:
                         return [next_line_point, line_point]
 
     def find_new_line_from_point_right(self, line_point: dict) -> dict:
+        """Function to find new line that start from certain point
+            Args:
+                line_point: end of current segment
+            Returns:
+                dict: second point in segment (is used in find_next_segment())
+        """
         for line in self.lines:
             if line_point['id'] == line['points'][0]:
                 return utils.find_dict(self.points, line['points'][1])
 
     def find_new_line_from_point_left(self, line_point: dict) -> dict:
+        """
+        Function to find new line that ends on certain point
+            Args:
+                line_point: end of current segment
+            Returns:
+                dict: first point in segment (is used in find_next_segment())
+        """
         for line in self.lines:
             if line_point['id'] == line['points'][-1]:
                 return utils.find_dict(self.points, line['points'][-2])
 
     def find_next_point_in_line(self, line_point: dict, original_list: list, condition: bool) -> dict:
+        """Function to find next segment in line. (is used until the end of line)
+            Args:
+                line_point: end of current segment,
+                original_list: list of point ids of line
+                condition: bool that demonstrates end or start of segment (True if start and False if end)
+            Returns:
+                dict: second point in segment (is used in find_next_segment())
+        """
         for i in range(len(original_list)):
             if line_point['id'] == original_list[i]:
                 return utils.find_dict(self.points, original_list[i + 1 if condition else i - 1])
 
     def find_next_segment_in_line(self, line_point: dict, condition: bool) -> list:
+        """Function to find next segment in line. (is used until the end of line)
+            Args:
+                line_point: end of current segment,
+                condition: bool that demonstrates end or start of segment (True if start and False if end)
+            Returns:
+                list:[
+                    dict: end/start of current segment,
+                    dict: next point of segment in line
+                ]
+        """
         for line in self.lines:
             if line_point['id'] in line['points']:
                 index = utils.find_index(line_point, line['points'])
@@ -173,10 +264,22 @@ class StateMatcher:
                 observed_segments = [[segments[0][0], segments[0][1]], [segments[1][0], segments[1][1]]]
         except IndexError:
             observed_segments = [[segments[0][0], segments[0][1]], [segments[1][0], segments[1][1]]]
-        #self.consider_segments()
+        # self.consider_segments()
         return observed_segments
 
-    def add_points_to_result_on_switch(self, points, cur_line) -> tuple:
+    def add_points_to_result_on_switch(self, points: list, cur_line: list) -> tuple:
+        """
+        Function to add points to result on switch. if path on switch consists of 2 or more segments,
+        the function finds previous segment and lowers heights on them.
+            Args:
+                points: point list that have to be added
+                cur_line: current segment of switch
+            Returns:
+                tuple:(
+                    lists [points, orthogonal projection of point],
+                    current segment on the path [p1,p2]
+                )
+        """
         result = []
         for point in points:
             ortho_point_dist = point_to_segment_distance(
@@ -197,15 +300,17 @@ class StateMatcher:
 
     def get_result_on_switch(self, i: int, line: list, last_line_ortho_point_dist: dict, condition: bool) -> list:
         """function to find segment on switch based on chosen method and all points on switch to chosen path
-            args:
+            Args:
                 i : index of gps point in list,
                 line: current line the train is moving on,
                 last_line_ortho_point_dist: dictionary with information about current line and last gps point in list
                 condition: bool that says that the train is moving to start or end of the segment
-            returns:
-                list: [point, orthogonal projection of point],
-                bool: did the train reach the end of map section,
-                step: len(points), step that will be skipped in while loop in match
+            Returns:
+                list:[
+                    list: [point, orthogonal projection of point],
+                    bool: did the train reach the end of map section,
+                    step: len(points), step that will be skipped in while loop in match
+                ]
         """
         line_point = line[1]
         points = []
@@ -254,6 +359,23 @@ class StateMatcher:
         return [result, False, len(points)]
 
     def add_point_on_cross(self, i: int, line: list, ortho_point_dist: dict, condition: bool) -> list:
+        """
+        Function to check if point in decision area. if it is in the area,
+        then get_result_on_switch is called else it is added to result with add_point_to_result function
+        Args:
+            i: index of point in point list
+            line: current segment on the map
+            ortho_point_dist: dictionary obout distance, flag is_ortho
+            (is it possible to lower the height on segment), e.t.c
+            condition: bool that demonstrates end or start of segment (True if start and False if end)
+
+        Returns:
+            list:[
+                    list: [point, orthogonal projection of point],
+                    bool: did the train reach the end of map section,
+                    step: len(points), step that will be skipped in while loop in match
+                ]
+        """
         if (self.gps_points[i]["coords"] - line[1]['coords']).norm <= self.end_r:
             return self.get_result_on_switch(i, line, ortho_point_dist, condition)
         else:
@@ -262,10 +384,27 @@ class StateMatcher:
             return [new_points, break_condition, 0]
 
     def get_switch_info(self):
+        """
+        Returns:
+            dict:{
+                constants:
+                    start radius,
+                    end radius,
+                    n points in last n mode
+                method_id,
+                mode,
+                switch choosing class object,
+                list of switches
+            }
+        """
         return self.switch_information
 
     def match(self) -> None:
-        #self.gps_points = self.gps_points[::-1]
+        # self.gps_points = self.gps_points[::-1]
+        """
+            Function that initialize algorithm
+            Returns: None
+        """
         self.initial_dict, i = self.initialize()
         self.result.append([self.gps_points[i - 1], self.initial_dict['gps_point']])
         while i < len(self.gps_points):
@@ -279,7 +418,7 @@ class StateMatcher:
                     self.gps_points[i]['coords'], self.initial_dict["cur_line"])]
                                    )
             else:
-                line = [p1,p2] if not ortho_point_dist['line_point'] else [p2,p1]
+                line = [p1, p2] if not ortho_point_dist['line_point'] else [p2, p1]
                 line_point = p2 if not ortho_point_dist['line_point'] else p1
                 if p2['cross'] if not ortho_point_dist['line_point'] else p1['cross']:
                     new_points, break_condition, step = self.add_point_on_cross(i, line, ortho_point_dist,
@@ -298,6 +437,10 @@ class StateMatcher:
             i += 1
 
     def draw_trajectory(self):
+        """
+            Draws map with only gps point from log
+            Returns: None
+        """
         fig = plt.figure()
         ax = fig.add_subplot(111)
         ax.set_aspect("equal")
