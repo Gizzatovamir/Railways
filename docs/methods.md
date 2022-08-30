@@ -67,8 +67,10 @@ min(sum(H * (i + 1)/L ))
 ![img_7.png](../images/img_7.png)
 
 
-min(H_(-1))
+min(H_(n))
 
-(-1 == last point)
+N = 0,1
+n = len(gps_point_list)
+
 
 [comment]: (\min_N\(H_{n}\))

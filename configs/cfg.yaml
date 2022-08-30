@@ -1,0 +1,12 @@
+---
+matching_config:
+  path: jsons/logs/nav_points.json
+  points_path: jsons/map_points.json
+  lines_path: jsons/map_lines.json
+  method: 6
+  mode: whole
+  n: 1
+  start_r: 20
+  end_r: 25
+  min_dist: 2
+

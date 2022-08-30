@@ -1,5 +1,5 @@
 from utils.utils import get_json
-from src.basicMap import basicMap
+from src.BasicMap import basicMap
 import pymap3d as pm
 from src.PointClass import Point
 

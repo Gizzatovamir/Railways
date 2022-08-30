@@ -83,7 +83,7 @@ def point_to_segment_distance(p: Point, line: list) -> dict:
     if ap.dot(ab) <= 0.0:  # Point is lagging behind start of the segment, so perpendicular distance is not viable.
         return {"dist": ap.norm, "is_ortho": False, "line_point": True,
                 'cur_line': line, "break": False}  # Use distance to start of segment instead.
-
+    #  Return True if function returns distance to the start and False if it returns to the end of segment
     bp = p - b
 
     if bp.dot(ab) >= 0.0:  # Point is advanced past the end of the segment, so perpendicular distance is not viable.
@@ -167,10 +167,10 @@ def dist_to_switch_segment(gps_point: dict, line_point: dict, segments: list, co
     try:
         if condition:
             return point_to_segment_distance(gps_point['coords'], [line_point,
-                                                                         segments[0]])["dist"]
+                                                                   segments[0]])["dist"]
         else:
             return point_to_segment_distance(gps_point['coords'], [line_point,
-                                                                         segments[1]])["dist"]
+                                                                   segments[1]])["dist"]
     except:
         return 10000
 
@@ -179,21 +179,15 @@ def get_angle(line_1, line_2) -> float:
     vec_1 = line_1[1]['coords'] - line_1[0]['coords']
     vec_2 = line_2[1]['coords'] - line_2[0]['coords']
     cos_alpha = (float(np.dot(vec_1.vector, np.reshape(vec_2.vector, (3, 1))))) / (vec_1.norm * vec_2.norm)
-    '''print(cos_alpha, " - sin of alpha")
-    [print(el["id"], end=' ') for el in line_1]
-    print(" - line 1")
-    [print(el["id"], end=' ') for el in line_2]
-    print(" - line 2")'''
-    print(cos_alpha, ' - cos of alpha')
-    return cos_alpha > np.cos(np.pi / 2)
+    return cos_alpha > np.cos(np.pi / 3)
 
 
 def is_switch_valid(cur_line: list, segments: list) -> dict:
     if all([get_angle(cur_line, segment) for segment in segments]):
         return {"is_valid": True}
     if get_angle(cur_line, segments[0]):
-        return {"is_valid": False, "line": segments[0][:2]}
+        return {"is_valid": False, "line": segments[0][0:1]}
     else:
-        return {"is_valid": False, "line": segments[1][:2]}
+        return {"is_valid": False, "line": segments[1][0:1]}
 
 

@@ -1,6 +1,6 @@
 from utils.utils import get_json, find_dict
 from utils.constants import POINTS_PATH, LINES_PATH
-from src.basicMap import basicMap
+from src.BasicMap import basicMap
 
 
 class RailLines(basicMap):
@@ -36,58 +36,7 @@ class RailLines(basicMap):
         print(self.lines)
 
     def merge_lines(self) -> None:
-        i = 0
-        j, k = 0, 0
-        print(len(self.lines))
-        while i < len(self.lines):
-            line_points = [find_dict(self.points, self.lines[i]['points'][x]) for x in range(len(self.lines[i]['points']))]
-            if line_points[0]['cross'] is False:
-                while j < len(self.lines):
-                    if self.lines[j]['points'][-1] == line_points[0]['id']:
-                        print(self.lines[j]['points'], ' j start')
-                        print(self.lines[i]['points'], ' i end')
-                        self.lines[j]['points'] = self.lines[j]['points'] + self.lines[i]['points'][1:]
-                        print(self.lines[j]['points'])
-                        self.lines.remove(self.lines[i])
-                        print(self.lines[j]['points'])
-                        i = 0
-                        j = 0
-                    if self.lines[j]['points'][0] == line_points[0]['id']:
-                        print(self.lines[j]['points'], ' j start')
-                        print(self.lines[i]['points'], ' i end')
-                        self.lines[i]['points'] = self.lines[i]['points'][::-1]
-                        self.lines[j]['points'] = self.lines[j]['points'] + self.lines[i]['points'][1:]
-                        print(self.lines[j]['points'])
-                        self.lines.remove(self.lines[i])
-                        print(self.lines[j]['points'])
-                        i = 0
-                        j = 0
-                    j+=1
-            if line_points[-1]['cross'] is False:
-                while k < len(self.lines):
-                    if self.lines[k]['points'][0] == line_points[-1]['id']:
-                        print(self.lines[i]['points'], ' i start')
-                        print(self.lines[k]['points'], ' k end')
-                        self.lines[i]['points'] = self.lines[i]['points'] + self.lines[k]['points'][1:]
-                        print(self.lines[i]['points'])
-                        self.lines.remove(self.lines[k])
-                        print(self.lines[i]['points'])
-                        k = 0
-                        i = 0
-                    if self.lines[k]['points'][-1] == line_points[-1]['id']:
-                        print(self.lines[i]['points'], ' i start')
-                        print(self.lines[k]['points'], ' k end')
-                        self.lines[k]['points'] = self.lines[k]['points'][::-1]
-                        self.lines[i]['points'] = self.lines[i]['points'] + self.lines[k]['points'][1:]
-                        print(self.lines[i]['points'])
-                        self.lines.remove(self.lines[k])
-                        print(self.lines[i]['points'])
-                        k = 0
-                        i = 0
-                    k+=1
-            #print(i)
-            i += 1
-        print(len(self.lines))
+        pass
 
 if __name__ == "__main__":
     new_map = RailLines(LINES_PATH, POINTS_PATH)

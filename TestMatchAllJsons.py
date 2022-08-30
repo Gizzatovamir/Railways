@@ -1,5 +1,5 @@
 from src.StateMatcher import StateMatcher
-from src.testerClass import Tester
+from src.TesterClass import Tester
 from utils.constants import GPS_POINTS_PATH, POINTS_PATH, LINES_PATH
 import argparse
 from os import walk

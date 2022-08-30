@@ -1,6 +1,6 @@
 from utils.constants import LINES_PATH, POINTS_PATH, GPS_POINTS_PATH
 from itertools import zip_longest
-from src.switchClass import SwitchClass
+from src.SwitchClass import SwitchClass
 
 R_CROSS = 30
 
@@ -13,6 +13,7 @@ class Tester:
         self.find_path_class.change_config(method=7, mode="whole")
         self.coincidence_counter = 0
         self.result = []
+
     def test_switches(self) -> tuple:
         for switch in self.switches:
             cur_line = self.find_path_class.find_cur_line(switch['points'], switch["segments"],
