@@ -1,0 +1,564 @@
+Now jsons/logs/nav_points_2022-07-12T12_30_16.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-09T12_17_13.json log is matching
+ 5 out of 5 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful', 'Matching on switch 3 is successful', 'Matching on switch 4 is successful']
+Now jsons/logs/nav_points_2022-06-04T00_06_10.json log is matching
+ 6 out of 6 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful', 'Matching on switch 3 is successful', 'Matching on switch 4 is successful', 'Matching on switch 5 is successful']
+Now jsons/logs/nav_points_2022-07-09T17_12_43.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-06-02T10_37_11.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-06-01T20_53_35.json log is matching
+ 6 out of 6 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful', 'Matching on switch 3 is successful', 'Matching on switch 4 is successful', 'Matching on switch 5 is successful']
+Now jsons/logs/nav_points_2022-07-09T20_16_00.json log is matching
+ 6 out of 6 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful', 'Matching on switch 3 is successful', 'Matching on switch 4 is successful', 'Matching on switch 5 is successful']
+Now jsons/logs/nav_points_2022-06-03T04_21_49.json log is matching
+ 4 out of 5 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful', 'Matching on switch 3 is successful', 'Matching on switch 4 is successful']
+Now jsons/logs/nav_points_2022-07-08T23_21_08.json log is matching
+ 0 out of 0 switches are correct
+[]
+Now jsons/logs/nav_points_2022-07-07T09_25_35.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-06-29T19_07_34.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-07-12T08_25_22.json log is matching
+ 0 out of 0 switches are correct
+[]
+Now jsons/logs/nav_points_2022-06-02T06_32_22.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-07-11T07_23_56.json log is matching
+ 3 out of 6 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful', 'Matching on switch 3 is unsuccessful', 'Matching on switch 4 is successful', 'Matching on switch 5 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-11T20_46_05.json log is matching
+ 3 out of 6 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful', 'Matching on switch 3 is unsuccessful', 'Matching on switch 4 is unsuccessful', 'Matching on switch 5 is successful']
+Now jsons/logs/nav_points_2022-06-03T22_13_56.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-12T05_58_30.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-07-11T20_24_53.json log is matching
+ 3 out of 4 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful', 'Matching on switch 3 is unsuccessful']
+Now jsons/logs/nav_points_2022-06-02T06_42_38.json log is matching
+ 1 out of 3 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-06-01T10_16_27.json log is matching
+ 1 out of 3 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-08T18_39_14.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-06-02T16_28_12.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-06-03T04_09_27.json log is matching
+ 1 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-10T14_08_39.json log is matching
+ 1 out of 5 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is unsuccessful', 'Matching on switch 3 is unsuccessful', 'Matching on switch 4 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-10T04_45_51.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-07T23_23_17.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-12T13_47_26.json log is matching
+ 2 out of 6 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful', 'Matching on switch 3 is unsuccessful', 'Matching on switch 4 is unsuccessful', 'Matching on switch 5 is unsuccessful']
+Now jsons/logs/nav_points_2022-06-29T14_45_37.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-12T08_27_44.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-11T15_40_58.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-07-07T04_12_58.json log is matching
+ 1 out of 2 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-07-09T21_38_25.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-10T07_18_22.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-06-03T06_35_10.json log is matching
+ 4 out of 5 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful', 'Matching on switch 3 is successful', 'Matching on switch 4 is successful']
+Now jsons/logs/nav_points_2022-07-10T07_36_37.json log is matching
+ 1 out of 2 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-06-29T14_51_06.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-06-29T17_16_38.json log is matching
+ 2 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-07-10T20_17_52.json log is matching
+ 2 out of 6 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful', 'Matching on switch 3 is unsuccessful', 'Matching on switch 4 is unsuccessful', 'Matching on switch 5 is successful']
+Now jsons/logs/nav_points_2022-06-02T02_03_21.json log is matching
+ 1 out of 3 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-07-11T07_15_52.json log is matching
+ 0 out of 0 switches are correct
+[]
+Now jsons/logs/nav_points_2022-07-11T22_40_53.json log is matching
+ 5 out of 5 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful', 'Matching on switch 3 is successful', 'Matching on switch 4 is successful']
+Now jsons/logs/nav_points_2022-07-08T09_46_34.json log is matching
+ 3 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-07-09T08_26_30.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-07-10T23_43_37.json log is matching
+ 4 out of 5 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful', 'Matching on switch 3 is successful', 'Matching on switch 4 is successful']
+Now jsons/logs/nav_points_2022-07-07T20_56_26.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-06-29T10_32_15.json log is matching
+ 0 out of 3 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-10T20_32_13.json log is matching
+ 1 out of 2 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-07-09T10_03_09.json log is matching
+ 2 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-06-02T10_48_06.json log is matching
+ 3 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-07-08T02_05_14.json log is matching
+ 2 out of 5 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is unsuccessful', 'Matching on switch 3 is successful', 'Matching on switch 4 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-10T14_02_39.json log is matching
+ 3 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-07-09T21_41_36.json log is matching
+ 1 out of 4 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is unsuccessful', 'Matching on switch 3 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-11T19_30_02.json log is matching
+ 1 out of 3 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-13T00_58_55.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-10T10_27_02.json log is matching
+ 3 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-07-10T11_06_35.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-06-01T13_23_07.json log is matching
+ 2 out of 6 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful', 'Matching on switch 3 is unsuccessful', 'Matching on switch 4 is unsuccessful', 'Matching on switch 5 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-07T16_27_29.json log is matching
+ 3 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-06-01T06_37_07.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-06-29T14_54_16.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-09T07_59_05.json log is matching
+ 3 out of 6 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful', 'Matching on switch 3 is successful', 'Matching on switch 4 is successful', 'Matching on switch 5 is unsuccessful']
+Now jsons/logs/nav_points_2022-06-03T03_00_23.json log is matching
+ 0 out of 0 switches are correct
+[]
+Now jsons/logs/nav_points_2022-07-08T12_46_39.json log is matching
+ 2 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-08T07_07_27.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-07-09T07_09_58.json log is matching
+ 0 out of 0 switches are correct
+[]
+Now jsons/logs/nav_points_2022-07-09T02_25_28.json log is matching
+ 3 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-07-08T07_03_44.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-09T09_58_25.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-10T14_55_05.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-08T04_24_31.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-06-01T05_26_58.json log is matching
+ 1 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-12T07_02_09.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-12T14_58_57.json log is matching
+ 2 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-07-08T20_45_41.json log is matching
+ 3 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-07-11T21_16_38.json log is matching
+ 3 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-07-10T20_37_32.json log is matching
+ 1 out of 4 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is unsuccessful', 'Matching on switch 3 is unsuccessful']
+Now jsons/logs/nav_points_2022-06-02T16_33_36.json log is matching
+ 1 out of 2 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-06-03T01_44_06.json log is matching
+ 1 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-13T01_15_13.json log is matching
+ 0 out of 2 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is unsuccessful']
+Now jsons/logs/nav_points_2022-06-03T06_40_59.json log is matching
+ 1 out of 3 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful']
+Now jsons/logs/nav_points_2022-06-03T02_51_03.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-08T09_40_34.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-09T07_01_54.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-06-02T11_38_23.json log is matching
+ 4 out of 6 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful', 'Matching on switch 3 is unsuccessful', 'Matching on switch 4 is successful', 'Matching on switch 5 is successful']
+Now jsons/logs/nav_points_2022-06-29T15_01_21.json log is matching
+ 1 out of 2 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-06-01T05_21_53.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-06-29T13_04_33.json log is matching
+ 2 out of 3 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-07-07T06_53_25.json log is matching
+ 0 out of 0 switches are correct
+[]
+Now jsons/logs/nav_points_2022-07-10T04_49_16.json log is matching
+ 3 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-07-07T06_48_54.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-07-13T02_10_03.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-06-29T17_12_32.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-10T15_08_52.json log is matching
+ 1 out of 2 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-07-09T10_09_00.json log is matching
+ 4 out of 4 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful', 'Matching on switch 3 is successful']
+Now jsons/logs/nav_points_2022-06-01T06_39_49.json log is matching
+ 2 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-12T12_41_40.json log is matching
+ 1 out of 3 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-06-29T13_06_56.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-06-29T12_55_56.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-07-09T04_34_50.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-12T12_36_28.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-11T15_44_21.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-06-03T01_39_38.json log is matching
+ 6 out of 6 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful', 'Matching on switch 3 is successful', 'Matching on switch 4 is successful', 'Matching on switch 5 is successful']
+Now jsons/logs/nav_points_2022-07-09T08_15_37.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-08T04_16_55.json log is matching
+ 5 out of 5 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful', 'Matching on switch 3 is successful', 'Matching on switch 4 is successful']
+Now jsons/logs/nav_points_2022-07-07T22_19_09.json log is matching
+ 3 out of 6 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful', 'Matching on switch 3 is successful', 'Matching on switch 4 is successful', 'Matching on switch 5 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-13T12_37_20.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-10T10_34_57.json log is matching
+ 3 out of 5 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful', 'Matching on switch 3 is successful', 'Matching on switch 4 is unsuccessful']
+Now jsons/logs/nav_points_2022-06-03T22_17_30.json log is matching
+ 3 out of 4 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful', 'Matching on switch 3 is successful']
+Now jsons/logs/nav_points_2022-07-07T16_31_38.json log is matching
+ 2 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-12T08_22_10.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-06-29T13_25_55.json log is matching
+ 2 out of 4 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful', 'Matching on switch 3 is unsuccessful']
+Now jsons/logs/nav_points_2022-06-01T10_28_07.json log is matching
+ 3 out of 6 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful', 'Matching on switch 3 is unsuccessful', 'Matching on switch 4 is successful', 'Matching on switch 5 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-13T01_06_08.json log is matching
+ 0 out of 0 switches are correct
+[]
+Now jsons/logs/nav_points_2022-06-03T22_33_01.json log is matching
+ 2 out of 4 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is unsuccessful', 'Matching on switch 3 is successful']
+Now jsons/logs/nav_points_2022-07-09T04_45_03.json log is matching
+ 0 out of 0 switches are correct
+[]
+Now jsons/logs/nav_points_2022-07-09T05_23_16.json log is matching
+ 0 out of 0 switches are correct
+[]
+Now jsons/logs/nav_points_2022-07-09T20_24_55.json log is matching
+ 2 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-09T10_05_25.json log is matching
+ 6 out of 6 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful', 'Matching on switch 3 is successful', 'Matching on switch 4 is successful', 'Matching on switch 5 is successful']
+Now jsons/logs/nav_points_2022-07-07T10_35_52.json log is matching
+ 2 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-06-02T01_59_43.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-08T19_05_39.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-11T19_17_43.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-07-08T04_29_35.json log is matching
+ 0 out of 0 switches are correct
+[]
+Now jsons/logs/nav_points_2022-07-09T20_43_21.json log is matching
+ 3 out of 4 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful', 'Matching on switch 3 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-11T14_33_34.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-07T11_18_51.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-11T21_13_34.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-07-11T23_11_06.json log is matching
+ 3 out of 4 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful', 'Matching on switch 3 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-10T19_09_18.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-11T20_43_38.json log is matching
+ 0 out of 0 switches are correct
+[]
+Now jsons/logs/nav_points_2022-07-11T19_35_12.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-06-02T17_45_06.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-11T23_48_16.json log is matching
+ 4 out of 5 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful', 'Matching on switch 3 is successful', 'Matching on switch 4 is successful']
+Now jsons/logs/nav_points_2022-06-03T04_11_59.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-06-03T05_18_16.json log is matching
+ 3 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-06-29T10_12_59.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-07T19_16_07.json log is matching
+ 3 out of 4 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful', 'Matching on switch 3 is unsuccessful']
+Now jsons/logs/nav_points_2022-06-04T00_52_19.json log is matching
+ 3 out of 4 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful', 'Matching on switch 3 is successful']
+Now jsons/logs/nav_points_2022-07-09T02_20_54.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points.json log is matching
+ 5 out of 6 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful', 'Matching on switch 3 is successful', 'Matching on switch 4 is successful', 'Matching on switch 5 is successful']
+Now jsons/logs/nav_points_2022-06-01T13_19_40.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-10T20_12_20.json log is matching
+ 3 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-06-01T20_58_06.json log is matching
+ 3 out of 4 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful', 'Matching on switch 3 is successful']
+Now jsons/logs/nav_points_2022-07-08T21_05_55.json log is matching
+ 3 out of 6 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful', 'Matching on switch 3 is unsuccessful', 'Matching on switch 4 is successful', 'Matching on switch 5 is successful']
+Now jsons/logs/nav_points_2022-07-08T23_17_58.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-09T22_12_58.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-07-09T04_57_02.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-06-01T10_22_15.json log is matching
+ 1 out of 2 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-07-08T02_02_10.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-07T21_50_06.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-10T00_01_53.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-11T12_11_15.json log is matching
+ 1 out of 2 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-06-01T15_30_37.json log is matching
+ 3 out of 6 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful', 'Matching on switch 3 is unsuccessful', 'Matching on switch 4 is successful', 'Matching on switch 5 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-08T19_25_51.json log is matching
+ 1 out of 2 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-06-03T22_22_58.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-07T04_05_32.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-09T12_26_47.json log is matching
+ 2 out of 4 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful', 'Matching on switch 3 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-07T21_02_08.json log is matching
+ 1 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-12T06_06_55.json log is matching
+ 2 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-07-08T18_47_00.json log is matching
+ 0 out of 0 switches are correct
+[]
+Now jsons/logs/nav_points_2022-07-07T11_23_56.json log is matching
+ 2 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-07-09T17_20_32.json log is matching
+ 0 out of 0 switches are correct
+[]
+Now jsons/logs/nav_points_2022-07-07T19_41_04.json log is matching
+ 3 out of 5 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful', 'Matching on switch 3 is successful', 'Matching on switch 4 is unsuccessful']
+Now jsons/logs/nav_points_2022-06-02T07_34_02.json log is matching
+ 0 out of 3 switches are correct
+['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-13T13_01_23.json log is matching
+ 2 out of 4 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful', 'Matching on switch 3 is unsuccessful']
+Now jsons/logs/nav_points_2022-06-02T07_19_52.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-06-29T19_10_00.json log is matching
+ 0 out of 0 switches are correct
+[]
+Now jsons/logs/nav_points_2022-07-13T01_08_30.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-12T07_29_10.json log is matching
+ 3 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-07-11T19_40_44.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-07-07T09_35_34.json log is matching
+ 3 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-07-09T20_33_45.json log is matching
+ 6 out of 6 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful', 'Matching on switch 3 is successful', 'Matching on switch 4 is successful', 'Matching on switch 5 is successful']
+Now jsons/logs/nav_points_2022-07-13T02_16_42.json log is matching
+ 0 out of 0 switches are correct
+[]
+Now jsons/logs/nav_points_2022-07-11T18_09_13.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-07-11T14_36_18.json log is matching
+ 2 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-07-11T07_18_39.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-06-03T04_15_59.json log is matching
+ 1 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is unsuccessful', 'Matching on switch 2 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-10T11_19_43.json log is matching
+ 0 out of 0 switches are correct
+[]
+Now jsons/logs/nav_points_2022-07-12T00_08_02.json log is matching
+ 3 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is successful']
+Now jsons/logs/nav_points_2022-07-09T17_17_46.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-08T04_20_16.json log is matching
+ 2 out of 3 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful', 'Matching on switch 2 is unsuccessful']
+Now jsons/logs/nav_points_2022-07-09T12_20_08.json log is matching
+ 0 out of 0 switches are correct
+[]
+Now jsons/logs/nav_points_2022-06-03T03_17_58.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']
+Now jsons/logs/nav_points_2022-07-11T12_04_22.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-07-10T19_18_02.json log is matching
+ 0 out of 0 switches are correct
+[]
+Now jsons/logs/nav_points_2022-06-03T01_48_37.json log is matching
+ 0 out of 0 switches are correct
+[]
+Now jsons/logs/nav_points_2022-07-09T08_20_11.json log is matching
+ 2 out of 2 switches are correct
+['Matching on switch 0 is successful', 'Matching on switch 1 is successful']
+Now jsons/logs/nav_points_2022-07-07T10_32_35.json log is matching
+ 1 out of 1 switches are correct
+['Matching on switch 0 is successful']

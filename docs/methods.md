@@ -1,6 +1,8 @@
 
-## All methods list with some information 
-![image of switch](../images/switch_1.png "Title")
+## All methods list with some information
+
+![image of switch](../images/switch_demonstration.png "Title")
+
 ## Multiple point methods
 #### Method 1
 
@@ -50,6 +52,14 @@ min(sum(H * i))
 
 [comment]: (\min_N\sum_{i=0}^n{H_i\cdot\(i\)})
 
+#### Method 8
+
+min(sum(H * (i + 1)/L ))
+
+![img.png](../images/img_8.png)
+
+[comment]: (\min_N\sum_{i=0}^n{\frac{H_i\cdot\(i+1\)}{L_i}})
+
 ## Single point methods
 
 #### method 7
@@ -57,8 +67,10 @@ min(sum(H * i))
 ![img_7.png](../images/img_7.png)
 
 
-min(H_(-1))
+min(H_(n))
 
-(-1 == last point)
+N = 0,1
+n = len(gps_point_list)
+
 
 [comment]: (\min_N\(H_{n}\))
