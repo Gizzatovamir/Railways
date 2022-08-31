@@ -430,7 +430,7 @@ class StateMatcher:
                     new_points, break_condition = self.add_point_to_result(self.gps_points[i], line_point,
                                                                            ortho_point_dist,
                                                                            not ortho_point_dist['line_point'])
-                if break_condition and i > len(self.gps_points) - 150:
+                if break_condition and i > len(self.gps_points) - 50:
                     break
                 self.result.extend(new_points)
                 i += step

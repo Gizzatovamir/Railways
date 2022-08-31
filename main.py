@@ -21,6 +21,8 @@ if __name__ == "__main__":
         with open(args.cfg, 'r') as cfg:
             try:
                 arg_list = yaml.load(cfg, Loader=yaml.FullLoader)['matching_config']
+                for key, value in vars(args).items():
+                    arg_list[key] = value
                 print(arg_list)
             except yaml.YAMLError as exc:
                 print(exc)

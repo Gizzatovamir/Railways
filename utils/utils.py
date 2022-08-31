@@ -75,7 +75,7 @@ def point_to_segment_distance(p: Point, line: list) -> dict:
     try:
         a = line[0]["coords"]
         b = line[1]["coords"]
-    except TypeError:
+    except:
         return {"dist": -1, "break": True}
     ab = b - a
     ap = p - a
