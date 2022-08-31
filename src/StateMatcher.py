@@ -448,4 +448,3 @@ class StateMatcher:
         RailLines.draw_points(self.gps_points, ax, "green")
         plt.grid()
         plt.show()
-
