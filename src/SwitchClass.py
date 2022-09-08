@@ -32,6 +32,9 @@ class SwitchClass:
             utils.method_2_poly_line,
             utils.method_3_poly_line,
             utils.method_4_poly_line,
+            utils.method_5_poly_line,
+            utils.method_6_poly_line,
+            utils.method_7_poly_line,
         ]
         self.selection_list = {
             "whole": utils.whole_radius_inclusion,
@@ -40,6 +43,9 @@ class SwitchClass:
         }
         self.method_poly_line_connection = [
             self.single_point_poly_line_method,
+            self.multiple_point_poly_line_method,
+            self.multiple_point_poly_line_method,
+            self.multiple_point_poly_line_method,
             self.multiple_point_poly_line_method,
             self.multiple_point_poly_line_method,
             self.multiple_point_poly_line_method,
@@ -77,12 +83,11 @@ class SwitchClass:
         self, gps_points: list, poly_lines: list, **kwargs
     ) -> PolyLine:
         criteria = []
-        print(len(poly_lines), "length of poly lines")
         for poly_line in poly_lines:
             tmp_criterion = 0
             for i in range(len(gps_points)):
                 tmp_criterion += self.poly_line_method_list[self.method_id](
-                    gps_points[i], poly_line, **kwargs
+                    gps_points, poly_line, i, **kwargs
                 )
             criteria.append([tmp_criterion, poly_line])
         return min(criteria, key=lambda x: x[0])[1]

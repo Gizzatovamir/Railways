@@ -4,6 +4,8 @@ from src.PolyLineMatcher import PolyLineMatcher
 from src.TesterClass import Tester
 from utils.constants import GPS_POINTS_PATH, POINTS_PATH, LINES_PATH
 import argparse
+from src.MakeCSV import MakeCSV
+from src.GPSPoints import GPSPoints
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -35,9 +37,11 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
     arg_list = utils.utils.get_arg_list(args)
-    matcher = PolyLineMatcher(arg_list)
-    # matcher.draw_trajectory()
-    matcher.match()
-    matcher.draw_full_map(matcher.result)
+    # matcher = PolyLineMatcher(arg_list)
+    # # matcher.draw_trajectory()
+    # matcher.match()
+    # matcher.draw_full_map(matcher.result)
     # tester = Tester(matcher.switch_information)
     # tester.test_switches()
+    csv = MakeCSV(GPSPoints(args.path).points)
+    csv.dict_list_to_data_frame()

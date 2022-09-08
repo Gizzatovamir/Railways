@@ -50,7 +50,7 @@ class BasicMap:
                 ax.plot(x, y, "o", color="lime")
             else:
                 ax.plot(x, y, "o", color=color)
-            #ax.text(x - 2, y, point["id"])
+            # ax.text(x - 2, y, point["id"])
             # ax.plot(point["coords"].x, point["coords"].y, point["coords"].z, 'ro', color=color)
 
     @staticmethod
@@ -88,17 +88,18 @@ class BasicMap:
                         )
                         x.append(new_x)
                         y.append(new_y)
-                        # ax.add_artist(circle1)
                         ax.text(
                             new_x,
                             new_y,
-                            "{}, {}, {}".format(
-                                true_point["id"], true_point["cross"], true_point["end"]
+                            "{}, {}, {}, {}".format(
+                                true_point["id"],
+                                true_point["cross"],
+                                true_point["end"],
+                                lines[i]["line_id"],
                             ),
                             fontsize=9,
                         )
                         # z.append(true_point["coords"].z)
 
-                # ax.text(np.mean(x), np.mean(y), "{}".format(lines[i]["line_id"]))
                 ax.plot(x, y)
                 # ax.plot(x, y)

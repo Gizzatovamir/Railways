@@ -76,3 +76,6 @@ class PolyLine:
 
     def print_poly_line(self) -> None:
         print(self._point_id_list, " - list of points in poly line")
+
+    def get_id(self):
+        return self._line_id

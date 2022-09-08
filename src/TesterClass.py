@@ -10,7 +10,7 @@ class Tester:
         self.switches = args["switches"]
         self.constants = args["constants"]
         self.find_path_class = args["switch_class"]
-        self.find_path_class.change_config(method=7, mode="whole")
+        self.find_path_class.change_config(method=0, mode="whole")
         self.coincidence_counter = 0
         self.result = []
 

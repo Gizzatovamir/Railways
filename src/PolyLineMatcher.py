@@ -31,6 +31,7 @@ class PolyLineMatcher(StateMatcher):
                         "gps_point": self.gps_points[index],
                         "cur_line": poly_line,
                     }
+        self.result_path.append(points["cur_line"].get_id())
         return points
 
     def find_initial_state(self, index: int) -> dict:
@@ -80,20 +81,20 @@ class PolyLineMatcher(StateMatcher):
             self.gps_points[i]["is_on_switch"] = is_valid_condition["is_valid"]
             i += 1
         print(is_valid_condition, " is valid condition")
-        try:
-            if is_valid_condition["is_valid"] and len(next_poly_lines) > 1:
-                print(last_segment[1], " last segment")
-                print(next_poly_lines)
-                [next_poly_line.print_poly_line() for next_poly_line in next_poly_lines]
-                cur_poly_line = self.find_path_class.find_cur_poly_line(
-                    points, next_poly_lines, center=last_segment[1]
-                )
-            else:
-                cur_poly_line = is_valid_condition["line"]
-        except Exception as e:
-            print(e)
-            cur_poly_line = self.initial_dict["cur_line"]
+        if is_valid_condition["is_valid"]:
+            print(last_segment[1], " last segment")
+            print(next_poly_lines)
+            [next_poly_line.print_poly_line() for next_poly_line in next_poly_lines]
+            cur_poly_line = self.find_path_class.find_cur_poly_line(
+                points,
+                next_poly_lines,
+                line_point=last_segment[1],
+                constants=self.switch_information["constants"],
+            )
+        else:
+            cur_poly_line = is_valid_condition["line"]
         self.link_points_to_poly_line_on_switch(points, cur_poly_line)
+        self.result_path.append(cur_poly_line.get_id())
         return cur_poly_line, len(points) if points != [] else 1
 
     def link_points_to_poly_line_on_switch(
@@ -141,3 +142,4 @@ class PolyLineMatcher(StateMatcher):
             [self.gps_points[i - 1], self.initial_dict["gps_point"]["ortho_point"]]
         )
         self.link_points_to_paths(i)
+        print(self.result_path, " result path that train has passed")

@@ -312,16 +312,57 @@ def method_1_poly_line(gps_point: dict, poly_line: "PolyLine", **kwargs) -> floa
     return poly_line.point_to_poly_line_dist(gps_point["coords"])["dist"]["dist"]
 
 
-def method_2_poly_line(gps_point: dict, poly_line: "PolyLine", **kwargs) -> float:
+def method_2_poly_line(
+    gps_points: dict, poly_line: "PolyLine", i: int, **kwargs
+) -> float:
     return (
-        poly_line.point_to_poly_line_dist(gps_point["coords"])["dist"]["dist"]
-        / (gps_point["coords"] - kwargs["center"]["coords"]).norm
+        poly_line.point_to_poly_line_dist(gps_points[i]["coords"])["dist"]["dist"]
+        / (gps_points[i]["coords"] - kwargs["line_point"]["coords"]).norm
     )
 
 
-def method_3_poly_line(gps_point: dict, poly_line: "PolyLine", **kwargs) -> float:
-    pass
+def method_3_poly_line(
+    gps_points: dict, poly_line: "PolyLine", i: int, **kwargs
+) -> float:
+    return np.cos(
+        np.pi
+        - np.arccos(
+            poly_line.point_to_poly_line_dist(gps_points[i]["coords"])["dist"]["dist"]
+            / (gps_points[i]["coords"] - kwargs["line_point"]["coords"]).norm
+        )
+    )
 
 
-def method_4_poly_line(gps_point: dict, poly_line: "PolyLine", **kwargs) -> float:
-    pass
+def method_4_poly_line(
+    gps_points: dict, poly_line: "PolyLine", i: int, **kwargs
+) -> float:
+    return (
+        poly_line.point_to_poly_line_dist(gps_points[i]["coords"])["dist"]["dist"]
+        * (gps_points[i]["coords"] - kwargs["line_point"]["coords"]).norm
+    )
+
+
+def method_5_poly_line(
+    gps_points: dict, poly_line: "PolyLine", i: int, **kwargs
+) -> float:
+    return poly_line.point_to_poly_line_dist(gps_points[i]["coords"])["dist"][
+        "dist"
+    ] / ((gps_points[i]["coords"] - kwargs["line_point"]["coords"]).norm * (i + 1))
+
+
+def method_6_poly_line(
+    gps_points: dict, poly_line: "PolyLine", i: int, **kwargs
+) -> float:
+    return (
+        poly_line.point_to_poly_line_dist(gps_points[i]["coords"])["dist"]["dist"] * i
+    )
+
+
+def method_7_poly_line(
+    gps_points: dict, poly_line: "PolyLine", i: int, **kwargs
+) -> float:
+    return (
+        poly_line.point_to_poly_line_dist(gps_points[i]["coords"])["dist"]["dist"]
+        * (i + 1)
+        / (gps_points[i]["coords"] - kwargs["line_point"]["coords"]).norm
+    )

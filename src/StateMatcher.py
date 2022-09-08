@@ -34,6 +34,7 @@ class StateMatcher:
             "switch_class": self.find_path_class,
             "switches": [],
         }
+        self.result_path = []
 
     def find_initial_state(self, index: int, min_dist=MIN_DIST) -> dict:
         """
