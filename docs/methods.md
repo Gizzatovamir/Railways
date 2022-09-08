@@ -24,9 +24,9 @@ min(sum(H_i))
 
 min(sum(sin(beta_i)) == sum(pi-sin(alpha_i)))
 
-![img_2.png](../images/img_2.png)
+![img.png](../images/img_2.png)
 
-[comment]: (\min_N\sum_{i=0}^n{\(\pi-\sin{\alpha_{i}\)}})
+[comment]: (\min_N\sum_{i=0}^n{\sin{\(\pi-\alpha_{i}\)}})
 
 #### Method 4
 
