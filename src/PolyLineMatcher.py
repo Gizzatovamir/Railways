@@ -8,6 +8,7 @@ from utils.utils import point_to_segment_distance, point_to_segment_projection
 import itertools
 from src.PolyLine import PolyLine
 from src.StateMatcher import StateMatcher
+from src.MakeCSV import MakeCSV
 
 
 class PolyLineMatcher(StateMatcher):
@@ -27,6 +28,7 @@ class PolyLineMatcher(StateMatcher):
                     poly_line = PolyLine(
                         self.lines[i]["line_id"], self.lines[i]["points"]
                     )
+                    self.gps_points[index]['poly_line_id'] = self.lines[i]["line_id"]
                     points = {
                         "gps_point": self.gps_points[index],
                         "cur_line": poly_line,
@@ -102,6 +104,7 @@ class PolyLineMatcher(StateMatcher):
     ) -> None:
         for point in gps_points:
             cur_point_to_dist = poly_line.point_to_poly_line_dist(point["coords"])
+            point['poly_line_id'] = poly_line.get_id()
             self.result.append(
                 [
                     point,
@@ -120,6 +123,7 @@ class PolyLineMatcher(StateMatcher):
                     cur_point_to_dist["ortho_point"],
                 ]
             )
+            self.gps_points[i]['poly_line_id'] = self.initial_dict["cur_line"].get_id()
             i += 1
         else:
             last_segment = (
@@ -143,3 +147,5 @@ class PolyLineMatcher(StateMatcher):
         )
         self.link_points_to_paths(i)
         print(self.result_path, " result path that train has passed")
+        make_csv = MakeCSV("result_df")
+        make_csv.linked_dict_list_to_data_frame(self.result)

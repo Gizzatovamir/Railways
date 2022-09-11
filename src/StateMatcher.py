@@ -99,6 +99,7 @@ class StateMatcher:
             if state:
                 self.gps_points[i]["cur_line"] = state["cur_line"]
                 for point in self.point_buffer:
+                    point['poly_line_id'] = state['cur_line'].get_id()
                     self.result.append(
                         [
                             point,
