@@ -1,61 +1,79 @@
 import utils.utils as utils
-from src.RailMap import RailLines
 from utils.constants import POINTS_PATH, LINES_PATH
 from src.PointClass import Point
+from typing import TYPE_CHECKING, Dict, List, Set, Tuple
+from copy import deepcopy
+
+if TYPE_CHECKING:
+    from src.RailMap import RailLines
 
 
 class PolyLine:
-    __slots__ = ("_line_id", "_point_id_list", "map_points", "points_dict_list")
+    __slots__ = ("_line_id", "_point_id_list", "map_points", "_points_dict_list")
 
-    def __init__(self, line_id: int, point_ids: list):
+    def __init__(self, line_id: int, point_ids: List[int], map_points: "RailLines"):
         self._line_id = line_id
         self._point_id_list = point_ids
-        self.map_points = RailLines(
-            path_to_lines=LINES_PATH, path_to_points=POINTS_PATH
-        )
-        self.points_dict_list = self.get_poly_line_list_by_id()
+        self.map_points = map_points
+        self._points_dict_list = self.get_poly_line_list_by_id()
 
-    def get_poly_line_list_by_id(self) -> list:
+    def get_poly_line_list_by_id(self) -> List[Dict]:
         return [
-            utils.find_dict(self.map_points.points, point_id)
+            utils.find_dict(self.map_points, point_id)
             for point_id in self._point_id_list
         ]
 
-    def point_to_poly_line_dist(self, p: Point) -> dict:
-        result = []
-        last_info = []
-        for i in range(len(self.points_dict_list) - 1):
-            current_segment = self.points_dict_list[i : i + 2]
+    def point_to_poly_line_dist(self, p: Point, **kwargs) -> Dict:
+        result: List = []
+        last_info: List = []
+        for i in range(len(self._points_dict_list) - 1):
+            current_segment = self._points_dict_list[i : i + 2]
             distance_to_segment = utils.point_to_segment_distance(p, current_segment)
             ortho_point = utils.point_to_segment_projection(p, current_segment)
-            if distance_to_segment["is_ortho"]:
-                result.append([distance_to_segment, ortho_point, current_segment])
-            else:
-                last_info = [distance_to_segment, ortho_point, current_segment]
+            result.append([distance_to_segment, ortho_point, current_segment])
         try:
             res = min(result, key=lambda x: x[0]["dist"])
-            return {
-                "dist": res[0],
-                "ortho_point": res[1],
-                "line": res[2],
-                "is_valid": True,
-            }
+
+            if res[0]["end_point"]:
+                if any(
+                    [
+                        res[0]["end_point"]["id"] == last_point["id"]
+                        for last_point in [self.start, self.end]
+                    ]
+                ):
+                    if (self.start["end"] and kwargs["direction"] == "start") or (
+                        self.end["end"] and kwargs["direction"] == "end"
+                    ):
+                        return {
+                            "is_valid": False,
+                        }
+                else:
+                    return {
+                        "dist": res[0],
+                        "ortho_point": res[1],
+                        "line": res[2],
+                        "is_valid": True,
+                    }
+            else:
+                return {
+                    "dist": res[0],
+                    "ortho_point": res[1],
+                    "line": res[2],
+                    "is_valid": True,
+                }
         except ValueError:
-            print("there is no suitable segment in the poly line")
+            # print("there is no suitable segment in the poly line")
             return {
-                "dist": last_info[0],
-                "ortho_point": last_info[1],
-                "line": last_info[2],
                 "is_valid": False,
             }
 
-    def point_to_poly_line_projection(self, p: Point) -> dict:
+    def point_to_poly_line_projection(self, p: Point) -> Dict:
         res = []
         last_info = []
-        for i in range(len(self.points_dict_list) - 1):
-            dist = utils.point_to_segment_distance(p, self.points_dict_list[i : i + 2])
+        for i in range(len(self._points_dict_list) - 1):
+            dist = utils.point_to_segment_distance(p, self._points_dict_list[i : i + 2])
             projection = utils.point_to_segment_projection(
-                p, self.points_dict_list[i : i + 2]
+                p, self._points_dict_list[i : i + 2]
             )
             if dist["is_ortho"]:
                 res.append([dist, projection])
@@ -67,15 +85,46 @@ class PolyLine:
                 "is_valid": True,
             }
         except ValueError:
-            print("there is no suitable segment in the poly line")
+            # print("there is no suitable segment in the poly line")
             return {"ortho_point": last_info, "is_valid": False}
 
-    def get_next_segment(self, segment: list) -> list:
-        index = self.points_dict_list.index(segment[1])
-        return self.points_dict_list[index : index + 2]
+    def get_next_segment(self, segment: List[Dict]) -> List[Dict]:
+        index = self._points_dict_list.index(segment[1])
+        return self._points_dict_list[index : index + 2]
 
     def print_poly_line(self) -> None:
         print(self._point_id_list, " - list of points in poly line")
 
-    def get_id(self):
-        return self._line_id
+    def print_poly_line_silent(self) -> None:
+        print(self._point_id_list, end=" ")
+
+    @property
+    def id(self):
+        return deepcopy(self._line_id)
+
+    @property
+    def start(self):
+        return deepcopy(self._points_dict_list[0])
+
+    @property
+    def end(self):
+        return deepcopy(self._points_dict_list[-1])
+
+    @property
+    def start_ids(self):
+        return deepcopy(self._point_id_list[:2])
+
+    @property
+    def end_ids(self):
+        return deepcopy(self._point_id_list[-2:])
+
+    def last_segment(self, direction: str):
+        return self._points_dict_list[: 2 if direction == "start" else -2 :]
+
+    @property
+    def points_dict_list(self):
+        return deepcopy(self._points_dict_list)
+
+    @property
+    def id_list(self):
+        return deepcopy(self._point_id_list)

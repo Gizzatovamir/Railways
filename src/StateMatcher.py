@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import utils.utils as utils
 from src.SwitchClass import SwitchClass
 from utils.utils import point_to_segment_distance, point_to_segment_projection
+from src.MakeCSV import MakeCSV
 import itertools
 
 
@@ -34,7 +35,6 @@ class StateMatcher:
             "switch_class": self.find_path_class,
             "switches": [],
         }
-        self.result_path = []
 
     def find_initial_state(self, index: int, min_dist=MIN_DIST) -> dict:
         """
@@ -99,15 +99,7 @@ class StateMatcher:
             if state:
                 self.gps_points[i]["cur_line"] = state["cur_line"]
                 for point in self.point_buffer:
-                    point['poly_line_id'] = state['cur_line'].get_id()
-                    self.result.append(
-                        [
-                            point,
-                            utils.point_to_segment_projection(
-                                point["coords"], state["cur_line"]
-                            ),
-                        ]
-                    )
+                    point["poly_line"] = state["cur_line"]
                 return state, i
 
     def find_segments_from_point(self, point: dict) -> list:
@@ -568,14 +560,7 @@ class StateMatcher:
                 self.gps_points[i]["coords"], self.initial_dict["cur_line"]
             )
             if ortho_point_dist["is_ortho"]:
-                self.result.append(
-                    [
-                        self.gps_points[i],
-                        point_to_segment_projection(
-                            self.gps_points[i]["coords"], self.initial_dict["cur_line"]
-                        ),
-                    ]
-                )
+                self.gps_points[i]["poly_line"] = self.initial_dict["cur_line"]
             else:
                 line = [p1, p2] if not ortho_point_dist["line_point"] else [p2, p1]
                 line_point = p2 if not ortho_point_dist["line_point"] else p1

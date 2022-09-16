@@ -4,6 +4,8 @@ from src.PointClass import Point
 from utils.utils import find_l0_h0
 import numpy as np
 
+UNDERGROUND_LINE_ID = 967
+
 
 class BasicMap:
     @staticmethod
@@ -25,7 +27,8 @@ class BasicMap:
 
     def point_transform(self, dict_point: dict, lines: list) -> list:
         res = []
-        under_line_ids = self.find_dict(lines, 967)
+        # Временое решение, так как высоты были не правильные
+        under_line_ids = self.find_dict(lines, UNDERGROUND_LINE_ID)
         for i in range(len(dict_point)):
             if dict_point["{}".format(i)]["point_id"] in under_line_ids:
                 old_z = -10
@@ -50,7 +53,7 @@ class BasicMap:
                 ax.plot(x, y, "o", color="lime")
             else:
                 ax.plot(x, y, "o", color=color)
-            # ax.text(x - 2, y, point["id"])
+            # ax.text(x, y, point["id"])
             # ax.plot(point["coords"].x, point["coords"].y, point["coords"].z, 'ro', color=color)
 
     @staticmethod
@@ -63,10 +66,17 @@ class BasicMap:
             gps_x, gps_y, gps_z = pm.ecef2ned(
                 *gps_point["coords"].vector, lat_0, lon_0, h_0
             )
-            new_x, new_y, new_z = pm.ecef2ned(*new_gps_point.vector, lat_0, lon_0, h_0)
+            try:
+                new_x, new_y, new_z = pm.ecef2ned(
+                    *new_gps_point.vector, lat_0, lon_0, h_0
+                )
+            except AttributeError:
+                new_x, new_y, new_z = pm.ecef2ned(
+                    *new_gps_point["coords"].vector, lat_0, lon_0, h_0
+                )
             ax.plot([gps_x, new_x], [gps_y, new_y], linestyle="--", color="black")
             ax.plot(new_x, new_y, "o", color="b")
-            # ax.text(gps_x, gps_y, gps_point["id"], fontsize=9)
+            ax.text(gps_x, gps_y, gps_point["id"], fontsize=7)
             if gps_point["is_on_switch"]:
                 ax.plot(gps_x, gps_y, "o", color="lime")
             else:
@@ -91,15 +101,16 @@ class BasicMap:
                         ax.text(
                             new_x,
                             new_y,
-                            "{}, {}, {}, {}".format(
+                            "{}, {}, {}".format(
                                 true_point["id"],
                                 true_point["cross"],
                                 true_point["end"],
-                                lines[i]["line_id"],
                             ),
                             fontsize=9,
                         )
                         # z.append(true_point["coords"].z)
-
+                # circle = plt.Circle((x[0], y[0]), kwargs["end_r"], fill=False)
+                # ax.add_artist(circle)
+                # ax.plot(x[0], y[0], "o", color="brown")
                 ax.plot(x, y)
                 # ax.plot(x, y)

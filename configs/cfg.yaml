@@ -1,12 +1,16 @@
 ---
 matching_config:
-  path: jsons/logs/nav_points.json
-  points_path: jsons/map_points.json
-  lines_path: jsons/map_lines.json
-  method: 6
-  mode: whole
-  n: 1
-  start_r: 20
-  end_r: 25
-  min_dist: 2
+  path: jsons/logs/nav_points.json # path to log with train path
+  points_path: jsons/map_points.json # path to json with map points
+  lines_path: jsons/map_lines.json # path to json with map lines
+  method: 0.0 # method number that will be used in switch choosing options[0...7] see methods.md
+  mode: whole # mode of point selection options[whole (all points),
+              #                                 interval (points will be selected in range (start_r, end_r) meters from start of switch)
+              #                                 last_n (last n points in list will be selected and used in switch_choosing class)]
+  n: 1.0 # number of points that will be taking part in switch choosing
+  start_r: 20.0 # start radius of interval selection
+  end_r: 25.0 # end radius of decision-making interval
+  min_dist: 2.0 # minimal distance to start of the path in initializing
+  result_csv_path: result_csvs/ # path where result csvs will be saved
+  logs_path: jsons/logs/ # path to all logs in json format
 

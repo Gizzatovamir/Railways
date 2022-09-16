@@ -1,6 +1,7 @@
 import utils.utils as utils
 from utils.utils import point_to_segment_projection, point_to_segment_distance
 from src.PolyLine import PolyLine
+from typing import Dict, List, Tuple, Set
 
 
 class SwitchClass:
@@ -52,8 +53,8 @@ class SwitchClass:
         ]
 
     def multiple_points_method(
-        self, gps_points: list, observed_segments: dict, **kwargs
-    ) -> list:
+        self, gps_points: List[Dict], observed_segments: List[List[Dict]], **kwargs
+    ) -> List[Dict]:
         criteria = []
         for segment in observed_segments:
             tmp_criterion = 0
@@ -65,8 +66,8 @@ class SwitchClass:
         return min(criteria, key=lambda x: x[0])[1]
 
     def single_point_method(
-        self, gps_points: list, observed_segments: dict, **kwargs
-    ) -> list:
+        self, gps_points: List[Dict], observed_segments: List[List[Dict]], **kwargs
+    ) -> List[Dict]:
         criteria = []
         for segment in observed_segments:
             criteria.append(
@@ -80,22 +81,25 @@ class SwitchClass:
         return min(criteria, key=lambda x: x[0])[1]
 
     def multiple_point_poly_line_method(
-        self, gps_points: list, poly_lines: list, **kwargs
+        self, gps_points: List[Dict], poly_lines: List[PolyLine], **kwargs
     ) -> PolyLine:
         criteria = []
         for poly_line in poly_lines:
             tmp_criterion = 0
             for i in range(len(gps_points)):
                 tmp_criterion += self.poly_line_method_list[self.method_id](
-                    gps_points, poly_line, i, **kwargs
+                    gps_points[i], poly_line, i, **kwargs
                 )
             criteria.append([tmp_criterion, poly_line])
         return min(criteria, key=lambda x: x[0])[1]
 
     def single_point_poly_line_method(
-        self, gps_points: list, poly_lines: list, **kwargs
+        self, gps_points: List[Dict], poly_lines: List[PolyLine], **kwargs
     ) -> PolyLine:
+        [print(poly_line.id_list, end=" | ") for poly_line in poly_lines]
+        print("Poly lines to choose")
         criteria = []
+        # [print(poly_line.get_id, " Line id") for poly_line in poly_lines]
         for poly_line in poly_lines:
             criteria.append(
                 [
@@ -105,13 +109,18 @@ class SwitchClass:
                     poly_line,
                 ]
             )
-        return min(criteria, key=lambda x: x[0])[1]
+        if criteria:
+            return min(criteria, key=lambda x: x[0])[1]
+        else:
+            return None
 
-    def change_config(self, **kwargs):
+    def change_config(self, **kwargs) -> None:
         self.method_id = kwargs["method"]
         self.selection_mode = kwargs["mode"]
 
-    def find_cur_line(self, gps_points: list, segments: list, **kwargs):
+    def find_cur_line(
+        self, gps_points: List[dict], segments: List[Dict], **kwargs
+    ) -> List[Dict]:
         selected_gps_points = self.selection_list[self.selection_mode](
             gps_points, **kwargs
         )
@@ -120,7 +129,9 @@ class SwitchClass:
         )
         return result_segment
 
-    def find_cur_poly_line(self, gps_points: list, poly_lines: list, **kwargs):
+    def find_cur_poly_line(
+        self, gps_points: List[Dict], poly_lines: List[PolyLine], **kwargs
+    ) -> PolyLine:
         selected_gps_points = self.selection_list[self.selection_mode](
             gps_points, **kwargs
         )
@@ -128,3 +139,15 @@ class SwitchClass:
             selected_gps_points, poly_lines, **kwargs
         )
         return result_poly_line
+
+    def find_cur_switch(
+        self, gps_point: Dict, graph: Dict, leaves: Set, **kwargs
+    ) -> PolyLine:
+        result_poly_line = self.method_poly_line_connection[0](
+            [gps_point], leaves, **kwargs
+        )
+        for key, value in graph.items():
+            if result_poly_line in value and len(graph.items()) > 1:
+                return key
+            else:
+                return None
