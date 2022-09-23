@@ -11,7 +11,6 @@ class PolyLineMatcher(StateMatcher):
     def __init__(self, kwargs: Dict):
         super(PolyLineMatcher, self).__init__(kwargs)
         self.result_path = []
-        print(kwargs["result_csv_path"])
         self.make_csv = MakeCSV(
             kwargs["result_csv_path"]
             + kwargs["path"].split("/")[-1].split(".")[0]
@@ -49,26 +48,52 @@ class PolyLineMatcher(StateMatcher):
                     }
         return points
 
+    def initialize(self) -> (dict, int):
+        init_state = super(PolyLineMatcher, self).initialize()
+        if init_state:
+            return init_state
+        else:
+            return None, 0
+
     def find_initial_state(self, index: int) -> Dict:
         points = self.get_initial_points(index)
+        # print(points)
         if points:
+            points["direction"] = self.find_init_direction(points, index)
             current_line = points["cur_line"].point_to_poly_line_dist(
-                self.gps_points[index]["coords"]
+                self.gps_points[index]["coords"], direction=points["direction"]
             )["line"]
             if all([not line_point["cross"] for line_point in current_line]):
                 points["gps_point"] = points["cur_line"].point_to_poly_line_projection(
                     points["gps_point"]["coords"]
                 )["ortho_point"]
-                # self.result_path.append(points["cur_line"].get_id)
-                points["direction"] = self.find_init_direction(points, index)
             for point in current_line:
                 if point["cross"]:
-                    if (
-                        self.gps_points[index]["coords"] - point["coords"]
-                    ).norm <= self.end_r:
-                        self.point_buffer.append(self.gps_points[index])
-                        self.gps_points[index]["is_on_switch"] = True
-                        points = None
+                    next_poly_lines = utils.find_next_poly_lines_on_switch(
+                        self.lines,
+                        current_line,
+                        direction=points["direction"],
+                        points=self.points,
+                    )
+                    [line.print_poly_line() for line in next_poly_lines]
+                    if (len(next_poly_lines) < 2) ^ (
+                        not all(
+                            [
+                                utils.get_angle(
+                                    current_line,
+                                    next_poly_line.points_dict_list,
+                                    direction=points["direction"],
+                                )
+                                for next_poly_line in next_poly_lines
+                            ]
+                        )
+                    ):
+                        if (
+                            self.gps_points[index]["coords"] - point["coords"]
+                        ).norm <= self.end_r:
+                            self.point_buffer.append(self.gps_points[index])
+                            self.gps_points[index]["is_on_switch"] = True
+                            points = None
 
         return points
 
@@ -90,18 +115,16 @@ class PolyLineMatcher(StateMatcher):
         is_valid_condition = utils.is_switch_valid_poly_line(
             last_segment, next_poly_lines, **kwargs
         )
-        print(last_segment[1])
-        print(last_segment[0])
-        print(" Last segment")
-        print("len of all gps points", len(self.gps_points))
-        print("__________")
-        while (
-            last_segment[1]["coords"] - self.gps_points[i]["coords"]
-        ).norm <= self.end_r and i < len(self.gps_points) - 1:
-            print(self.gps_points[i])
-            points.append(self.gps_points[i])
-            self.gps_points[i]["is_on_switch"] = is_valid_condition["is_valid"]
-            i += 1
+        # print(i, "start of point list")
+        try:
+            while (
+                last_segment[1]["coords"] - self.gps_points[i]["coords"]
+            ).norm <= self.end_r and i <= len(self.gps_points):
+                points.append(self.gps_points[i])
+                self.gps_points[i]["is_on_switch"] = is_valid_condition["is_valid"]
+                i += 1
+        except IndexError:
+            return None, 0
         if is_valid_condition["is_valid"]:
             cur_poly_line = self.find_path_class.find_cur_poly_line(
                 points,
@@ -130,8 +153,8 @@ class PolyLineMatcher(StateMatcher):
     def match_all_gps_points(self) -> None:
         for point in self.gps_points:
             try:
-                print(point["poly_line"].id_list, " - ", point["id"])
-                print("__________")
+                # print(point["poly_line"].id_list, " - ", point["id"])
+                # print("__________")
                 point_projection = point["poly_line"].point_to_poly_line_projection(
                     point["coords"]
                 )["ortho_point"]
@@ -148,36 +171,35 @@ class PolyLineMatcher(StateMatcher):
             point["poly_line"] = poly_line
 
     def link_points_to_paths(self, i: int) -> None:
-        # print(self.initial_dict["cur_line"])
-        cur_point_to_dist = self.initial_dict["cur_line"].point_to_poly_line_dist(
-            self.gps_points[i]["coords"], direction=self.initial_dict["direction"]
-        )
         try:
-            print(cur_point_to_dist["is_valid"])
-            if cur_point_to_dist["is_valid"]:
-                self.gps_points[i]["poly_line"] = self.initial_dict["cur_line"]
-                print(self.initial_dict["cur_line"].print_poly_line())
-                i += 1
-            else:
-                result_poly_line, step = self.choose_line_on_cross(
-                    i,
-                    self.initial_dict["cur_line"],
-                    direction=self.initial_dict["direction"],
-                    points=self.points,
-                )
-                self.initial_dict["cur_line"] = result_poly_line
-                print(i, "current point")
-                i += step
-        except Exception as e:
-            print("Exception", e)
+            cur_point_to_dist = self.initial_dict["cur_line"].point_to_poly_line_dist(
+                self.gps_points[i]["coords"], direction=self.initial_dict["direction"]
+            )
+        except AttributeError:
             return
-        if i < len(self.gps_points) and self.initial_dict["cur_line"]:
+        if cur_point_to_dist["is_valid"]:
+            self.gps_points[i]["poly_line"] = self.initial_dict["cur_line"]
+            i += 1
+        else:
+            result_poly_line, step = self.choose_line_on_cross(
+                i,
+                self.initial_dict["cur_line"],
+                direction=self.initial_dict["direction"],
+                points=self.points,
+            )
+            self.initial_dict["cur_line"] = result_poly_line
+            i += step
+        if i < len(self.gps_points) and not cur_point_to_dist["is_breakable"]:
             self.link_points_to_paths(i)
 
-    def match(self) -> None:
+    def save_result_to_csv(self, file_path):
+        self.make_csv.matched_dict_list_to_data_frame(self.result, file_path)
+
+    def match(self, file_path) -> None:
         # self.gps_points = self.gps_points[::-1]
         self.initial_dict, i = self.initialize()
-        self.gps_points[i - 1]["poly_line"] = self.initial_dict["cur_line"]
-        self.link_points_to_paths(i)
-        self.match_all_gps_points()
-        self.make_csv.matched_dict_list_to_data_frame(self.result)
+        if self.initial_dict:
+            self.gps_points[i - 1]["poly_line"] = self.initial_dict["cur_line"]
+            self.link_points_to_paths(i)
+            self.match_all_gps_points()
+            self.save_result_to_csv(file_path)

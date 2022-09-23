@@ -40,7 +40,8 @@ class ChainSwitch:
                 point["end"] for point in poly_line.points_dict_list
             ):
                 child = self.get_next_poly_lines_for_graph(poly_line, **kwargs)
-                graph[poly_line] = child
+                if child:
+                    graph[poly_line] = child
         return graph
 
     @staticmethod

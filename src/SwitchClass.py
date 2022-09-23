@@ -87,11 +87,15 @@ class SwitchClass:
         for poly_line in poly_lines:
             tmp_criterion = 0
             for i in range(len(gps_points)):
+                print(len(gps_points), " LENGTH OF GPS POINTS ON SWITCH")
                 tmp_criterion += self.poly_line_method_list[self.method_id](
-                    gps_points[i], poly_line, i, **kwargs
+                    gps_points, poly_line, i, **kwargs
                 )
             criteria.append([tmp_criterion, poly_line])
-        return min(criteria, key=lambda x: x[0])[1]
+        try:
+            return min(criteria, key=lambda x: x[0])[1]
+        except ValueError:
+            return None
 
     def single_point_poly_line_method(
         self, gps_points: List[Dict], poly_lines: List[PolyLine], **kwargs
@@ -99,18 +103,22 @@ class SwitchClass:
         [print(poly_line.id_list, end=" | ") for poly_line in poly_lines]
         print("Poly lines to choose")
         criteria = []
+        # print(gps_points)
         # [print(poly_line.get_id, " Line id") for poly_line in poly_lines]
-        for poly_line in poly_lines:
-            criteria.append(
-                [
-                    self.poly_line_method_list[self.method_id](
-                        gps_points[-1], poly_line
-                    ),
-                    poly_line,
-                ]
-            )
-        if criteria:
-            return min(criteria, key=lambda x: x[0])[1]
+        if gps_points:
+            for poly_line in poly_lines:
+                criteria.append(
+                    [
+                        self.poly_line_method_list[self.method_id](
+                            gps_points[-1], poly_line, **kwargs
+                        ),
+                        poly_line,
+                    ]
+                )
+            if criteria:
+                return min(criteria, key=lambda x: x[0])[1]
+            else:
+                return None
         else:
             return None
 

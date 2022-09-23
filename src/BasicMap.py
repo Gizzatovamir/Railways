@@ -53,7 +53,7 @@ class BasicMap:
                 ax.plot(x, y, "o", color="lime")
             else:
                 ax.plot(x, y, "o", color=color)
-            # ax.text(x, y, point["id"])
+            ax.text(x, y, point["id"])
             # ax.plot(point["coords"].x, point["coords"].y, point["coords"].z, 'ro', color=color)
 
     @staticmethod

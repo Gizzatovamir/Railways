@@ -25,7 +25,6 @@ class PolyLine:
 
     def point_to_poly_line_dist(self, p: Point, **kwargs) -> Dict:
         result: List = []
-        last_info: List = []
         for i in range(len(self._points_dict_list) - 1):
             current_segment = self._points_dict_list[i : i + 2]
             distance_to_segment = utils.point_to_segment_distance(p, current_segment)
@@ -34,18 +33,26 @@ class PolyLine:
         try:
             res = min(result, key=lambda x: x[0]["dist"])
 
-            if res[0]["end_point"]:
+            if not res[0]["is_ortho"]:
                 if any(
                     [
+                        # если расстояние не ортогонально и проекция находится на начале или конце геолинии, то True
                         res[0]["end_point"]["id"] == last_point["id"]
                         for last_point in [self.start, self.end]
                     ]
                 ):
+                    # если точка гоелинии является концом карты и движемся в конец линии, то True
                     if (self.start["end"] and kwargs["direction"] == "start") or (
                         self.end["end"] and kwargs["direction"] == "end"
                     ):
+                        return {"is_valid": False, "is_breakable": True}
+                    else:
                         return {
+                            "dist": res[0],
+                            "ortho_point": res[1],
+                            "line": res[2],
                             "is_valid": False,
+                            "is_breakable": False,
                         }
                 else:
                     return {
@@ -53,6 +60,7 @@ class PolyLine:
                         "ortho_point": res[1],
                         "line": res[2],
                         "is_valid": True,
+                        "is_breakable": False,
                     }
             else:
                 return {
@@ -60,12 +68,10 @@ class PolyLine:
                     "ortho_point": res[1],
                     "line": res[2],
                     "is_valid": True,
+                    "is_breakable": False,
                 }
         except ValueError:
-            # print("there is no suitable segment in the poly line")
-            return {
-                "is_valid": False,
-            }
+            return {"is_valid": False, "is_breakable": False}
 
     def point_to_poly_line_projection(self, p: Point) -> Dict:
         res = []
@@ -75,17 +81,13 @@ class PolyLine:
             projection = utils.point_to_segment_projection(
                 p, self._points_dict_list[i : i + 2]
             )
-            if dist["is_ortho"]:
-                res.append([dist, projection])
-            else:
-                last_info = projection
+            res.append([dist, projection])
         try:
             return {
                 "ortho_point": min(res, key=lambda x: x[0]["dist"])[1],
                 "is_valid": True,
             }
         except ValueError:
-            # print("there is no suitable segment in the poly line")
             return {"ortho_point": last_info, "is_valid": False}
 
     def get_next_segment(self, segment: List[Dict]) -> List[Dict]:

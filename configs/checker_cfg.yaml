@@ -1,0 +1,7 @@
+---
+checker_config:
+  path: result_csvs/ # path to directory with result directories that contains 3 csvs (matched, raw, ground truth)
+  min_dist: 2.5 # error distance between 2 points or 2 segments
+  compare: "diff" # flag to compare 2 segments (increment of nearby point distance between 2 segments) or 2 points (distance between 2 points from different logs) in logs
+  logs: "gr"
+

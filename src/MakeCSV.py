@@ -15,6 +15,7 @@ class MakeCSV:
         latitude, longitude, height = utils.transform_ecef_to_geodetic(point)
         try:
             tmp_dict = {
+                "id": index,
                 "latitude": latitude,
                 "longitude": longitude,
                 "height": height,
@@ -22,6 +23,7 @@ class MakeCSV:
             }
         except KeyError:
             tmp_dict = {
+                "id": index,
                 "latitude": latitude,
                 "longitude": longitude,
                 "height": height,
@@ -29,12 +31,12 @@ class MakeCSV:
             }
         return pd.DataFrame(
             tmp_dict,
-            columns=["latitude", "longitude", "height", "line_id"],
+            columns=["id", "latitude", "longitude", "height", "line_id"],
             index=[index],
         )
 
     def raw_dict_list_to_data_frame(self, data: List[Dict]) -> None:
-        res = pd.DataFrame(columns=["latitude", "longitude", "height"])
+        res = pd.DataFrame(columns=["id", "latitude", "longitude", "height"])
         for i in range(len(data)):
             tmp_frame = self.get_tmp_frame(data[i], i)
             res = pd.concat([res, tmp_frame])
@@ -44,12 +46,14 @@ class MakeCSV:
         self, data: List[Dict], file_path="matched"
     ) -> None:
         res_linked_gps_points = pd.DataFrame(
-            columns=["latitude", "longitude", "height", "line_id"]
+            columns=["id", "latitude", "longitude", "height", "line_id"]
         )
         for i in range(len(data)):
             # print(data[i][0])
+            # print(data[i], "DATA")
             tmp_linked_frame = self.get_tmp_frame(
-                {"coords": data[i][1], "poly_line_id": data[i][0]["poly_line"].id}, i
+                {"coords": data[i][1], "poly_line_id": data[i][0]["poly_line"].id},
+                data[i][0]["id"],
             )
             res_linked_gps_points = pd.concat([res_linked_gps_points, tmp_linked_frame])
         res_linked_gps_points.to_csv(

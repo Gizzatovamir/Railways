@@ -8,7 +8,13 @@ import argparse
 import sys
 
 
-def get_arg_list() -> dict:
+GROUND_TRUTH_FILE = "ground_truth"
+MATCHED_TRUTH_FILE = "matched"
+GROUND_TRUTH_CONFIG_NAME = "ground_truth_config"
+MATCHING_CONFIG_NAME = "matching_config"
+
+
+def get_arg_list(config_name) -> dict:
     parser = argparse.ArgumentParser()
     parser.add_argument("--cfg", default=None, help="path to config file")
     parser.add_argument(
@@ -43,17 +49,15 @@ def get_arg_list() -> dict:
         "--logs_path", type=str, help=" path to all logs in json format"
     )
     args = parser.parse_args()
-    arg_list = utils.utils.get_arg_list(args)
+    arg_list = utils.utils.get_arg_list(args, config_name)
     return arg_list
 
 
 if __name__ == "__main__":
     sys.setrecursionlimit(3500)
     print(sys.getrecursionlimit(), "recursion limit")
-    arg_list = get_arg_list()
-    matcher = GroundTruthMatcher(arg_list)
-    matcher.draw_trajectory()
-    matcher.match()
+    ground_truth_arg_list = get_arg_list(GROUND_TRUTH_CONFIG_NAME)
+    matcher = GroundTruthMatcher(ground_truth_arg_list)
+    # matcher.draw_trajectory()
+    matcher.match(GROUND_TRUTH_FILE)
     matcher.draw_full_map(matcher.result)
-    # tester = Tester(matcher.switch_information)
-    # tester.test_switches()

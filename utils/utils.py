@@ -1,11 +1,18 @@
+import os
 import json
 import numpy as np
 from src.PointClass import Point
 from typing import Dict, List, Tuple, Set
+import argparse
+import re
 
 import yaml
 from src.PolyLine import PolyLine
 import pymap3d as pm
+
+MIN_LIMIT_VALUE = 2.5
+MIN_ACCEPTABLE_ERROR = 0.15
+STEP_IN_LIST = 2
 
 
 def get_json(path: str):
@@ -14,7 +21,7 @@ def get_json(path: str):
     return data
 
 
-def find_l0_h0() -> (float, float, float):
+def find_l0_h0() -> Tuple[float, float, float]:
     return 59.62569003, 28.55332764, 0
 
 
@@ -72,27 +79,27 @@ def find_index(to_find: Dict, original_list: List[Dict]) -> int:
             return i
 
 
-def find_dict(points, point_id) -> dict:
+def find_dict(points: List[Dict], point_id: int) -> Dict:
     return next(item for item in points if item["id"] == point_id)
 
 
-def print_dict(to_print: dict) -> None:
+def print_dict(to_print: Dict) -> None:
     [print(el) for el in to_print]
 
 
-def find_line_from_start_point(start_point: dict, lines: list) -> dict:
+def find_line_from_start_point(start_point: Dict, lines: List[Dict]) -> Dict:
     for line in lines:
         if line["points"][0] == start_point["id"]:
             return line
 
 
-def find_line_from_end_point(end_point: dict, lines: list) -> dict:
+def find_line_from_end_point(end_point: Dict, lines: List[Dict]) -> Dict:
     for line in lines:
         if line["points"][-1] == end_point["id"]:
             return line
 
 
-def point_to_segment_distance(p: Point, line: list) -> dict:
+def point_to_segment_distance(p: Point, line: List[Dict]) -> Dict:
     try:
         a = line[0]["coords"]
         b = line[1]["coords"]
@@ -110,9 +117,9 @@ def point_to_segment_distance(p: Point, line: list) -> dict:
             "dist": ap.norm,
             "is_ortho": False,
             "line_point": "start",
+            "end_point": line[0],
             "cur_line": line,
             "break": False,
-            "end_point": line[0],
         }  # Use distance to start of segment instead.
     #  Return True if function returns distance to the start and False if it returns to the end of segment
     bp = p - b
@@ -124,9 +131,9 @@ def point_to_segment_distance(p: Point, line: list) -> dict:
             "dist": bp.norm,
             "is_ortho": False,
             "line_point": "end",
+            "end_point": line[1],
             "cur_line": line,
             "break": False,
-            "end_point": line[1],
         }  # Use distance to end of the segment instead.
 
     # Perpendicular distance of point to segment. Use distance to start of segment instead.
@@ -139,7 +146,7 @@ def point_to_segment_distance(p: Point, line: list) -> dict:
     }
 
 
-def point_to_segment_projection(p: Point, line: list) -> Point:
+def point_to_segment_projection(p: Point, line: List[Dict]) -> Point:
     """Finds point projection on a line segment.
     Args:
         points['gps_point']: point from projection is made
@@ -157,7 +164,7 @@ def point_to_segment_projection(p: Point, line: list) -> Point:
 
 
 def find_cur_line_by_sin_of_angle(
-    gps_points: list, observed_segment: list, i: int, **kwargs
+    gps_points: List[Dict], observed_segment: List[Dict], i: int, **kwargs
 ) -> float:
     return (
         point_to_segment_distance(gps_points[i]["coords"], observed_segment)["dist"]
@@ -166,19 +173,19 @@ def find_cur_line_by_sin_of_angle(
 
 
 def find_cur_line_by_accum_dist(
-    gps_points: list, observed_segment: list, i: int, **kwargs
+    gps_points: List[Dict], observed_segment: List[Dict], i: int, **kwargs
 ) -> float:
     return point_to_segment_distance(gps_points[i]["coords"], observed_segment)["dist"]
 
 
 def find_cur_line_min_by__last_point_min_dist(
-    gps_point: dict, observed_segment: list, **kwargs
+    gps_point: Dict, observed_segment: List[Dict], **kwargs
 ) -> float:
     return point_to_segment_distance(gps_point["coords"], observed_segment)["dist"]
 
 
 def find_cur_line_min_by_multiply_dists(
-    gps_points: list, observed_segment: list, i: int, **kwargs
+    gps_points: List[Dict], observed_segment: List[Dict], i: int, **kwargs
 ) -> float:
     return (
         point_to_segment_distance(gps_points[i]["coords"], observed_segment)["dist"]
@@ -196,7 +203,7 @@ def find_cur_line_cos_beta_adjacent_angle(
 
 
 def find_cur_line_by_min_dist_with_multiplier(
-    gps_points: list, observed_segment: list, i: int, **kwargs
+    gps_points: List[Dict], observed_segment: List[Dict], i: int, **kwargs
 ) -> float:
     return (
         point_to_segment_distance(gps_points[i]["coords"], observed_segment)["dist"] * i
@@ -204,7 +211,7 @@ def find_cur_line_by_min_dist_with_multiplier(
 
 
 def find_cur_line_by_sin_of_angle_with_multiplier(
-    gps_points: list, observed_segment: list, i: int, **kwargs
+    gps_points: List[Dict], observed_segment: List[Dict], i: int, **kwargs
 ) -> float:
     return point_to_segment_distance(gps_points[i]["coords"], observed_segment)[
         "dist"
@@ -212,7 +219,7 @@ def find_cur_line_by_sin_of_angle_with_multiplier(
 
 
 def find_cur_line_by_sin_of_angle_multiplied(
-    gps_points: list, observed_segment: list, i: int, **kwargs
+    gps_points: List[Dict], observed_segment: List[Dict], i: int, **kwargs
 ) -> float:
     return (
         point_to_segment_distance(gps_points[i]["coords"], observed_segment)["dist"]
@@ -221,11 +228,11 @@ def find_cur_line_by_sin_of_angle_multiplied(
     )
 
 
-def whole_radius_inclusion(gps_point: list, **kwargs) -> list:
+def whole_radius_inclusion(gps_point: List[Dict], **kwargs) -> List[Dict]:
     return gps_point
 
 
-def segment_radius_inclusion(gps_points: list, **kwargs) -> list:
+def segment_radius_inclusion(gps_points: List[Dict], **kwargs) -> List[Dict]:
     return [
         gps_point
         for gps_point in gps_points
@@ -235,12 +242,12 @@ def segment_radius_inclusion(gps_points: list, **kwargs) -> list:
     ]
 
 
-def last_n_points(gps_points: list, **kwargs) -> list:
+def last_n_points(gps_points: List[Dict], **kwargs) -> List[Dict]:
     return [gps_point for gps_point in gps_points[-kwargs["constants"]["n"] :]]
 
 
 def dist_to_switch_segment(
-    gps_point: dict, line_point: dict, segments: list, condition: bool
+    gps_point: Dict, line_point: Dict, segments: List[Dict], condition: bool
 ) -> int:
     try:
         if condition:
@@ -255,7 +262,7 @@ def dist_to_switch_segment(
         return 10000
 
 
-def get_angle(line_1, line_2, **kwargs) -> float:
+def get_angle(line_1: List[Dict], line_2: List[Dict], **kwargs) -> float:
     vec_1 = line_1[1]["coords"] - line_1[0]["coords"]
     if line_1[1]["id"] == line_2[0]["id"]:
         vec_2 = line_2[1]["coords"] - line_2[0]["coords"]
@@ -268,7 +275,7 @@ def get_angle(line_1, line_2, **kwargs) -> float:
     return 0 < np.arccos(cos_alpha) < np.pi / 2
 
 
-def is_switch_valid(cur_line: list, segments: list) -> dict:
+def is_switch_valid(cur_line: List[Dict], segments: List[List[Dict]]) -> Dict:
     if all([get_angle(cur_line, segment) for segment in segments]):
         return {"is_valid": True}
     if get_angle(cur_line, segments[0]):
@@ -277,7 +284,9 @@ def is_switch_valid(cur_line: list, segments: list) -> dict:
         return {"is_valid": False, "line": segments[1][0:2]}
 
 
-def is_switch_valid_poly_line(cur_line: list, poly_lines: list, **kwargs) -> dict:
+def is_switch_valid_poly_line(
+    cur_line: List[Dict], poly_lines: List[PolyLine], **kwargs
+) -> dict:
     # [line.print_poly_line() for line in poly_lines]
     if all(
         [get_angle(cur_line, line.points_dict_list, **kwargs) for line in poly_lines]
@@ -291,18 +300,35 @@ def is_switch_valid_poly_line(cur_line: list, poly_lines: list, **kwargs) -> dic
     except Exception as e:
         # print(e)
         # [line.print_poly_line() for line in poly_lines]
-        return {"is_valid": False, "line": poly_lines[0]}
+        print(cur_line, " this is current line that is has empty next lines")
+        return {"is_valid": False, "line": None}
 
 
-def get_arg_list(args) -> dict:
+def replace_args_for_ground_truth(args, arg_list, el):
+    if args.__dict__[el] and el == "path":
+        arg_list[el] = args.__dict__[el]
+    return arg_list
+
+
+def replace_args_for_matching(args, arg_list, el):
+    if args.__dict__[el] and el != "cfg":
+        arg_list[el] = args.__dict__[el]
+    return arg_list
+
+
+get_arg_dict = {
+    "ground_truth_config": replace_args_for_ground_truth,
+    "matching_config": replace_args_for_matching,
+}
+
+
+def get_arg_list(args, config_name) -> Dict:
     if args.cfg:
         with open(args.cfg, "r") as cfg:
             try:
-                arg_list = yaml.load(cfg, Loader=yaml.FullLoader)["matching_config"]
+                arg_list = yaml.load(cfg, Loader=yaml.FullLoader)[config_name]
                 for el in args.__dict__:
-                    if args.__dict__[el] and el != "cfg":
-                        arg_list[el] = args.__dict__[el]
-                print(arg_list)
+                    arg_list = get_arg_dict[config_name](args, arg_list, el)
             except yaml.YAMLError as exc:
                 print(exc)
     else:
@@ -310,12 +336,14 @@ def get_arg_list(args) -> dict:
     return arg_list
 
 
-def method_1_poly_line(gps_point: dict, poly_line: "PolyLine", **kwargs) -> float:
-    return poly_line.point_to_poly_line_dist(gps_point["coords"])["dist"]["dist"]
+def method_1_poly_line(gps_point: Dict, poly_line: "PolyLine", **kwargs) -> float:
+    return poly_line.point_to_poly_line_dist(gps_point["coords"], **kwargs)["dist"][
+        "dist"
+    ]
 
 
 def method_2_poly_line(
-    gps_points: dict, poly_line: "PolyLine", i: int, **kwargs
+    gps_points: List[Dict], poly_line: "PolyLine", i: int, **kwargs
 ) -> float:
     return (
         poly_line.point_to_poly_line_dist(gps_points[i]["coords"])["dist"]["dist"]
@@ -324,7 +352,7 @@ def method_2_poly_line(
 
 
 def method_3_poly_line(
-    gps_points: dict, poly_line: "PolyLine", i: int, **kwargs
+    gps_points: List[Dict], poly_line: "PolyLine", i: int, **kwargs
 ) -> float:
     return np.cos(
         np.pi
@@ -336,7 +364,7 @@ def method_3_poly_line(
 
 
 def method_4_poly_line(
-    gps_points: dict, poly_line: "PolyLine", i: int, **kwargs
+    gps_points: List[Dict], poly_line: "PolyLine", i: int, **kwargs
 ) -> float:
     return (
         poly_line.point_to_poly_line_dist(gps_points[i]["coords"])["dist"]["dist"]
@@ -345,7 +373,7 @@ def method_4_poly_line(
 
 
 def method_5_poly_line(
-    gps_points: dict, poly_line: "PolyLine", i: int, **kwargs
+    gps_points: List[Dict], poly_line: "PolyLine", i: int, **kwargs
 ) -> float:
     return poly_line.point_to_poly_line_dist(gps_points[i]["coords"])["dist"][
         "dist"
@@ -353,7 +381,7 @@ def method_5_poly_line(
 
 
 def method_6_poly_line(
-    gps_points: dict, poly_line: "PolyLine", i: int, **kwargs
+    gps_points: List[Dict], poly_line: "PolyLine", i: int, **kwargs
 ) -> float:
     return (
         poly_line.point_to_poly_line_dist(gps_points[i]["coords"])["dist"]["dist"] * i
@@ -361,7 +389,7 @@ def method_6_poly_line(
 
 
 def method_7_poly_line(
-    gps_points: dict, poly_line: "PolyLine", i: int, **kwargs
+    gps_points: List[Dict], poly_line: "PolyLine", i: int, **kwargs
 ) -> float:
     return (
         poly_line.point_to_poly_line_dist(gps_points[i]["coords"])["dist"]["dist"]
@@ -370,17 +398,25 @@ def method_7_poly_line(
     )
 
 
-def find_next_poly_lines_on_switch(lines: list, last_segment: list, **kwargs) -> list:
+def find_next_poly_lines_on_switch(
+    lines: List[Dict], last_segment: List[Dict], **kwargs
+) -> List[PolyLine]:
     result = []
     try:
         for line in lines:
-            if (
-                last_segment[1]["id"] in line["points"]
-                and last_segment[0]["id"] not in line["points"]
-            ):
-                result.append(
-                    PolyLine(line["line_id"], line["points"], kwargs["points"])
-                )
+            try:
+                if (
+                    last_segment[1]["id"] in line["points"]
+                    and last_segment[0]["id"] not in line["points"]
+                ):
+                    result.append(
+                        PolyLine(line["line_id"], line["points"], kwargs["points"])
+                    )
+            except TypeError:
+                if last_segment[1]["id"] in line["points"]:
+                    result.append(
+                        PolyLine(line["line_id"], line["points"], kwargs["points"])
+                    )
     except IndexError:
         return None
     return result
@@ -405,7 +441,7 @@ def switch_adding_condition(
     return any(conditions)
 
 
-def transform_ecef_to_geodetic(point) -> (float, float, float):
+def transform_ecef_to_geodetic(point) -> Tuple[float, float, float]:
     try:
         return pm.ecef2geodetic(*point["coords"].vector, deg=True)
     except AttributeError:
@@ -414,3 +450,89 @@ def transform_ecef_to_geodetic(point) -> (float, float, float):
 
 def is_in_decision_area(poly_line: PolyLine, end_r: float) -> bool:
     return (poly_line.start["coords"] - poly_line.end["coords"]).norm <= end_r
+
+
+def get_norm_in_segment(point_1, point_2):
+    p1 = Point(
+        *pm.geodetic2ecef(
+            float(point_1["latitude"]),
+            float(point_1["longitude"]),
+            float(point_1["height"]),
+        )
+    )
+    p2 = Point(
+        *pm.geodetic2ecef(
+            float(point_2["latitude"]),
+            float(point_2["longitude"]),
+            float(point_2["height"]),
+        )
+    )
+    return (p1 - p2).norm
+
+
+def point_comparator(
+    point_1: Dict, point_2: Dict, limit_value=MIN_LIMIT_VALUE
+) -> Tuple[bool, float, int]:
+    # print("_________")
+    distance = get_norm_in_segment(point_1, point_2)
+    # print(distance)
+    return distance < limit_value, distance, point_1["id"]
+
+
+def segment_comparator(
+    segment_1: List[Dict], segment_2: List[Dict], acceptable_error=MIN_ACCEPTABLE_ERROR
+) -> Tuple[bool, float, List[int]]:
+    # print("_______________")
+    substract = abs(get_norm_in_segment(*segment_2) - get_norm_in_segment(*segment_1))
+    # print(substract)
+    return (
+        substract < acceptable_error,
+        substract,
+        [point["index"] for point in segment_1],
+    )
+
+
+def get_all_file_paths(path: str, input_log_strings: List[str]) -> List[str]:
+    input_log_names_dict = {
+        "ground[_truth]*": "result_df_ground_truth.csv",
+        "mat[ched]*": "result_df_matched.csv",
+        "raw*": "result_df_raw.csv",
+    }
+    dict_keys_pattern = re.compile("|".join(input_log_names_dict), re.IGNORECASE)
+    dir_path = next(os.walk(path), (None, None, []))
+    res_paths = []
+    acceptable_paths = []
+    merged_str = " ".join(map(str, input_log_strings))
+    file_found = re.findall(dict_keys_pattern, merged_str)
+    if file_found:
+        for i in file_found:
+            for k, v in input_log_names_dict.items():
+                if re.match(k, i, re.IGNORECASE):
+                    acceptable_paths.append(v)
+
+    for csv_path in dir_path[2]:
+        if csv_path in acceptable_paths:
+            res_paths.append("{}{}".format(dir_path[0], csv_path))
+    return res_paths
+
+
+def get_points_from_different_samples(
+    index: int, original_sample: List[Dict], different_sample: List[Dict]
+) -> List[Dict]:
+    for correlated_point in different_sample:
+        if correlated_point["id"] == original_sample[index]["id"]:
+            return [original_sample[index], correlated_point]
+    return None
+
+
+def get_points_from_same_sample(
+    index: int, original_sample: List[Dict], different_sample: List[Dict]
+) -> List[List[Dict]]:
+    while index < len(original_sample) - 1:
+        if different_sample[index]["id"] == original_sample[index]["id"]:
+            return [
+                original_sample[index : index + STEP_IN_LIST],
+                different_sample[index : index + STEP_IN_LIST],
+            ]
+        index += 1
+    return None

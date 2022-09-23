@@ -10,7 +10,18 @@ matching_config:
   n: 1.0 # number of points that will be taking part in switch choosing
   start_r: 20.0 # start radius of interval selection
   end_r: 25.0 # end radius of decision-making interval
-  min_dist: 2.0 # minimal distance to start of the path in initializing
+  min_dist: 3.0 # minimal distance to start of the path in initializing
   result_csv_path: result_csvs/ # path where result csvs will be saved
   logs_path: jsons/logs/ # path to all logs in json format
-
+ground_truth_config: # config for ground truth matcher 
+  path: jsons/logs/nav_points.json
+  points_path: jsons/map_points.json
+  lines_path: jsons/map_lines.json
+  method: 0.0
+  mode: whole
+  n: 1.0
+  start_r: 20.0
+  end_r: 35
+  min_dist: 3.0
+  result_csv_path: result_csvs/
+  logs_path: jsons/logs/

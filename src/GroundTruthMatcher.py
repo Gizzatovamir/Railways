@@ -12,9 +12,6 @@ class GroundTruthMatcher(PolyLineMatcher):
         super(GroundTruthMatcher, self).__init__(kwargs)
         self.switch_chain_class = ChainSwitch(lines=self.lines, end_r=self.end_r)
 
-    def assign_points_to_poly_lines_in_path(self, path: List):
-        pass
-
     def choose_line_on_cross(
         self, i: int, last_poly_line: PolyLine, **kwargs
     ) -> Tuple[PolyLine, int]:
@@ -39,19 +36,21 @@ class GroundTruthMatcher(PolyLineMatcher):
                     last_poly_line, next_poly_lines, None, **kwargs
                 )
                 tmp_i = i
-                while (
-                    list(graph.keys())[0].end["coords"]
-                    - self.gps_points[tmp_i]["coords"]
-                ).norm <= self.end_r:
-                    tmp_i += 1
+                try:
+                    while (
+                        list(graph.keys())[0].end["coords"]
+                        - self.gps_points[tmp_i]["coords"]
+                    ).norm <= self.end_r:
+                        tmp_i += 1
+                except IndexError:
+                    break
                 print("old graph")
                 ChainSwitch.print_graph(graph)
                 leaves = self.switch_chain_class.dfs(graph)
-                root = self.find_path_class.find_cur_switch(
-                    self.gps_points[tmp_i], graph, leaves
-                )
-                # check if switch is the end of current map piece
-                if root:
+                if len(graph) > 2:
+                    root = self.find_path_class.find_cur_switch(
+                        self.gps_points[tmp_i], graph, leaves, **kwargs
+                    )
                     while (
                         root.start["coords"] - self.gps_points[i]["coords"]
                     ).norm <= (root.end["coords"] - root.start["coords"]).norm:
@@ -79,8 +78,4 @@ class GroundTruthMatcher(PolyLineMatcher):
                 next_poly_lines, last_segment, i, **kwargs
             )
         else:
-            return is_valid_condition["line"], 0
-
-    def match(self) -> None:
-        super(GroundTruthMatcher, self).match()
-        self.make_csv.matched_dict_list_to_data_frame(self.result, "ground_truth")
+            return is_valid_condition["line"], 1
