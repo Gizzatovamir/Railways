@@ -1,3 +1,0 @@
-Now jsons/logs/nav_points_2022-07-12T12_30_16.json log is matching
- 0 out of 2 switches are correct
-['Matching on switch 0 is unsuccessful', 'Matching on switch 1 is unsuccessful']
